@@ -1,0 +1,6 @@
+@WAPI_GS_HostAddress = http://localhost:5093
+
+GET {{WAPI_GS_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
