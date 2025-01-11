@@ -1,18 +1,18 @@
 ﻿using CS800_Model_iCorp;
 using Microsoft.EntityFrameworkCore;
-using WAPI_GS.Dto.Sala;
-using WAPI_GS.EM.Sala;
+using WAPI_GS.Dto.User;
+using WAPI_GS.EM.User;
 using WAPI_GS.Interfaces;
 using WAPI_GS.Modelos;
 
 namespace WAPI_GS.Service
 {
-    public class SalaService(AppDbContext appDbContext)
-        : ICS_CrudInterface<DtoCreateSala, DtoGetSala>
+    public class UserService(AppDbContext appDbContext)
+        : ICS_CrudInterface<DtoCreateUser, DtoGetUser>
     {
         private readonly AppDbContext _appDbContext = appDbContext;
 
-        public string Create(DtoCreateSala dto)
+        public string Create(DtoCreateUser dto)
         {
             var entity = dto.ToEntity();
             try
@@ -26,7 +26,7 @@ namespace WAPI_GS.Service
             return "Entidade gerada!";
         }
 
-        public async Task<string> Update(DtoCreateSala dto, int id)
+        public async Task<string> Update(DtoCreateUser dto, int id)
         {
             //A entidade existe, se nao solta um erro e nem passa dessa linha
             await GetEntityByIdAndThrowExIfNot(id);
@@ -75,7 +75,7 @@ namespace WAPI_GS.Service
             }
         }
 
-        public async Task<DtoGetSala> GetById(int id)
+        public async Task<DtoGetUser> GetById(int id)
         {
             try
             {
@@ -89,17 +89,17 @@ namespace WAPI_GS.Service
             }
         }
 
-        public async Task<PagedList<DtoGetSala>> GetList(FiltersParameter filtersParameter)
+        public async Task<PagedList<DtoGetUser>> GetList(FiltersParameter filtersParameter)
         {
             try
             {
-                IQueryable<TblSala> completeQuery = CreateQueryByTenantAndActive().AsQueryable();
+                IQueryable<TblUser> completeQuery = CreateQueryByTenantAndActive().AsQueryable();
 
                 completeQuery = FilteringWhenExistFilters(filtersParameter, completeQuery);
 
                 var listaDTO = await completeQuery.Select(c => c.ToDto()).ToListAsync();
 
-                var result = PagedList<DtoGetSala>.ToPagedList(
+                var result = PagedList<DtoGetUser>.ToPagedList(
                     listaDTO,
                     filtersParameter.PageNumber,
                     filtersParameter.PageSize
@@ -116,21 +116,21 @@ namespace WAPI_GS.Service
 
 
         //PRIVATE
-        private IQueryable<TblSala> CreateQueryByTenantAndActive()
+        private IQueryable<TblUser> CreateQueryByTenantAndActive()
         {
-            return _appDbContext.TblSalas
+            return _appDbContext.TblUsers
             .AsNoTracking()
             .AsQueryable()
             .AsSplitQuery();
         }
 
-        private async Task<TblSala> GetEntityByIdAndThrowExIfNot(int id)
+        private async Task<TblUser> GetEntityByIdAndThrowExIfNot(int id)
         {
             return await CreateQueryByTenantAndActive()
                  .FirstOrDefaultAsync(e => e.Id == id) ?? throw new KeyNotFoundException("Entidade não encontrada");
         }
 
-        private IQueryable<TblSala> FilteringWhenExistFilters(FiltersParameter queryParameters, IQueryable<TblSala> query)
+        private IQueryable<TblUser> FilteringWhenExistFilters(FiltersParameter queryParameters, IQueryable<TblUser> query)
         {
             if (queryParameters.Search != null)
             {

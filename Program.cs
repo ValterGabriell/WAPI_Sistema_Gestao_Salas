@@ -5,6 +5,16 @@ using WAPI_GS.Modelos;
 using WAPI_GS.Service;
 
 var builder = WebApplication.CreateBuilder(args);
+//add cors policy
+var MyCorsPolicy = "_myCorsPolicy";
+builder.Services.AddCors(op =>
+{
+    op.AddPolicy(name: MyCorsPolicy,
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:8080").AllowAnyHeader().AllowAnyMethod();
+        });
+});
 
 // Add services to the container.
 
@@ -18,7 +28,7 @@ builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+    options.UseNpgsql(connectionString);
 });
 builder.Services.AddScoped<ICS_UnitOfWork, UOWService>();
 var app = builder.Build();
@@ -32,6 +42,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors(MyCorsPolicy);
 app.UseAuthorization();
 
 app.MapControllers();

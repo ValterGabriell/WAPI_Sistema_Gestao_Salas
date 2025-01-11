@@ -6,7 +6,7 @@ public class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
-
+        this.ChangeTracker.LazyLoadingEnabled = false;
     }
     public DbSet<TblUsersSala> TblUsersSala { get; set; }
 
@@ -21,16 +21,5 @@ public class AppDbContext : DbContext
         base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<TblUsersSala>()
            .HasKey(us => new { us.UserId, us.SalaId }); 
-
-        modelBuilder.Entity<TblUsersSala>()
-        .HasOne(us => us.User)
-        .WithMany(u => u.UserSalas)
-        .HasForeignKey(us => us.UserId);
-
-        modelBuilder.Entity<TblUsersSala>()
-            .HasOne(us => us.Sala)
-            .WithMany(s => s.UserSalas)
-            .HasForeignKey(us => us.SalaId);
-
     }
 }

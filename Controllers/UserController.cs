@@ -1,45 +1,45 @@
 ﻿using CS800_Model_iCorp;
 using Microsoft.AspNetCore.Mvc;
-using WAPI_GS.Dto.Sala;
+using WAPI_GS.Dto.User;
 using WAPI_GS.Interfaces;
 
 namespace WAPI_GS.Controllers
 {
     [ApiController]
-    [Route("api/v1/sala")]
-    public class SalaController(ICS_UnitOfWork uow) : ControllerBase
+    [Route("api/v1/user")]
+    public class UserController(ICS_UnitOfWork uow) : ControllerBase
     {
         private readonly ICS_UnitOfWork _uow = uow;
 
         [HttpPost]
-        public ActionResult<string> Create(DtoCreateSala dto)
+        public ActionResult<string> Create(DtoCreateUser dto)
         {
             try
             {
-                var result = _uow.SalaRepository.Create(dto);
+                var result = _uow.UserRepository.Create(dto);
                 _uow.Commit();
                 return Ok(result);
             }
             catch (Exception ex)
             {
-               return BadRequest();
+                return BadRequest();
             }
         }
 
         [HttpDelete]
         public void Delete(int id)
         {
-            _uow.SalaRepository.Delete(id);
+            _uow.UserRepository.Delete(id);
             _uow.Commit();
         }
 
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<DtoGetSala>> GetById(int id)
+        public async Task<ActionResult<DtoGetUser>> GetById(int id)
         {
             try
             {
-                var result = await _uow.SalaRepository.GetById(id);
+                var result = await _uow.UserRepository.GetById(id);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -49,11 +49,11 @@ namespace WAPI_GS.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<PagedList<DtoGetSala>>> GetList([FromQuery]FiltersParameter filtersParameter)
+        public async Task<ActionResult<PagedList<DtoGetUser>>> GetList([FromQuery] FiltersParameter filtersParameter)
         {
             try
             {
-                var result = await _uow.SalaRepository.GetList(filtersParameter);
+                var result = await _uow.UserRepository.GetList(filtersParameter);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -64,18 +64,20 @@ namespace WAPI_GS.Controllers
 
         [HttpPut("{id}")]
 
-        public async Task<ActionResult<string>> Update(DtoCreateSala dto, int id)
+        public async Task<ActionResult<string>> Update(DtoCreateUser dto, int id)
         {
             try
             {
-                var result = await _uow.SalaRepository.Update(dto, id);
-               await _uow.Commit();
+                var result = await _uow.UserRepository.Update(dto, id);
+                await _uow.Commit();
                 return Ok(result);
             }
             catch (Exception ex)
             {
-               return BadRequest();
+                return BadRequest();
             }
         }
     }
 }
+
+

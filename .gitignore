@@ -1,0 +1,39 @@
+# Ignorar bin e obj em todos os níveis
+WAPI_GS/bin/
+WAPI_GS/obj/
+
+
+
+# Ignorar diretórios e arquivos específicos
+.vs/
+
+
+# Ignorar arquivos JSON
+
+
+# Ignorar arquivos de cache
+*.cache
+
+
+bin/Debug/net8.0/Microsoft.EntityFrameworkCore.Abstractions.dll
+bin/Debug/net8.0/Microsoft.EntityFrameworkCore.dll
+bin/Debug/net8.0/Microsoft.EntityFrameworkCore.Relational.dll
+bin/Debug/net8.0/Microsoft.Extensions.Caching.Abstractions.dll
+bin/Debug/net8.0/Microsoft.Extensions.Caching.Memory.dll
+bin/Debug/net8.0/Microsoft.Extensions.Configuration.Abstractions.dll
+bin/Debug/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+bin/Debug/net8.0/Microsoft.Extensions.DependencyInjection.dll
+bin/Debug/net8.0/Microsoft.Extensions.Logging.Abstractions.dll
+bin/Debug/net8.0/Microsoft.Extensions.Logging.dll
+bin/Debug/net8.0/Microsoft.Extensions.Options.dll
+bin/Debug/net8.0/Microsoft.Extensions.Primitives.dll
+bin/Debug/net8.0/Microsoft.OpenApi.dll
+bin/Debug/net8.0/Npgsql.dll
+bin/Debug/net8.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll
+bin/Debug/net8.0/Swashbuckle.AspNetCore.Swagger.dll
+bin/Debug/net8.0/Swashbuckle.AspNetCore.SwaggerGen.dll
+bin/Debug/net8.0/Swashbuckle.AspNetCore.SwaggerUI.dll
+bin/Debug/net8.0/System.Diagnostics.DiagnosticSource.dll
+bin/Debug/net8.0/WAPI_GS.dll
+bin/Debug/net8.0/WAPI_GS.exe
+bin/Debug/net8.0/WAPI_GS.pdb

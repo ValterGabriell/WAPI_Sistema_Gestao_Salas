@@ -12,6 +12,6 @@ namespace WAPI_GS.Dto.Sala
 
         public string? Name { get; set; }
 
-        public ICollection<TblUsersSala> UserSalas { get; set; }
+        //public ICollection<TblUsersSala> UserSalas { get; set; }
     }
 }

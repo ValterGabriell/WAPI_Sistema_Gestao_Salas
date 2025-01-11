@@ -1,0 +1,8 @@
+﻿namespace WAPI_GS.Dto.UserSala
+{
+    public class DtoCreateUserSala
+    {
+        public int UserId { get; set; }
+        public int SalaId { get; set; }
+    }
+}

@@ -23,7 +23,7 @@ namespace WAPI_GS.EM.Sala
                 IsActive = entity.IsActive,
                 CreationDate = entity.CreationDate,
                 Name = entity.Name,
-                UserSalas = entity.UserSalas,
+                //UserSalas = entity.UserSalas,
             };
         }
     }
