@@ -5,9 +5,9 @@ using WAPI_GS.Interfaces;
 
 namespace WAPI_GS.Controllers
 {
-    [ApiController]
-    [Route("api/v1/user")]
-    public class UserController(ICS_UnitOfWork uow) : ControllerBase
+    [ApiController()]
+    [Route("api/v1/professor")]
+    public class ProfessorController(ICS_UnitOfWork uow) : ControllerBase
     {
         private readonly ICS_UnitOfWork _uow = uow;
 

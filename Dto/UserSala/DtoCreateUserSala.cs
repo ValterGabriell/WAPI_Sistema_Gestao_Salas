@@ -4,5 +4,6 @@
     {
         public int UserId { get; set; }
         public int SalaId { get; set; }
+        public DateOnly Dia { get; set; }
     }
 }

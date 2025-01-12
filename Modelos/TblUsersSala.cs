@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WAPI_GS.Modelos;
 
-[Table("tbluserssala")]
+[Table("tbluserssaladias")]
 [PrimaryKey(nameof(UserId), nameof(SalaId))]
 public class TblUsersSala
 {
@@ -13,4 +13,7 @@ public class TblUsersSala
 
     [Column("salaid")]
     public int SalaId { get; set; }
+
+    [Column("dia")]
+    public DateOnly Dia { get; set; }
 }

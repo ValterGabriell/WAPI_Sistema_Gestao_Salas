@@ -1,14 +1,13 @@
 ﻿using CS800_Model_iCorp;
 using Microsoft.AspNetCore.Mvc;
-using WAPI_GS.Dto.User;
 using WAPI_GS.Dto.UserSala;
 using WAPI_GS.Interfaces;
 
 namespace WAPI_GS.Controllers
 {
     [ApiController]
-    [Route("api/v1/UserController")]
-    public class UserSalaController(ICS_UnitOfWork uow) : ControllerBase
+    [Route("api/v1/professorsala")]
+    public class ProfessorSalaController(ICS_UnitOfWork uow) : ControllerBase
     {
         private readonly ICS_UnitOfWork _uow = uow;
 

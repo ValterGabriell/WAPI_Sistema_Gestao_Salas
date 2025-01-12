@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "HItpNeaJDh1JG+Yx/b6GWA2+VkFAZ7pRshYQS2xOFms=",
+  "Source": "WAPI_GS",
+  "BasePath": "_content/WAPI_GS",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
