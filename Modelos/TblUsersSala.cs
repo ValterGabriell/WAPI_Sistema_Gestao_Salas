@@ -16,4 +16,7 @@ public class TblUsersSala
 
     [Column("dia")]
     public DateOnly Dia { get; set; }
+
+    public TblUser TblUser { get; set; }
+    public TblSala TblSala { get; set; }
 }

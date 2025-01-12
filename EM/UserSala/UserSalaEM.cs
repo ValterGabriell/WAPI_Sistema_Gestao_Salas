@@ -10,7 +10,8 @@ namespace WAPI_GS.EM.UserSala
             return new TblUsersSala
             {
                 UserId = dto.UserId,
-                SalaId = dto.SalaId
+                SalaId = dto.SalaId,
+                Dia = dto.Dia
             };
         }
 
@@ -19,7 +20,10 @@ namespace WAPI_GS.EM.UserSala
             return new DtoGetUserSala
             {
                 UserId = entity.UserId,
-                SalaId = entity.SalaId
+                SalaId = entity.SalaId,
+                Dia = entity.Dia,
+                TblSala = entity.TblSala,
+                TblUser = entity.TblUser
             };
         }
     }

@@ -20,6 +20,18 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<TblUsersSala>()
-           .HasKey(us => new { us.UserId, us.SalaId }); 
+
+           .HasKey(us => new { us.UserId, us.SalaId });
+        modelBuilder.Entity<TblUsersSala>()
+       .HasOne(us => us.TblUser)  // TblUsersSala tem um TblUser
+       .WithMany() // TblUser pode ter muitos TblUsersSala
+       .HasForeignKey(us => us.UserId); // A chave estrangeira para TblUser é UserId
+
+        // Definindo o relacionamento com TblSala
+        modelBuilder.Entity<TblUsersSala>()
+            .HasOne(us => us.TblSala)  // TblUsersSala tem um TblSala
+            .WithMany() // TblSala pode ter muitos TblUsersSala
+            .HasForeignKey(us => us.SalaId); // A chave estrangeira para TblSala é SalaId
+
     }
 }

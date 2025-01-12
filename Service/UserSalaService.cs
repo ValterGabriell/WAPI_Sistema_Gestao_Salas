@@ -34,7 +34,8 @@ namespace WAPI_GS.Service
                 .FirstOrDefaultAsync() ?? throw new KeyNotFoundException("Entidade nao encontrda!");
 
             entity.SalaId = dto.SalaId;
-            entity.SalaId = dto.UserId;
+            entity.UserId = dto.UserId;
+            entity.Dia = dto.Dia;
 
             try
             {
@@ -51,7 +52,7 @@ namespace WAPI_GS.Service
         {
             var entity = CreateQuery()
                 .Where(e => e.UserId == userId)
-                .Where(e =>e.SalaId == salaId);
+                .Where(e => e.SalaId == salaId);
             try
             {
                 _appDbContext.Remove(entity);
@@ -93,7 +94,10 @@ namespace WAPI_GS.Service
         {
             try
             {
-                IQueryable<TblUsersSala> completeQuery = CreateQuery().AsQueryable();
+                IQueryable<TblUsersSala> completeQuery = CreateQuery()
+                    .Include(e => e.TblUser)
+                    .Include(e => e.TblSala)
+                    .AsQueryable();
                 var listaDTO = await completeQuery.Select(c => c.ToDto()).ToListAsync();
                 return listaDTO;
             }
