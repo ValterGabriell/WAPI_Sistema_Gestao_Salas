@@ -266,58 +266,6 @@
     ]
   },
   {
-    "ContainingType": "WAPI_GS.Controllers.ProfessorSalaController",
-    "Method": "GetBySalaId",
-    "RelativePath": "api/v1/professorsala/sala/{salaNome}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "salaNome",
-        "Type": "System.String",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "CS800_Model_iCorp.PagedList\u00601[[WAPI_GS.Dto.UserSala.DtoGetUserSala, WAPI_GS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "WAPI_GS.Controllers.ProfessorSalaController",
-    "Method": "GetByUserId",
-    "RelativePath": "api/v1/professorsala/user/{userId}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "userId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "CS800_Model_iCorp.PagedList\u00601[[WAPI_GS.Dto.UserSala.DtoGetUserSala, WAPI_GS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
     "ContainingType": "WAPI_GS.Controllers.SalaController",
     "Method": "Create",
     "RelativePath": "api/v1/sala",

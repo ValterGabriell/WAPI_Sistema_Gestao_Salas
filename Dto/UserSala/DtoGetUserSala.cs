@@ -4,11 +4,14 @@ namespace WAPI_GS.Dto.UserSala
 {
     public class DtoGetUserSala
     {
-        public int UserId { get; set; }
-        public int SalaId { get; set; }
-        public DateOnly Dia { get; set; }
+        public DateOnly Dia { get; set; }  // Data de alocação
+        public List<SalaComProfessores> Salas { get; set; }  // Lista de salas e seus professores
 
-        public TblUser TblUser { get; set; }
-        public TblSala TblSala { get; set; }
+        public class SalaComProfessores
+        {
+            public int SalaId { get; set; }  // Id da sala
+            public TblSala TblSala { get; set; }  // Detalhes da sala
+            public List<TblUser> Professores { get; set; }  // Lista de professores alocados na sala
+        }
     }
 }

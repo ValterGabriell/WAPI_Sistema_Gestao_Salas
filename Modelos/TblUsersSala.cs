@@ -19,4 +19,5 @@ public class TblUsersSala
 
     public TblUser TblUser { get; set; }
     public TblSala TblSala { get; set; }
+
 }

@@ -64,40 +64,40 @@ namespace WAPI_GS.Service
         }
 
 
-        public async Task<List<DtoGetUserSala>> GetByUserId(int id)
-        {
-            try
-            {
-                var dto = CreateQuery().Where(e => e.UserId == id).Select(e => e.ToDto()).AsNoTracking().ToList();
-                return dto;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
+        //public async Task<List<DtoGetUserSala>> GetByUserId(int id)
+        //{
+        //    try
+        //    {
+        //        var dto = CreateQuery().Where(e => e.UserId == id).Select(e => e.ToDto()).AsNoTracking().ToList();
+        //        return dto;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ex.Message);
+        //    }
+        //}
 
-        public async Task<List<DtoGetUserSala>> GetBySalaNome(string salaNome)
-        {
-            try
-            {
-                var dto = CreateQuery().Include(e => e.TblSala).Where(e => e.TblSala.Name == salaNome).Select(e => e.ToDto()).AsNoTracking().ToList();
-                return dto;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
+        //public async Task<List<DtoGetUserSala>> GetBySalaNome(string salaNome)
+        //{
+        //    try
+        //    {
+        //        var dto = CreateQuery().Include(e => e.TblSala).Where(e => e.TblSala.Name == salaNome).Select(e => e.ToDto()).AsNoTracking().ToList();
+        //        return dto;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ex.Message);
+        //    }
+        //}
 
         public async Task<List<DtoGetUserSala>> GetList(int? salaId, int? profId)
         {
             try
             {
                 IQueryable<TblUsersSala> completeQuery = CreateQuery()
-                    .Include(e => e.TblUser)
-                    .Include(e => e.TblSala)
-                    .AsQueryable();
+           .Include(e => e.TblUser)
+           .Include(e => e.TblSala)
+           .AsQueryable();
 
                 if (salaId != null)
                 {
@@ -109,8 +109,27 @@ namespace WAPI_GS.Service
                     completeQuery = completeQuery.Where(e => e.UserId == profId);
                 }
 
-                var listaDTO = await completeQuery.Select(c => c.ToDto()).ToListAsync();
-                return listaDTO;
+                // Obtendo a lista de todos os dados necessários
+                var lista = await completeQuery.ToListAsync();
+
+                // Agrupando os dados por Dia
+                var groupedByDate = lista
+                    .GroupBy(e => e.Dia)
+                    .Select(dateGroup => new DtoGetUserSala
+                    {
+                        Dia = dateGroup.Key,  // Data da alocação
+                        Salas = dateGroup
+                            .GroupBy(e => e.SalaId)  // Agrupando por SalaId dentro de cada dia
+                            .Select(salaGroup => new DtoGetUserSala.SalaComProfessores
+                            {
+                                SalaId = salaGroup.Key,  // Id da sala
+                                TblSala = salaGroup.First().TblSala,  // Detalhes da sala
+                                Professores = salaGroup.Select(e => e.TblUser).ToList()  // Lista de professores alocados na sala
+                            }).ToList()  // Lista de salas para aquela data
+                    }).ToList();
+
+                return groupedByDate;
+
             }
             catch (Exception ex)
             {

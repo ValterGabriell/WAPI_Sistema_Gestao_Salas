@@ -432,103 +432,6 @@
         }
       }
     },
-    "/api/v1/professorsala/sala/{salaNome}": {
-      "get": {
-        "tags": [
-          "ProfessorSala"
-        ],
-        "parameters": [
-          {
-            "name": "salaNome",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DtoGetUserSala"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DtoGetUserSala"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DtoGetUserSala"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/professorsala/user/{userId}": {
-      "get": {
-        "tags": [
-          "ProfessorSala"
-        ],
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DtoGetUserSala"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DtoGetUserSala"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DtoGetUserSala"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/v1/sala": {
       "post": {
         "tags": [
@@ -885,23 +788,36 @@
       "DtoGetUserSala": {
         "type": "object",
         "properties": {
-          "userId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "salaId": {
-            "type": "integer",
-            "format": "int32"
-          },
           "dia": {
             "type": "string",
             "format": "date"
           },
-          "tblUser": {
-            "$ref": "#/components/schemas/TblUser"
+          "salas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SalaComProfessores"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SalaComProfessores": {
+        "type": "object",
+        "properties": {
+          "salaId": {
+            "type": "integer",
+            "format": "int32"
           },
           "tblSala": {
             "$ref": "#/components/schemas/TblSala"
+          },
+          "professores": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TblUser"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
