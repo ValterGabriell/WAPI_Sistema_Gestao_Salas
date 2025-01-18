@@ -77,11 +77,11 @@ namespace WAPI_GS.Service
             }
         }
 
-        public async Task<List<DtoGetUserSala>> GetBySalaId(int id)
+        public async Task<List<DtoGetUserSala>> GetBySalaNome(string salaNome)
         {
             try
             {
-                var dto = CreateQuery().Where(e => e.SalaId == id).Select(e => e.ToDto()).AsNoTracking().ToList();
+                var dto = CreateQuery().Include(e => e.TblSala).Where(e => e.TblSala.Name == salaNome).Select(e => e.ToDto()).AsNoTracking().ToList();
                 return dto;
             }
             catch (Exception ex)
@@ -90,7 +90,7 @@ namespace WAPI_GS.Service
             }
         }
 
-        public async Task<List<DtoGetUserSala>> GetList()
+        public async Task<List<DtoGetUserSala>> GetList(int? salaId, int? profId)
         {
             try
             {
@@ -98,6 +98,17 @@ namespace WAPI_GS.Service
                     .Include(e => e.TblUser)
                     .Include(e => e.TblSala)
                     .AsQueryable();
+
+                if (salaId != null)
+                {
+                    completeQuery = completeQuery.Where(e => e.SalaId == salaId);
+                }
+
+                if (profId != null)
+                {
+                    completeQuery = completeQuery.Where(e => e.UserId == profId);
+                }
+
                 var listaDTO = await completeQuery.Select(c => c.ToDto()).ToListAsync();
                 return listaDTO;
             }

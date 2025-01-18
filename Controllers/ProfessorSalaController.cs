@@ -34,12 +34,12 @@ namespace WAPI_GS.Controllers
         }
 
 
-        [HttpGet("sala/{salaId}")]
-        public async Task<ActionResult<DtoGetUserSala>> GetBySalaId(int salaId)
+        [HttpGet("sala/{salaNome}")]
+        public async Task<ActionResult<PagedList<DtoGetUserSala>>> GetBySalaId(string salaNome)
         {
             try
             {
-                var result = await _uow.UserSalaRepository.GetBySalaId(salaId);
+                var result = await _uow.UserSalaRepository.GetBySalaNome(salaNome);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -49,7 +49,7 @@ namespace WAPI_GS.Controllers
         }
 
         [HttpGet("user/{userId}")]
-        public async Task<ActionResult<DtoGetUserSala>> GetByUserId(int userId)
+        public async Task<ActionResult<PagedList<DtoGetUserSala>>> GetByUserId(int userId)
         {
             try
             {
@@ -63,11 +63,11 @@ namespace WAPI_GS.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<PagedList<DtoGetUserSala>>> GetList()
+        public async Task<ActionResult<PagedList<DtoGetUserSala>>> GetList([FromQuery] int? salaId, [FromQuery] int? profId)
         {
             try
             {
-                var result = await _uow.UserSalaRepository.GetList();
+                var result = await _uow.UserSalaRepository.GetList(salaId, profId);
                 return Ok(result);
             }
             catch (Exception ex)

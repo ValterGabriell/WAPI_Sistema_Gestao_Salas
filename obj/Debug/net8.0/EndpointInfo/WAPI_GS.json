@@ -317,6 +317,24 @@
         "tags": [
           "ProfessorSala"
         ],
+        "parameters": [
+          {
+            "name": "salaId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "profId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -414,19 +432,18 @@
         }
       }
     },
-    "/api/v1/professorsala/sala/{salaId}": {
+    "/api/v1/professorsala/sala/{salaNome}": {
       "get": {
         "tags": [
           "ProfessorSala"
         ],
         "parameters": [
           {
-            "name": "salaId",
+            "name": "salaNome",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
             }
           }
         ],
@@ -436,17 +453,26 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/DtoGetUserSala"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DtoGetUserSala"
+                  }
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DtoGetUserSala"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DtoGetUserSala"
+                  }
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DtoGetUserSala"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DtoGetUserSala"
+                  }
                 }
               }
             }
@@ -476,17 +502,26 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/DtoGetUserSala"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DtoGetUserSala"
+                  }
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DtoGetUserSala"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DtoGetUserSala"
+                  }
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DtoGetUserSala"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DtoGetUserSala"
+                  }
                 }
               }
             }
