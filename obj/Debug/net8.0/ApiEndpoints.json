@@ -239,7 +239,7 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "WAPI_GS.Dto.UserSala.DtoCreateUserSala",
+        "Type": "WAPI_GS.Dto.UserSala.DtoUpdateSalaUser",
         "IsRequired": true
       },
       {
@@ -248,7 +248,7 @@
         "IsRequired": false
       },
       {
-        "Name": "userId",
+        "Name": "oldUserId",
         "Type": "System.Int32",
         "IsRequired": false
       }

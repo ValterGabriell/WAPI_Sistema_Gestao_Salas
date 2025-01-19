@@ -5,5 +5,7 @@
         public int UserId { get; set; }
         public int SalaId { get; set; }
         public DateOnly Dia { get; set; }
+        public int HoraInicial { get; set; }
+        public int HoraFinal { get; set; }
     }
 }

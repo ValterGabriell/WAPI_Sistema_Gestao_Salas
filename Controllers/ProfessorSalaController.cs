@@ -78,11 +78,11 @@ namespace WAPI_GS.Controllers
 
         [HttpPut]
 
-        public async Task<ActionResult<string>> Update(DtoCreateUserSala dto, [FromQuery] int salaId, [FromQuery] int userId)
+        public async Task<ActionResult<string>> Update(DtoUpdateSalaUser dto, [FromQuery] int salaId, [FromQuery] int oldUserId)
         {
             try
             {
-                var result = await _uow.UserSalaRepository.Update(dto, userId, salaId);
+                var result = await _uow.UserSalaRepository.Update(dto, oldUserId, salaId);
                 await _uow.Commit();
                 return Ok(result);
             }

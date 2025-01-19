@@ -25,27 +25,32 @@ namespace WAPI_GS.Service
             return "Entidade gerada!";
         }
 
-        public async Task<string> Update(DtoCreateUserSala dto, int userId, int salaId)
+        public async Task<string> Update(DtoUpdateSalaUser dto, int oldUserId, int SalaId)
         {
             //A entidade existe, se nao solta um erro e nem passa dessa linha
-            var entity = await CreateQuery()
-                .Where(e => e.SalaId == userId)
-                .Where(e => e.UserId == salaId)
+            TblUsersSala tblUsersSala = await CreateQuery()
+                .Where(e => e.Dia == DateOnly.Parse(dto.DiaCorrente))
+                .Where(e => e.SalaId == SalaId)
+                .Where(e => e.UserId == oldUserId)
                 .FirstOrDefaultAsync() ?? throw new KeyNotFoundException("Entidade nao encontrda!");
 
-            entity.SalaId = dto.SalaId;
-            entity.UserId = dto.UserId;
-            entity.Dia = dto.Dia;
+            _appDbContext.Remove(tblUsersSala);
+            await _appDbContext.SaveChangesAsync();
+
+
+            tblUsersSala.UserId = dto.UserId;
+            tblUsersSala.HoraInicial = dto.HoraInicial;
+            tblUsersSala.HoraFinal = dto.HoraFinal;
 
             try
             {
-                _appDbContext.Update(entity);
+                _appDbContext.Add(tblUsersSala);
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
-            return entity.SalaId.ToString() + "-> User: " + entity.UserId;
+            return tblUsersSala.SalaId.ToString() + "-> User: " + tblUsersSala.UserId;
         }
 
         public async Task Delete(int userId, int salaId)
@@ -117,9 +122,12 @@ namespace WAPI_GS.Service
                     .GroupBy(e => e.Dia)
                     .Select(dateGroup => new DtoGetUserSala
                     {
-                        Dia = dateGroup.Key,  // Data da alocação
+                        Dia = dateGroup.Key,
+                        HoraInit = dateGroup.Min(e => e.HoraInicial),
+                        HoraFinal = dateGroup.Max(e => e.HoraFinal),
                         Salas = dateGroup
-                            .GroupBy(e => e.SalaId)  // Agrupando por SalaId dentro de cada dia
+                            .GroupBy(e => e.SalaId)
+                            // Agrupando por SalaId dentro de cada dia
                             .Select(salaGroup => new DtoGetUserSala.SalaComProfessores
                             {
                                 SalaId = salaGroup.Key,  // Id da sala

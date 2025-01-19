@@ -4,7 +4,9 @@ namespace WAPI_GS.Dto.UserSala
 {
     public class DtoGetUserSala
     {
-        public DateOnly Dia { get; set; }  // Data de alocação
+        public DateOnly Dia { get; set; }
+        public int HoraInit { get; set; }
+        public int HoraFinal { get; set; }
         public List<SalaComProfessores> Salas { get; set; }  // Lista de salas e seus professores
 
         public class SalaComProfessores

@@ -381,7 +381,7 @@
             }
           },
           {
-            "name": "userId",
+            "name": "oldUserId",
             "in": "query",
             "schema": {
               "type": "integer",
@@ -393,17 +393,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/DtoCreateUserSala"
+                "$ref": "#/components/schemas/DtoUpdateSalaUser"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/DtoCreateUserSala"
+                "$ref": "#/components/schemas/DtoUpdateSalaUser"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/DtoCreateUserSala"
+                "$ref": "#/components/schemas/DtoUpdateSalaUser"
               }
             }
           }
@@ -718,6 +718,14 @@
           "dia": {
             "type": "string",
             "format": "date"
+          },
+          "horaInicial": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "horaFinal": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -792,11 +800,44 @@
             "type": "string",
             "format": "date"
           },
+          "horaInit": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "horaFinal": {
+            "type": "integer",
+            "format": "int32"
+          },
           "salas": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SalaComProfessores"
             },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DtoUpdateSalaUser": {
+        "required": [
+          "diaCorrente"
+        ],
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "horaInicial": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "horaFinal": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "diaCorrente": {
+            "type": "string",
             "nullable": true
           }
         },
