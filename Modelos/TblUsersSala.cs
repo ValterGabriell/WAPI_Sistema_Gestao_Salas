@@ -1,13 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
 namespace WAPI_GS.Modelos;
 
 [Table("tbluserssaladias")]
-[PrimaryKey(nameof(UserId), nameof(SalaId))]
 public class TblUsersSala
 {
+
+    [Column("id")]
+    [Key]
+    public string Id { get; set; } = null!;
     [Column("userid")]
     public int UserId { get; set; }
 

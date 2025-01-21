@@ -20,8 +20,7 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<TblUsersSala>()
-
-           .HasKey(us => new { us.UserId, us.SalaId });
+           .HasKey(us => us.Id);
         modelBuilder.Entity<TblUsersSala>()
        .HasOne(us => us.TblUser)  // TblUsersSala tem um TblUser
        .WithMany() // TblUser pode ter muitos TblUsersSala

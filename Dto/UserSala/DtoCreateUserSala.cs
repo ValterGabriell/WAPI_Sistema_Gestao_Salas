@@ -7,5 +7,9 @@
         public DateOnly Dia { get; set; }
         public int HoraInicial { get; set; }
         public int HoraFinal { get; set; }
+
+        public bool IsRepeat { get; set; } = false;
+        public int TimeRepeat { get; set; } = 1;
+
     }
 }

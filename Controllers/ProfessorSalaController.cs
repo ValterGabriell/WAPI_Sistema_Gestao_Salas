@@ -33,35 +33,6 @@ namespace WAPI_GS.Controllers
             _uow.Commit();
         }
 
-
-        //[HttpGet("sala/{salaNome}")]
-        //public async Task<ActionResult<PagedList<DtoGetUserSala>>> GetBySalaId(string salaNome)
-        //{
-        //    try
-        //    {
-        //        var result = await _uow.UserSalaRepository.GetBySalaNome(salaNome);
-        //        return Ok(result);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest();
-        //    }
-        //}
-
-        //[HttpGet("user/{userId}")]
-        //public async Task<ActionResult<PagedList<DtoGetUserSala>>> GetByUserId(int userId)
-        //{
-        //    try
-        //    {
-        //        var result = await _uow.UserSalaRepository.GetByUserId(userId);
-        //        return Ok(result);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest();
-        //    }
-        //}
-
         [HttpGet]
         public async Task<ActionResult<PagedList<DtoGetUserSala>>> GetList([FromQuery] int? salaId, [FromQuery] int? profId)
         {

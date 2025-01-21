@@ -726,6 +726,13 @@
           "horaFinal": {
             "type": "integer",
             "format": "int32"
+          },
+          "isRepeat": {
+            "type": "boolean"
+          },
+          "timeRepeat": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false

@@ -15,7 +15,7 @@ namespace WAPI_GS.Service
 
         public ICS_CrudInterface<DtoCreateUser, DtoGetUser> _userRepository = null!;
         public ICS_CrudInterface<DtoCreateUser, DtoGetUser> UserRepository
-            => _userRepository ??= new UserService(appDbContext);
+            => _userRepository ??= new ProfessorService(appDbContext);
 
 
         public ICS_UserSala<DtoCreateUserSala, DtoGetUserSala> _userSalaRepository = null!;

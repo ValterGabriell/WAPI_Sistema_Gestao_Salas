@@ -13,10 +13,26 @@ namespace WAPI_GS.Service
 
         public string Create(DtoCreateUserSala dto)
         {
-            var entity = dto.ToEntity();
             try
             {
-                _appDbContext.Add(entity);
+                if (dto.IsRepeat)
+                {
+                    for (var i = 0; i <= dto.TimeRepeat; i++)
+                    {
+                        TblUsersSala entity = dto.ToEntity();
+                        Guid g = Guid.NewGuid();
+                        entity.Id = g.ToString();
+                        _appDbContext.Add(entity);
+                        dto.Dia = dto.Dia.AddDays(7);
+                    }
+                }
+                else
+                {
+                    TblUsersSala entity = dto.ToEntity();
+                    Guid g = Guid.NewGuid();
+                    entity.Id = g.ToString();
+                    _appDbContext.Add(entity);
+                }
             }
             catch (Exception ex)
             {
@@ -68,32 +84,6 @@ namespace WAPI_GS.Service
             }
         }
 
-
-        //public async Task<List<DtoGetUserSala>> GetByUserId(int id)
-        //{
-        //    try
-        //    {
-        //        var dto = CreateQuery().Where(e => e.UserId == id).Select(e => e.ToDto()).AsNoTracking().ToList();
-        //        return dto;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new Exception(ex.Message);
-        //    }
-        //}
-
-        //public async Task<List<DtoGetUserSala>> GetBySalaNome(string salaNome)
-        //{
-        //    try
-        //    {
-        //        var dto = CreateQuery().Include(e => e.TblSala).Where(e => e.TblSala.Name == salaNome).Select(e => e.ToDto()).AsNoTracking().ToList();
-        //        return dto;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new Exception(ex.Message);
-        //    }
-        //}
 
         public async Task<List<DtoGetUserSala>> GetList(int? salaId, int? profId)
         {
@@ -152,20 +142,6 @@ namespace WAPI_GS.Service
         {
             return _appDbContext.TblUsersSala
             .AsNoTracking();
-        }
-
-
-
-        private async Task<TblUsersSala> GetEntityByUserIdAndThrowExIfNot(int userId)
-        {
-            return await CreateQuery()
-                 .FirstOrDefaultAsync(e => e.UserId == userId) ?? throw new KeyNotFoundException("Entidade não encontrada");
-        }
-
-        private async Task<TblUsersSala> GetEntityBySalaIdAndThrowExIfNot(int salaId)
-        {
-            return await CreateQuery()
-                 .FirstOrDefaultAsync(e => e.SalaId == salaId) ?? throw new KeyNotFoundException("Entidade não encontrada");
         }
 
     }

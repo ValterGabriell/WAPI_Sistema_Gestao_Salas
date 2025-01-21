@@ -7,7 +7,7 @@ using WAPI_GS.Modelos;
 
 namespace WAPI_GS.Service
 {
-    public class UserService(AppDbContext appDbContext)
+    public class ProfessorService(AppDbContext appDbContext)
         : ICS_CrudInterface<DtoCreateUser, DtoGetUser>
     {
         private readonly AppDbContext _appDbContext = appDbContext;
