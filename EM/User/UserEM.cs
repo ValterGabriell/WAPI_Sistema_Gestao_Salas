@@ -14,6 +14,7 @@ namespace WAPI_GS.EM.User
                 Email = dto.Email,
                 Username = dto.Username,
                 Password = dto.Password,
+                IsActive = true
             };
         }
 
@@ -30,6 +31,22 @@ namespace WAPI_GS.EM.User
                 Email = entity.Email,
                 Username = entity.Username,
                 Password = entity.Password,
+            };
+        }
+
+        public static TblUser ToEntity(this DtoGetUser dto)
+        {
+            return new TblUser
+            {
+                Id = dto.Id,
+                IsActive = dto.IsActive,
+                CreationDate = dto.CreationDate,
+                LastLogin = dto.LastLogin,
+                Name = dto.Name,
+                MobilePhone = dto.MobilePhone,
+                Email = dto.Email,
+                Username = dto.Username,
+                Password = dto.Password,
             };
         }
     }

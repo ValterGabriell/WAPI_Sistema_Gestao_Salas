@@ -9,7 +9,7 @@
         public int HoraFinal { get; set; }
 
         public bool IsRepeat { get; set; } = false;
-        public int TimeRepeat { get; set; } = 1;
+        public int? TimeRepeat { get; set; } = 1;
 
     }
 }

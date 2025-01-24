@@ -64,10 +64,10 @@ namespace WAPI_GS.Service
 
         public async Task Delete(int id)
         {
-            var entity = await GetEntityByIdAndThrowExIfNot(id);
+            DtoGetUser dtoGetUser = await GetById(id);
             try
             {
-                _appDbContext.Remove(entity);
+                _appDbContext.Remove(dtoGetUser.ToEntity());
             }
             catch (Exception ex)
             {

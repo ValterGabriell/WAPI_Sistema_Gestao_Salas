@@ -52,26 +52,6 @@
           }
         }
       },
-      "delete": {
-        "tags": [
-          "Professor"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
       "get": {
         "tags": [
           "Professor"
@@ -732,7 +712,8 @@
           },
           "timeRepeat": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -807,14 +788,6 @@
             "type": "string",
             "format": "date"
           },
-          "horaInit": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "horaFinal": {
-            "type": "integer",
-            "format": "int32"
-          },
           "salas": {
             "type": "array",
             "items": {
@@ -854,6 +827,14 @@
         "type": "object",
         "properties": {
           "salaId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "horaInit": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "horaFinal": {
             "type": "integer",
             "format": "int32"
           },

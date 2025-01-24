@@ -26,14 +26,6 @@ namespace WAPI_GS.Controllers
             }
         }
 
-        [HttpDelete]
-        public void Delete(int id)
-        {
-            _uow.UserRepository.Delete(id);
-            _uow.Commit();
-        }
-
-
         [HttpGet("{id}")]
         public async Task<ActionResult<DtoGetUser>> GetById(int id)
         {

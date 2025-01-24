@@ -26,8 +26,4 @@ public class TblUsersSala
     [Column("horafinal")]
     public int HoraFinal { get; set; }
 
-
-    public TblUser TblUser { get; set; }
-    public TblSala TblSala { get; set; }
-
 }

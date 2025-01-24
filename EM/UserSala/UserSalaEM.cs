@@ -17,16 +17,12 @@ namespace WAPI_GS.EM.UserSala
             };
         }
 
-        //public static DtoGetUserSala ToDto(this TblUsersSala entity)
-        //{
-        //    return new DtoGetUserSala
-        //    {
-        //        UserId = entity.UserId,
-        //        SalaId = entity.SalaId,
-        //        Dia = entity.Dia,
-        //        TblSala = entity.TblSala,
-        //        TblUser = entity.TblUser
-        //    };
-        //}
+        public static DtoGetUserSala ToDto(this TblUsersSala entity)
+        {
+            return new DtoGetUserSala
+            {
+                Dia = entity.Dia
+            };
+        }
     }
 }

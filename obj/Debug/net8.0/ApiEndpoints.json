@@ -27,28 +27,6 @@
   },
   {
     "ContainingType": "WAPI_GS.Controllers.ProfessorController",
-    "Method": "Delete",
-    "RelativePath": "api/v1/professor",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "WAPI_GS.Controllers.ProfessorController",
     "Method": "GetList",
     "RelativePath": "api/v1/professor",
     "HttpMethod": "GET",

@@ -18,6 +18,4 @@ public class TblSala
 
     [Column("name")]
     public string? Name { get; set; }
-
-    //public ICollection<TblUsersSala> UserSalas { get; set; }
 }
