@@ -1,4 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Net;
+using System.Net.Mail;
+using System.Text;
+using System.Text.Json;
 using WAPI_GS.Dto.UserSala;
 using WAPI_GS.EM.Sala;
 using WAPI_GS.EM.UserSala;
@@ -7,10 +11,11 @@ using WAPI_GS.Modelos;
 
 namespace WAPI_GS.Service
 {
-    public class UserSalaService(AppDbContext appDbContext)
+    public class UserSalaService(AppDbContext appDbContext, IConfiguration configuration)
         : ICS_UserSala<DtoCreateUserSala, DtoGetUserSala>
     {
         private readonly AppDbContext _appDbContext = appDbContext;
+        private readonly IConfiguration _configuration = configuration;
 
         public DtoResponseCreate Create(DtoCreateUserSala dto)
         {
@@ -207,8 +212,163 @@ namespace WAPI_GS.Service
         }
 
 
+        public async Task<bool> SendEmailSolicitacao(string destEmail,
+            string body,
+            string title,
+            string fullUrl,
+            int salaId,
+            DateOnly dia,
+            int currentUserId,
+            int newUserId,
+            int horaInit,
+            int horaFinal
+
+            )
+        {
+            try
+            {
+                var smtpSettings = _configuration.GetSection("SmtpSettings");
+
+                using (SmtpClient client = new(smtpSettings["Host"], int.Parse(smtpSettings["Port"])))
+                {
+                    client.Credentials = new NetworkCredential(smtpSettings["Username"], smtpSettings["Password"]);
+                    client.EnableSsl = bool.Parse(smtpSettings["EnableSsl"]);
+
+                    var mailMessage = new MailMessage
+                    {
+                        From = new MailAddress(smtpSettings["Username"], "Gestão de Salas"),
+                        Subject = title,
+                        Body = body + "\n\n" +
+                            "Caso aceite, clique no link abaixo referente ao aceite ou não:\n\n" +
+                            "✔ Aceito: " + fullUrl + "/accept?salaId=" + salaId +
+                            "&dia=" + dia +
+                            "&userId=" + currentUserId +
+                            "&newUserId=" + newUserId +
+                            "&horaInit=" + horaInit +
+                            "&horaFinal=" + horaFinal + "\n\n" +
+                            "❌ Não aceito: " + fullUrl + "/notAccept?salaId=" + salaId + " \n",
+                        IsBodyHtml = true
+                    };
+
+                    mailMessage.To.Add(destEmail);
+
+                    await client.SendMailAsync(mailMessage);
+                }
+
+                // Enviar mensagem no WhatsApp após o e-mail
+                await SendWhatsAppMessage("+5591985253357", $"Sua solicitação de troca de sala foi enviada! Para aceitar ou recusar, acesse: {fullUrl}");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
 
 
+
+
+
+        public async Task<bool> Accept(int salaId, DateOnly dia, int userId, int newUserId, int horaInit, int horaFinal)
+        {
+            int year = dia.Year;
+            int month = dia.Month;
+            int day = dia.Day;
+
+            // Formatar como "YYYY-DD-MM"
+            string formattedDate = $"{year}-{day:D2}-{month:D2}";
+            var tblUsersSala = await _appDbContext.TblUsersSala
+                .Where(e => e.SalaId == salaId
+                    && e.UserId == userId
+                    && e.Dia == DateOnly.Parse(formattedDate)
+                    && e.HoraInicial == horaInit
+                    && e.HoraFinal == horaFinal)
+                .FirstOrDefaultAsync() ?? throw new Exception("Nenhuma reserva encontrada com os parâmetros fornecidos.");
+
+            tblUsersSala.UserId = newUserId;
+            await _appDbContext.SaveChangesAsync();
+
+            TblUser tblUser = await _appDbContext.TblUsers.Where(e => e.Id == newUserId).FirstAsync();
+            TblSala tblSala = await _appDbContext.TblSalas.Where(e => e.Id == salaId).FirstAsync();
+            await SendEmail(tblUser.Email!,
+                "Solicitação para troca de sala aceita! " + tblSala.Name +
+                " agora está alocada para você em " +
+                tblUsersSala.Dia + " " + tblUsersSala.HoraInicial + ":" + tblUsersSala.HoraFinal,
+                tblSala.Name + "Solicitação de troca de sala aceita!"
+                );
+
+
+            return true;
+        }
+
+        public async Task<bool> SendEmail(string destEmail, string body, string title)
+        {
+            try
+            {
+                var smtpSettings = _configuration.GetSection("SmtpSettings");
+
+                using (SmtpClient client = new(smtpSettings["Host"], int.Parse(smtpSettings["Port"])))
+                {
+                    client.Credentials = new NetworkCredential(smtpSettings["Username"], smtpSettings["Password"]);
+                    client.EnableSsl = bool.Parse(smtpSettings["EnableSsl"]);
+
+                    var mailMessage = new MailMessage
+                    {
+                        From = new MailAddress(smtpSettings["Username"], "Gestão de Salas"),
+                        Subject = title,
+                        Body = body,
+                        IsBodyHtml = true
+                    };
+
+                    mailMessage.To.Add(destEmail);
+
+                    await client.SendMailAsync(mailMessage);
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<bool> NotAccept(int salaId)
+        {
+            TblUsersSala tblUsersSala = await _appDbContext.TblUsersSala.Where(e => e.SalaId == salaId).FirstAsync();
+            TblUser tblUser = await _appDbContext.TblUsers.Where(e => e.Id == tblUsersSala.UserId).FirstAsync();
+            TblSala tblSala = await _appDbContext.TblSalas.Where(e => e.Id == salaId).FirstAsync();
+            await SendEmail(tblUser.Email!,
+                "Solicitação para troca de sala recusada! " + tblSala.Name +
+                "O professor referente " + tblUser.Name + " não aceitou sua solicitação",
+                tblSala.Name + "Solicitação de troca de sala recusada!"
+                );
+            return false;
+        }
+
+
+        private async Task SendWhatsAppMessage(string phoneNumber, string message)
+        {
+            var whatsappApiUrl = "https://graph.facebook.com/v17.0/YOUR_WHATSAPP_NUMBER_ID/messages";
+            var accessToken = "YOUR_ACCESS_TOKEN"; // Obtido na conta do Meta for Developers
+
+            var payload = new
+            {
+                messaging_product = "whatsapp",
+                to = phoneNumber,
+                type = "text",
+                text = new { body = message }
+            };
+
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
+                var jsonPayload = JsonSerializer.Serialize(payload);
+                var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+
+                var response = await client.PostAsync(whatsappApiUrl, content);
+                response.EnsureSuccessStatusCode();
+            }
+        }
 
 
         //PRIVATE

@@ -6,10 +6,10 @@ using WAPI_GS.Modelos;
 
 namespace WAPI_GS.Service
 {
-    public class UOWService(AppDbContext appDbContext) : ICS_UnitOfWork
+    public class UOWService(AppDbContext appDbContext, IConfiguration configuration) : ICS_UnitOfWork
     {
         public ICS_CrudInterface<DtoCreateSala, DtoGetSala> _salaRepository = null!;
-        public ICS_CrudInterface<DtoCreateSala, DtoGetSala> SalaRepository 
+        public ICS_CrudInterface<DtoCreateSala, DtoGetSala> SalaRepository
             => _salaRepository ??= new SalaService(appDbContext);
 
 
@@ -19,8 +19,8 @@ namespace WAPI_GS.Service
 
 
         public ICS_UserSala<DtoCreateUserSala, DtoGetUserSala> _userSalaRepository = null!;
-        public ICS_UserSala<DtoCreateUserSala, DtoGetUserSala> UserSalaRepository 
-            => _userSalaRepository ??= new UserSalaService(appDbContext);
+        public ICS_UserSala<DtoCreateUserSala, DtoGetUserSala> UserSalaRepository
+            => _userSalaRepository ??= new UserSalaService(appDbContext, configuration);
 
         public async Task Commit()
         {

@@ -11,5 +11,15 @@ namespace WAPI_GS.Interfaces
         //Task<List<DtoGet>> GetBySalaNome(string salaNome);
         Task<List<DtoGet>> GetList(int? salaId, int? profId);
         Task Delete(int userId, int salaId);
+
+        Task<bool> SendEmail(string destEmail, string body, string title);
+        Task<bool> SendEmailSolicitacao(string destEmail, string body, string title, string fullUrl, int salaId,
+            DateOnly dia,
+            int currentUserId,
+            int newUserId,
+            int horaInit,
+            int horaFinal);
+        Task<bool> Accept(int salaId, DateOnly dia, int userId, int newUserId, int horaInit, int horaFinal);
+        Task<bool> NotAccept(int salaId);
     }
 }

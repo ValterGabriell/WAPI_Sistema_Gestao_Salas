@@ -1,5 +1,6 @@
 ﻿using CS800_Model_iCorp;
 using Microsoft.AspNetCore.Mvc;
+using WAPI_GS.Dto;
 using WAPI_GS.Dto.UserSala;
 using WAPI_GS.Interfaces;
 
@@ -19,6 +20,63 @@ namespace WAPI_GS.Controllers
                 var result = _uow.UserSalaRepository.Create(dto);
                 _uow.Commit();
                 return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+        [HttpPost("/sendEmail")]
+        public async Task<ActionResult<bool>> SendEmail([FromBody] DtoSendEmail dtoSendEmail)
+        {
+            try
+            {
+                var scheme = HttpContext.Request.Scheme; // "http" ou "https"
+                var host = HttpContext.Request.Host.Value; // Exemplo: localhost:5000 ou meu-app.onrender.com
+                var fullUrl = $"{scheme}://{host}"; // Construindo a URL completa
+                var title = "Solicitação de substituição de horário " + dtoSendEmail.salaNome;
+
+                var result = await _uow.UserSalaRepository.SendEmailSolicitacao(dtoSendEmail.destEmail, dtoSendEmail.body, title, fullUrl,
+                    dtoSendEmail.salaId,
+                    dtoSendEmail.dia,
+                    dtoSendEmail.currentUserId,
+                    dtoSendEmail.newUserId,
+                    dtoSendEmail.horaInit,
+                    dtoSendEmail.horaFinal
+                    );
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("/accept")]
+        public async Task<ActionResult<bool>> Accept([FromQuery] int salaId, [FromQuery] DateOnly dia, [FromQuery] int userId, [FromQuery] int newUserId,
+            [FromQuery] int horaInit,
+            [FromQuery] int horaFinal)
+        {
+            try
+            {
+                bool v = await _uow.UserSalaRepository.Accept(salaId, dia, userId, newUserId, horaInit, horaFinal);
+                return Ok(v);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+        [HttpGet("/notAccept")]
+        public async Task<ActionResult<bool>> NotAccept([FromQuery] int salaId)
+        {
+            try
+            {
+                return Ok(await _uow.UserSalaRepository.NotAccept(salaId));
             }
             catch (Exception ex)
             {
