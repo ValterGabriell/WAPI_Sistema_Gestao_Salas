@@ -22,6 +22,8 @@ namespace WAPI_GS.Service
         public ICS_UserSala<DtoCreateUserSala, DtoGetUserSala> UserSalaRepository
             => _userSalaRepository ??= new UserSalaService(appDbContext, configuration);
 
+        public ICS_Auth AuthRepository => new AuthService(appDbContext);
+
         public async Task Commit()
         {
             await appDbContext.SaveChangesAsync();

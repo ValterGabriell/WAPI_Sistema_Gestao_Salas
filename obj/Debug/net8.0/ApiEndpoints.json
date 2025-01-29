@@ -51,6 +51,32 @@
     ]
   },
   {
+    "ContainingType": "WAPI_GS.Controllers.AuthController",
+    "Method": "Login",
+    "RelativePath": "api/v1/auth",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "WAPI_GS.Dto.DtoLogin",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "WAPI_GS.Controllers.ProfessorController",
     "Method": "Create",
     "RelativePath": "api/v1/professor",

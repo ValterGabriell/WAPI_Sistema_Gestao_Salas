@@ -13,6 +13,7 @@ public class AppDbContext : DbContext
     public DbSet<TblSala> TblSalas { get; set; }
 
     public DbSet<TblUser> TblUsers { get; set; }
+    public DbSet<TblAuth> TblAuth { get; set; }
 
 
 

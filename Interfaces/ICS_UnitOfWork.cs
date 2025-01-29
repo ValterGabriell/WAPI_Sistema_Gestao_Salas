@@ -9,6 +9,7 @@ namespace WAPI_GS.Interfaces
         ICS_CrudInterface<DtoCreateSala, DtoGetSala> SalaRepository { get; }
         ICS_CrudInterface<DtoCreateUser, DtoGetUser> UserRepository { get; }
         ICS_UserSala<DtoCreateUserSala, DtoGetUserSala> UserSalaRepository { get; }
+        ICS_Auth AuthRepository { get; }
         Task Commit();
     }
 }

@@ -30,7 +30,7 @@ namespace WAPI_GS.EM.User
                 MobilePhone = entity.MobilePhone,
                 Email = entity.Email,
                 Username = entity.Username,
-                Password = entity.Password,
+                //Password = entity.Password,
             };
         }
 
@@ -46,7 +46,7 @@ namespace WAPI_GS.EM.User
                 MobilePhone = dto.MobilePhone,
                 Email = dto.Email,
                 Username = dto.Username,
-                Password = dto.Password,
+                //Password = dto.Password,
             };
         }
     }

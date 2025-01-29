@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace WAPI_GS.Dto.User
+﻿namespace WAPI_GS.Dto.User
 {
     public class DtoGetUser
     {
@@ -12,6 +10,6 @@ namespace WAPI_GS.Dto.User
         public string? MobilePhone { get; set; }
         public string? Email { get; set; }
         public string? Username { get; set; }
-        public string? Password { get; set; }
+        //public string? Password { get; set; }
     }
 }
