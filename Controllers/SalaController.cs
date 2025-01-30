@@ -12,69 +12,69 @@ namespace WAPI_GS.Controllers
         private readonly ICS_UnitOfWork _uow = uow;
 
         [HttpPost]
-        public ActionResult<string> Create(DtoCreateSala dto)
+        public ActionResult<string> Create(DtoCreateSala dto, [FromHeader] string requestKey)
         {
             try
             {
-                var result = _uow.SalaRepository.Create(dto);
+                var result = _uow.SalaRepository.Create(dto, requestKey);
                 _uow.Commit();
                 return Ok(result);
             }
             catch (Exception ex)
             {
-               return BadRequest();
+               return BadRequest(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
             }
         }
 
         [HttpDelete]
-        public void Delete(int id)
+        public void Delete(int id, [FromHeader] string requestKey)
         {
-            _uow.SalaRepository.Delete(id);
+            _uow.SalaRepository.Delete(id, requestKey);
             _uow.Commit();
         }
 
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<DtoGetSala>> GetById(int id)
+        public async Task<ActionResult<DtoGetSala>> GetById(int id, [FromHeader] string requestKey)
         {
             try
             {
-                var result = await _uow.SalaRepository.GetById(id);
+                var result = await _uow.SalaRepository.GetById(id, requestKey);
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
             }
         }
 
         [HttpGet]
-        public async Task<ActionResult<PagedList<DtoGetSala>>> GetList([FromQuery]FiltersParameter filtersParameter)
+        public async Task<ActionResult<PagedList<DtoGetSala>>> GetList([FromQuery]FiltersParameter filtersParameter, [FromHeader] string requestKey)
         {
             try
             {
-                var result = await _uow.SalaRepository.GetList(filtersParameter);
+                var result = await _uow.SalaRepository.GetList(filtersParameter, requestKey);
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
             }
         }
 
         [HttpPut("{id}")]
 
-        public async Task<ActionResult<string>> Update(DtoCreateSala dto, int id)
+        public async Task<ActionResult<string>> Update(DtoCreateSala dto, int id, [FromHeader] string requestKey)
         {
             try
             {
-                var result = await _uow.SalaRepository.Update(dto, id);
+                var result = await _uow.SalaRepository.Update(dto, id, requestKey);
                await _uow.Commit();
                 return Ok(result);
             }
             catch (Exception ex)
             {
-               return BadRequest();
+               return BadRequest(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
             }
         }
     }

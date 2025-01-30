@@ -5,10 +5,10 @@ namespace WAPI_GS.Interfaces
     public interface ICS_CrudInterface<DtoCreateUpdate, DtoGet>
         where DtoGet : class where DtoCreateUpdate : class
     {
-        string Create(DtoCreateUpdate dto);
-        Task<string> Update(DtoCreateUpdate dto, int id);
-        Task<DtoGet> GetById(int id);
-        Task<PagedList<DtoGet>> GetList(FiltersParameter filtersParameter);
-        Task Delete(int id);
+        Task<string> Create(DtoCreateUpdate dto, string requestKey);
+        Task<string> Update(DtoCreateUpdate dto, int id, string requestKey);
+        Task<DtoGet> GetById(int id, string requestKey);
+        Task<PagedList<DtoGet>> GetList(FiltersParameter filtersParameter, string requestKey);
+        Task Delete(int id, string requestKey);
     }
 }

@@ -12,61 +12,61 @@ namespace WAPI_GS.Controllers
         private readonly ICS_UnitOfWork _uow = uow;
 
         [HttpPost]
-        public ActionResult<string> Create(DtoCreateUser dto)
+        public ActionResult<string> Create(DtoCreateUser dto, [FromHeader] string requestKey)
         {
             try
             {
-                var result = _uow.UserRepository.Create(dto);
+                var result = _uow.UserRepository.Create(dto, requestKey);
                 _uow.Commit();
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
             }
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<DtoGetUser>> GetById(int id)
+        public async Task<ActionResult<DtoGetUser>> GetById(int id, [FromHeader] string requestKey)
         {
             try
             {
-                var result = await _uow.UserRepository.GetById(id);
+                var result = await _uow.UserRepository.GetById(id, requestKey);
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
             }
         }
 
         [HttpGet]
-        public async Task<ActionResult<PagedList<DtoGetUser>>> GetList([FromQuery] FiltersParameter filtersParameter)
+        public async Task<ActionResult<PagedList<DtoGetUser>>> GetList([FromQuery] FiltersParameter filtersParameter, [FromHeader] string requestKey)
         {
             try
             {
-                var result = await _uow.UserRepository.GetList(filtersParameter);
+                var result = await _uow.UserRepository.GetList(filtersParameter, requestKey);
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
             }
         }
 
         [HttpPut("{id}")]
 
-        public async Task<ActionResult<string>> Update(DtoCreateUser dto, int id)
+        public async Task<ActionResult<string>> Update(DtoCreateUser dto, int id, [FromHeader] string requestKey)
         {
             try
             {
-                var result = await _uow.UserRepository.Update(dto, id);
+                var result = await _uow.UserRepository.Update(dto, id, requestKey);
                 await _uow.Commit();
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
             }
         }
     }

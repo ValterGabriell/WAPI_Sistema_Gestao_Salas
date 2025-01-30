@@ -13,11 +13,11 @@ namespace WAPI_GS.Controllers
         private readonly ICS_UnitOfWork _uow = uow;
 
         [HttpPost]
-        public ActionResult<string> Create(DtoCreateUserSala dto)
+        public ActionResult<string> Create(DtoCreateUserSala dto, [FromHeader] string requestKey)
         {
             try
             {
-                var result = _uow.UserSalaRepository.Create(dto);
+                var result = _uow.UserSalaRepository.Create(dto, requestKey);
                 _uow.Commit();
                 return Ok(result);
             }
@@ -29,7 +29,7 @@ namespace WAPI_GS.Controllers
 
 
         [HttpPost("/sendEmail")]
-        public async Task<ActionResult<bool>> SendEmail([FromBody] DtoSendEmail dtoSendEmail)
+        public async Task<ActionResult<bool>> SendEmail([FromBody] DtoSendEmail dtoSendEmail, [FromHeader] string requestKey)
         {
             try
             {
@@ -44,7 +44,8 @@ namespace WAPI_GS.Controllers
                     dtoSendEmail.currentUserId,
                     dtoSendEmail.newUserId,
                     dtoSendEmail.horaInit,
-                    dtoSendEmail.horaFinal
+                    dtoSendEmail.horaFinal,
+                    requestKey
                     );
                 return Ok(result);
             }
@@ -85,18 +86,18 @@ namespace WAPI_GS.Controllers
         }
 
         [HttpDelete]
-        public void Delete([FromQuery] int userId, [FromQuery] int salaId)
+        public void Delete([FromQuery] int userId, [FromQuery] int salaId, [FromHeader] string requestKey)
         {
-            _uow.UserSalaRepository.Delete(userId, salaId);
+            _uow.UserSalaRepository.Delete(userId, salaId, requestKey);
             _uow.Commit();
         }
 
         [HttpGet]
-        public async Task<ActionResult<PagedList<DtoGetUserSala>>> GetList([FromQuery] int? salaId, [FromQuery] int? profId)
+        public async Task<ActionResult<PagedList<DtoGetUserSala>>> GetList([FromQuery] int? salaId, [FromQuery] int? profId, [FromHeader] string requestKey)
         {
             try
             {
-                var result = await _uow.UserSalaRepository.GetList(salaId, profId);
+                var result = await _uow.UserSalaRepository.GetList(salaId, profId, requestKey);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -107,11 +108,11 @@ namespace WAPI_GS.Controllers
 
         [HttpPut]
 
-        public async Task<ActionResult<string>> Update(DtoUpdateSalaUser dto, [FromQuery] int salaId, [FromQuery] int oldUserId)
+        public async Task<ActionResult<string>> Update(DtoUpdateSalaUser dto, [FromQuery] int salaId, [FromQuery] int oldUserId, [FromHeader] string requestKey)
         {
             try
             {
-                var result = await _uow.UserSalaRepository.Update(dto, oldUserId, salaId);
+                var result = await _uow.UserSalaRepository.Update(dto, oldUserId, salaId, requestKey);
                 await _uow.Commit();
                 return Ok(result);
             }

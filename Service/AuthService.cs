@@ -11,7 +11,15 @@ namespace WAPI_GS.Service
         {
             TblUser tblUser = await _appDbContext.TblUsers.Where(e => e.Username == username)
                 .FirstOrDefaultAsync() ?? throw new KeyNotFoundException("Usuário não encontrado");
-            if (tblUser.Password != password)
+
+            bool hasAdmin = await _appDbContext.TblAuth.AnyAsync(e => e.IsAdmin);
+            if (hasAdmin)
+            {
+                isAdmin = false;
+            }
+        
+            // Verifica se a senha está correta
+            if (!BCrypt.Net.BCrypt.Verify(password, tblUser.Password))
             {
                 throw new Exception("Senha incorreta");
             }
@@ -20,18 +28,28 @@ namespace WAPI_GS.Service
             string RequestToken = "";
             TblAuth? currentLogin = await _appDbContext.TblAuth.Where(e => e.UserId == tblUser.Id).FirstOrDefaultAsync() ?? null;
 
+            // Obter a data e hora atual
+            DateTime agora = DateTime.Now;
+
+            // Converter a data e hora atual para milissegundos (desde 1 de janeiro de 1970)
+            long milissegundosAtuais = (long)(agora - new DateTime(1970, 1, 1)).TotalMilliseconds;
+
             if (currentLogin == null)
             {
-                TblAuth tblAuth = await GenerateAuthEntityRegister(isAdmin, tblUser);
+                TblAuth tblAuth = await GenerateAuthEntityRegister(isAdmin, tblUser, milissegundosAtuais);
 
                 RequestToken = tblAuth.RequestToken;
             }
             else
             {
-                //token nao valido mais
-                if (DateTime.UtcNow > currentLogin.TokenAvailableUntil)
+
+
+                if (milissegundosAtuais > currentLogin.TokenAvailableUntil)
                 {
-                    TblAuth tblAuth = await GenerateAuthEntityRegister(isAdmin, tblUser);
+                    _appDbContext.Remove(currentLogin);
+                    await _appDbContext.SaveChangesAsync();
+
+                    TblAuth tblAuth = await GenerateAuthEntityRegister(isAdmin, tblUser, milissegundosAtuais);
                     RequestToken = tblAuth.RequestToken;
                 }
                 else
@@ -42,19 +60,14 @@ namespace WAPI_GS.Service
             return RequestToken;
         }
 
-        private async Task<TblAuth> GenerateAuthEntityRegister(bool isAdmin, TblUser tblUser)
+        private async Task<TblAuth> GenerateAuthEntityRegister(bool isAdmin, TblUser tblUser, long miliAtuais)
         {
-            tblUser.LastLogin = DateTime.Now;
+            tblUser.LastLogin = DateTime.UtcNow;
 
 
-            // Obter a data e hora atual
-            DateTime agora = DateTime.Now;
-
-            // Converter a data e hora atual para milissegundos (desde 1 de janeiro de 1970)
-            long milissegundosAtuais = (long)(agora - new DateTime(1970, 1, 1)).TotalMilliseconds;
 
             // Adicionar 12 horas em milissegundos (12 horas * 60 minutos * 60 segundos * 1000 milissegundos)
-            long milissegundosCom12Horas = milissegundosAtuais + (12 * 60 * 60 * 1000);
+            long milissegundosCom12Horas = miliAtuais + (12 * 60 * 60 * 1000);
 
 
 
@@ -64,7 +77,7 @@ namespace WAPI_GS.Service
                 Id = Guid.NewGuid().ToString(),
                 IsAdmin = isAdmin,
                 AccessToken = Guid.NewGuid().ToString(),
-                TokenAvailableUntil = dateTime,
+                TokenAvailableUntil = milissegundosCom12Horas,
                 UserId = tblUser.Id,
                 RequestToken = Guid.NewGuid().ToString()
             };

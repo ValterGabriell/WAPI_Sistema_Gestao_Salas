@@ -17,8 +17,22 @@ namespace WAPI_GS.Service
         private readonly AppDbContext _appDbContext = appDbContext;
         private readonly IConfiguration _configuration = configuration;
 
-        public DtoResponseCreate Create(DtoCreateUserSala dto)
+        public async Task<DtoResponseCreate> Create(DtoCreateUserSala dto, string requestKey)
         {
+
+            try
+            {
+                bool requestValid = await ValidateRequestToken.Validate(_appDbContext, requestKey);
+                if (!requestValid)
+                {
+                    throw new Exception("000-Token Inválido");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+            }
             try
             {
                 if (dto.IsRepeat)
@@ -87,8 +101,22 @@ namespace WAPI_GS.Service
             entity.Id = g.ToString();
         }
 
-        public async Task<string> Update(DtoUpdateSalaUser dto, int oldUserId, int SalaId)
+        public async Task<string> Update(DtoUpdateSalaUser dto, int oldUserId, int SalaId, string requestKey)
         {
+
+            try
+            {
+                bool requestValid = await ValidateRequestToken.Validate(_appDbContext, requestKey);
+                if (!requestValid)
+                {
+                    throw new Exception("000-Token Inválido");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+            }
             //A entidade existe, se nao solta um erro e nem passa dessa linha
             TblUsersSala tblUsersSala = await CreateQuery()
                 .Where(e => e.Dia == DateOnly.Parse(dto.DiaCorrente))
@@ -115,8 +143,22 @@ namespace WAPI_GS.Service
             return tblUsersSala.SalaId.ToString() + "-> User: " + tblUsersSala.UserId;
         }
 
-        public async Task Delete(int userId, int salaId)
+        public async Task Delete(int userId, int salaId, string requestKey)
         {
+
+            try
+            {
+                bool requestValid = await ValidateRequestToken.Validate(_appDbContext, requestKey);
+                if (!requestValid)
+                {
+                    throw new Exception("000-Token Inválido");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+            }
             var entity = CreateQuery()
                 .Where(e => e.UserId == userId)
                 .Where(e => e.SalaId == salaId);
@@ -131,8 +173,22 @@ namespace WAPI_GS.Service
         }
 
 
-        public async Task<List<DtoGetUserSala>> GetList(int? salaId, int? profId)
+        public async Task<List<DtoGetUserSala>> GetList(int? salaId, int? profId, string requestKey)
         {
+
+            try
+            {
+                bool requestValid = await ValidateRequestToken.Validate(_appDbContext, requestKey);
+                if (!requestValid)
+                {
+                    throw new Exception("000-Token Inválido");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+            }
             try
             {
                 // Busca os registros de TblUsersSalas
@@ -222,9 +278,22 @@ namespace WAPI_GS.Service
             int newUserId,
             int horaInit,
             int horaFinal
-
-            )
+            , string requestKey)
         {
+
+            try
+            {
+                bool requestValid = await ValidateRequestToken.Validate(_appDbContext, requestKey);
+                if (!requestValid)
+                {
+                    throw new Exception("000-Token Inválido");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+            }
             try
             {
                 var smtpSettings = _configuration.GetSection("SmtpSettings");

@@ -88,6 +88,11 @@
         "Name": "dto",
         "Type": "WAPI_GS.Dto.User.DtoCreateUser",
         "IsRequired": true
+      },
+      {
+        "Name": "requestKey",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -129,6 +134,11 @@
         "Name": "PageSize",
         "Type": "System.Int32",
         "IsRequired": false
+      },
+      {
+        "Name": "requestKey",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -155,6 +165,11 @@
         "Name": "id",
         "Type": "System.Int32",
         "IsRequired": true
+      },
+      {
+        "Name": "requestKey",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -186,6 +201,11 @@
         "Name": "id",
         "Type": "System.Int32",
         "IsRequired": true
+      },
+      {
+        "Name": "requestKey",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -212,6 +232,11 @@
         "Name": "dto",
         "Type": "WAPI_GS.Dto.UserSala.DtoCreateUserSala",
         "IsRequired": true
+      },
+      {
+        "Name": "requestKey",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -243,6 +268,11 @@
         "Name": "salaId",
         "Type": "System.Int32",
         "IsRequired": false
+      },
+      {
+        "Name": "requestKey",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -269,6 +299,11 @@
       {
         "Name": "profId",
         "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "requestKey",
+        "Type": "System.String",
         "IsRequired": false
       }
     ],
@@ -306,6 +341,11 @@
         "Name": "oldUserId",
         "Type": "System.Int32",
         "IsRequired": false
+      },
+      {
+        "Name": "requestKey",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -332,6 +372,11 @@
         "Name": "dto",
         "Type": "WAPI_GS.Dto.Sala.DtoCreateSala",
         "IsRequired": true
+      },
+      {
+        "Name": "requestKey",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -357,6 +402,11 @@
       {
         "Name": "id",
         "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "requestKey",
+        "Type": "System.String",
         "IsRequired": false
       }
     ],
@@ -395,6 +445,11 @@
         "Name": "PageSize",
         "Type": "System.Int32",
         "IsRequired": false
+      },
+      {
+        "Name": "requestKey",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -421,6 +476,11 @@
         "Name": "id",
         "Type": "System.Int32",
         "IsRequired": true
+      },
+      {
+        "Name": "requestKey",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -452,6 +512,11 @@
         "Name": "id",
         "Type": "System.Int32",
         "IsRequired": true
+      },
+      {
+        "Name": "requestKey",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -504,6 +569,11 @@
         "Name": "dtoSendEmail",
         "Type": "WAPI_GS.Dto.DtoSendEmail",
         "IsRequired": true
+      },
+      {
+        "Name": "requestKey",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [

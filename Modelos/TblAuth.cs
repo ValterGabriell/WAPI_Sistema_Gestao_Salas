@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace WAPI_GS.Modelos
 {
     [Table("tblauth")]
-
     public class TblAuth
     {
         [Key]

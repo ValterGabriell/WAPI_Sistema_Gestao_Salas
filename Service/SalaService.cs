@@ -12,8 +12,22 @@ namespace WAPI_GS.Service
     {
         private readonly AppDbContext _appDbContext = appDbContext;
 
-        public string Create(DtoCreateSala dto)
+        public async Task<string> Create(DtoCreateSala dto, string requestKey)
         {
+
+            try
+            {
+                bool requestValid = await ValidateRequestToken.Validate(_appDbContext, requestKey);
+                if (!requestValid)
+                {
+                    throw new Exception("000-Token Inválido");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+            }
             var entity = dto.ToEntity();
             try
             {
@@ -26,8 +40,22 @@ namespace WAPI_GS.Service
             return "Entidade gerada!";
         }
 
-        public async Task<string> Update(DtoCreateSala dto, int id)
+        public async Task<string> Update(DtoCreateSala dto, int id, string requestKey)
         {
+
+            try
+            {
+                bool requestValid = await ValidateRequestToken.Validate(_appDbContext, requestKey);
+                if (!requestValid)
+                {
+                    throw new Exception("000-Token Inválido");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+            }
             //A entidade existe, se nao solta um erro e nem passa dessa linha
             await GetEntityByIdAndThrowExIfNot(id);
 
@@ -46,8 +74,22 @@ namespace WAPI_GS.Service
         }
 
 
-        public async Task<string> ChangeActive(int id)
+        public async Task<string> ChangeActive(int id, string requestKey)
         {
+
+            try
+            {
+                bool requestValid = await ValidateRequestToken.Validate(_appDbContext, requestKey);
+                if (!requestValid)
+                {
+                    throw new Exception("000-Token Inválido");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+            }
             var entity = await GetEntityByIdAndThrowExIfNot(id);
             entity.IsActive = !entity.IsActive;
             try
@@ -62,8 +104,22 @@ namespace WAPI_GS.Service
         }
 
 
-        public async Task Delete(int id)
+        public async Task Delete(int id, string requestKey)
         {
+
+            try
+            {
+                bool requestValid = await ValidateRequestToken.Validate(_appDbContext, requestKey);
+                if (!requestValid)
+                {
+                    throw new Exception("000-Token Inválido");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+            }
             var entity = await GetEntityByIdAndThrowExIfNot(id);
             try
             {
@@ -75,8 +131,22 @@ namespace WAPI_GS.Service
             }
         }
 
-        public async Task<DtoGetSala> GetById(int id)
+        public async Task<DtoGetSala> GetById(int id, string requestKey)
         {
+
+            try
+            {
+                bool requestValid = await ValidateRequestToken.Validate(_appDbContext, requestKey);
+                if (!requestValid)
+                {
+                    throw new Exception("000-Token Inválido");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+            }
             try
             {
                 var entity = await GetEntityByIdAndThrowExIfNot(id);
@@ -89,8 +159,22 @@ namespace WAPI_GS.Service
             }
         }
 
-        public async Task<PagedList<DtoGetSala>> GetList(FiltersParameter filtersParameter)
+        public async Task<PagedList<DtoGetSala>> GetList(FiltersParameter filtersParameter, string requestKey)
         {
+
+            try
+            {
+                bool requestValid = await ValidateRequestToken.Validate(_appDbContext, requestKey);
+                if (!requestValid)
+                {
+                    throw new Exception("000-Token Inválido");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+            }
             try
             {
                 IQueryable<TblSala> completeQuery = CreateQueryByTenantAndActive().AsQueryable();
