@@ -12,22 +12,18 @@ namespace WAPI_GS.Service
     {
         private readonly AppDbContext _appDbContext = appDbContext;
 
-        public async Task<string> Create(DtoCreateUser dto, string requestKey)
+        public async Task<string> Create(DtoCreateUser dto, string _)
         {
 
-            try
+            foreach (var item in CreateQueryByTenantAndActive().AsQueryable())
             {
-                bool requestValid = await ValidateRequestToken.Validate(_appDbContext, requestKey);
-                if (!requestValid)
+                if (item.Username == dto.Username)
                 {
-                    throw new Exception("000-Token Inválido");
+                    throw new Exception("Professor com usernome já cadastrado");
                 }
-            }
-            catch (Exception ex)
-            {
+            };
 
-                throw new Exception(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
-            }
+
             var entity = dto.ToEntity();
 
             // Criptografa a senha antes de salvar
@@ -45,9 +41,10 @@ namespace WAPI_GS.Service
 
         public async Task<string> Update(DtoCreateUser dto, int id, string requestKey)
         {
-
             try
             {
+
+
                 bool requestValid = await ValidateRequestToken.Validate(_appDbContext, requestKey);
                 if (!requestValid)
                 {
@@ -62,7 +59,12 @@ namespace WAPI_GS.Service
 
 
             //A entidade existe, se nao solta um erro e nem passa dessa linha
-            await GetEntityByIdAndThrowExIfNot(id);
+            TblUser currentUser = await GetEntityByIdAndThrowExIfNot(id);
+
+            if (dto.Password == "" || dto.Password == null)
+            {
+                dto.Password = currentUser.Password!;
+            }
 
             var entity = dto.ToEntity();
 
@@ -111,7 +113,6 @@ namespace WAPI_GS.Service
 
         public async Task Delete(int id, string requestKey)
         {
-
             try
             {
                 bool requestValid = await ValidateRequestToken.Validate(_appDbContext, requestKey);
@@ -129,6 +130,9 @@ namespace WAPI_GS.Service
             try
             {
                 _appDbContext.Remove(dtoGetUser.ToEntity());
+
+                List<TblUsersSala> tblUsersSalas = await _appDbContext.TblUsersSala.Where(e => e.UserId == id).ToListAsync();
+                _appDbContext.RemoveRange(tblUsersSalas);
             }
             catch (Exception ex)
             {

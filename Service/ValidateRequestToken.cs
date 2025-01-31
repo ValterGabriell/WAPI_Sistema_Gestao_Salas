@@ -5,9 +5,9 @@ namespace WAPI_GS.Service
 {
     public static class ValidateRequestToken
     {
-        public static async Task<bool> Validate(AppDbContext appDbContext,string requestToken)
+        public static async Task<bool> Validate(AppDbContext appDbContext, string requestToken)
         {
-            TblAuth? currentLogin = (await appDbContext.TblAuth
+            TblAuth? currentLogin = (await appDbContext.TblAuth.AsNoTracking()
                 .Where(e => e.RequestToken == requestToken).FirstAsync() ?? null) ?? throw new Exception("Por favor, logue novamente");
 
             // Obter a data e hora atual

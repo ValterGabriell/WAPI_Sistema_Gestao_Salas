@@ -12,11 +12,11 @@ namespace WAPI_GS.Controllers
         private readonly ICS_UnitOfWork _uow = uow;
 
         [HttpPost]
-        public ActionResult<string> Create(DtoCreateUser dto, [FromHeader] string requestKey)
+        public ActionResult<string> Create(DtoCreateUser dto)
         {
             try
             {
-                var result = _uow.UserRepository.Create(dto, requestKey);
+                var result = _uow.UserRepository.Create(dto, "");
                 _uow.Commit();
                 return Ok(result);
             }
@@ -63,6 +63,22 @@ namespace WAPI_GS.Controllers
                 var result = await _uow.UserRepository.Update(dto, id, requestKey);
                 await _uow.Commit();
                 return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+            }
+        }
+
+        [HttpDelete("{id}")]
+
+        public async Task<ActionResult> Delete(int id, [FromHeader] string requestKey)
+        {
+            try
+            {
+                await _uow.UserRepository.Delete(id, requestKey);
+                await _uow.Commit();
+                return Ok();
             }
             catch (Exception ex)
             {

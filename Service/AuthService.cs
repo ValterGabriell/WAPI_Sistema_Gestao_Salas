@@ -12,12 +12,25 @@ namespace WAPI_GS.Service
             TblUser tblUser = await _appDbContext.TblUsers.Where(e => e.Username == username)
                 .FirstOrDefaultAsync() ?? throw new KeyNotFoundException("Usuário não encontrado");
 
-            bool hasAdmin = await _appDbContext.TblAuth.AnyAsync(e => e.IsAdmin);
-            if (hasAdmin)
+            TblAuth tblAdmin = await _appDbContext.TblAuth.SingleAsync(e => e.IsAdmin);
+
+            if (isAdmin)
             {
-                isAdmin = false;
+                if (tblAdmin.UserId != tblUser.Id)
+                {
+                    throw new Exception("Usuário não encontrado!");
+                }
             }
-        
+            else
+            {
+                if (tblAdmin.UserId == tblUser.Id)
+                {
+                    throw new Exception("Usuário não encontrado!");
+                }
+            }
+
+
+
             // Verifica se a senha está correta
             if (!BCrypt.Net.BCrypt.Verify(password, tblUser.Password))
             {

@@ -88,11 +88,6 @@
         "Name": "dto",
         "Type": "WAPI_GS.Dto.User.DtoCreateUser",
         "IsRequired": true
-      },
-      {
-        "Name": "requestKey",
-        "Type": "System.String",
-        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -219,6 +214,27 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "WAPI_GS.Controllers.ProfessorController",
+    "Method": "Delete",
+    "RelativePath": "api/v1/professor/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "requestKey",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "WAPI_GS.Controllers.ProfessorSalaController",

@@ -19,7 +19,7 @@ namespace WAPI_GS.Modelos
         public string AccessToken { get; set; }
 
 
-        [Column("TokenAvailableUntil")]
+        [Column("tokenAvailableUntil")]
         public long TokenAvailableUntil { get; set; }
 
 

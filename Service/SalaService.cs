@@ -59,6 +59,14 @@ namespace WAPI_GS.Service
             //A entidade existe, se nao solta um erro e nem passa dessa linha
             await GetEntityByIdAndThrowExIfNot(id);
 
+            foreach (var item in CreateQueryByTenantAndActive().AsQueryable())
+            {
+                if (item.Name == dto.Name)
+                {
+                    throw new Exception("Sala com nome já cadastrado");
+                }
+            };
+
             var entity = dto.ToEntity();
 
             entity.Id = id;
@@ -124,6 +132,10 @@ namespace WAPI_GS.Service
             try
             {
                 _appDbContext.Remove(entity);
+
+                List<TblUsersSala> tblUsersSalas = await _appDbContext.TblUsersSala.Where(e => e.SalaId == id).ToListAsync();
+                _appDbContext.RemoveRange(tblUsersSalas);
+
             }
             catch (Exception ex)
             {

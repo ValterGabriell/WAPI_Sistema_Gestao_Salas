@@ -19,26 +19,12 @@ namespace WAPI_GS.Service
 
         public async Task<DtoResponseCreate> Create(DtoCreateUserSala dto, string requestKey)
         {
-
-            try
-            {
-                bool requestValid = await ValidateRequestToken.Validate(_appDbContext, requestKey);
-                if (!requestValid)
-                {
-                    throw new Exception("000-Token Inválido");
-                }
-            }
-            catch (Exception ex)
-            {
-
-                throw new Exception(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
-            }
             try
             {
                 if (dto.IsRepeat)
                 {
                     List<string> notSavedEntityList = new();
-                    for (var i = 0; i <= dto.TimeRepeat; i++)
+                    for (var i = 0; i < dto.TimeRepeat; i++)
                     {
                         bool existEntityToDayHour = IsEntityPresentForDayHour(dto);
                         if (!existEntityToDayHour)
@@ -56,7 +42,7 @@ namespace WAPI_GS.Service
 
                     return new DtoResponseCreate
                     {
-                        message = "Entidade gerada! Porém alguns dias não foram salvos!",
+                        message = "Entidade gerada!",
                         errors = notSavedEntityList
                     };
                 }
@@ -91,7 +77,9 @@ namespace WAPI_GS.Service
 
         private bool IsEntityPresentForDayHour(DtoCreateUserSala dto)
         {
-            return _appDbContext.TblUsersSala.Any(e => e.Dia == dto.Dia && dto.HoraInicial >= e.HoraInicial && dto.HoraInicial <= e.HoraFinal);
+            return _appDbContext.TblUsersSala
+                .AsNoTracking()
+                .Any(e => e.Dia == dto.Dia && dto.HoraInicial >= e.HoraInicial && dto.HoraInicial <= e.HoraFinal);
         }
 
         private static void InitializeEntity(DtoCreateUserSala dto, out TblUsersSala entity)
@@ -263,7 +251,7 @@ namespace WAPI_GS.Service
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while processing your request.", ex);
+                throw new Exception(ex.Message);
             }
         }
 

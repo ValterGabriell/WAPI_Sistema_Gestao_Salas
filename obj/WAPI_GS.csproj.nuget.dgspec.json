@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\vgabr\\OneDrive\\Documentos\\TCC\\WAPI_TCC\\WAPI_GS.csproj": {}
+    "Z:\\Programacao\\TCC\\WAPI_GS\\WAPI_GS.csproj": {}
   },
   "projects": {
-    "C:\\Users\\vgabr\\OneDrive\\Documentos\\TCC\\WAPI_TCC\\WAPI_GS.csproj": {
+    "Z:\\Programacao\\TCC\\WAPI_GS\\WAPI_GS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\vgabr\\OneDrive\\Documentos\\TCC\\WAPI_TCC\\WAPI_GS.csproj",
+        "projectUniqueName": "Z:\\Programacao\\TCC\\WAPI_GS\\WAPI_GS.csproj",
         "projectName": "WAPI_GS",
-        "projectPath": "C:\\Users\\vgabr\\OneDrive\\Documentos\\TCC\\WAPI_TCC\\WAPI_GS.csproj",
+        "projectPath": "Z:\\Programacao\\TCC\\WAPI_GS\\WAPI_GS.csproj",
         "packagesPath": "C:\\Users\\vgabr\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\vgabr\\OneDrive\\Documentos\\TCC\\WAPI_TCC\\obj\\",
+        "outputPath": "Z:\\Programacao\\TCC\\WAPI_GS\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -92,7 +92,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
