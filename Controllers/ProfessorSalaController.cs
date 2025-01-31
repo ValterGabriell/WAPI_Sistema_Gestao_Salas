@@ -13,12 +13,12 @@ namespace WAPI_GS.Controllers
         private readonly ICS_UnitOfWork _uow = uow;
 
         [HttpPost]
-        public ActionResult<string> Create(DtoCreateUserSala dto, [FromHeader] string requestKey)
+        public async Task<ActionResult<string>> Create(DtoCreateUserSala dto, [FromHeader] string requestKey)
         {
             try
             {
-                var result = _uow.UserSalaRepository.Create(dto, requestKey);
-                _uow.Commit();
+                var result = await _uow.UserSalaRepository.Create(dto, requestKey);
+                await _uow.Commit();
                 return Ok(result);
             }
             catch (Exception ex)

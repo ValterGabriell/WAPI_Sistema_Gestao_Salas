@@ -22,15 +22,8 @@ namespace WAPI_GS.Controllers
             }
             catch (Exception ex)
             {
-               return BadRequest(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+                return BadRequest(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
             }
-        }
-
-        [HttpDelete]
-        public void Delete(int id, [FromHeader] string requestKey)
-        {
-            _uow.SalaRepository.Delete(id, requestKey);
-            _uow.Commit();
         }
 
 
@@ -49,7 +42,7 @@ namespace WAPI_GS.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<PagedList<DtoGetSala>>> GetList([FromQuery]FiltersParameter filtersParameter, [FromHeader] string requestKey)
+        public async Task<ActionResult<PagedList<DtoGetSala>>> GetList([FromQuery] FiltersParameter filtersParameter, [FromHeader] string requestKey)
         {
             try
             {
@@ -69,12 +62,28 @@ namespace WAPI_GS.Controllers
             try
             {
                 var result = await _uow.SalaRepository.Update(dto, id, requestKey);
-               await _uow.Commit();
+                await _uow.Commit();
                 return Ok(result);
             }
             catch (Exception ex)
             {
-               return BadRequest(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+                return BadRequest(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+            }
+        }
+
+        [HttpDelete("{id}")]
+
+        public async Task<ActionResult<string>> Delete(int id, [FromHeader] string requestKey)
+        {
+            try
+            {
+                await _uow.SalaRepository.Delete(id, requestKey);
+                await _uow.Commit();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
             }
         }
     }

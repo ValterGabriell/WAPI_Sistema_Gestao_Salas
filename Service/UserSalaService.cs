@@ -19,55 +19,47 @@ namespace WAPI_GS.Service
 
         public async Task<DtoResponseCreate> Create(DtoCreateUserSala dto, string requestKey)
         {
-            try
+            if (dto.IsRepeat)
             {
-                if (dto.IsRepeat)
+                List<string> notSavedEntityList = new();
+                for (var i = 0; i < dto.TimeRepeat; i++)
                 {
-                    List<string> notSavedEntityList = new();
-                    for (var i = 0; i < dto.TimeRepeat; i++)
-                    {
-                        bool existEntityToDayHour = IsEntityPresentForDayHour(dto);
-                        if (!existEntityToDayHour)
-                        {
-                            TblUsersSala entity;
-                            InitializeEntity(dto, out entity);
-                            _appDbContext.Add(entity);
-                        }
-                        else
-                        {
-                            notSavedEntityList.Add("Dia: " + dto.Dia + " com horário inicial " + dto.HoraInicial + " e hora final " + dto.HoraFinal + " já cadastrado!");
-                        }
-                        dto.Dia = dto.Dia.AddDays(7);
-                    }
-
-                    return new DtoResponseCreate
-                    {
-                        message = "Entidade gerada!",
-                        errors = notSavedEntityList
-                    };
-                }
-                else
-                {
-                    TblUsersSala entity;
-
                     bool existEntityToDayHour = IsEntityPresentForDayHour(dto);
-
                     if (!existEntityToDayHour)
                     {
+                        TblUsersSala entity;
                         InitializeEntity(dto, out entity);
                         _appDbContext.Add(entity);
                     }
                     else
                     {
-                        throw new Exception("Dia " + dto.Dia + " já possui registro de horário em: " + dto.HoraInicial + " - " + dto.HoraFinal);
+                        notSavedEntityList.Add("Dia: " + dto.Dia + " com horário inicial " + dto.HoraInicial + " e hora final " + dto.HoraFinal + " já cadastrado!");
                     }
+                    dto.Dia = dto.Dia.AddDays(7);
+                }
+
+                return new DtoResponseCreate
+                {
+                    message = "Entidade gerada!",
+                    errors = notSavedEntityList
+                };
+            }
+            else
+            {
+                TblUsersSala entity;
+
+                bool existEntityToDayHour = IsEntityPresentForDayHour(dto);
+
+                if (!existEntityToDayHour)
+                {
+                    InitializeEntity(dto, out entity);
+                    _appDbContext.Add(entity);
+                }
+                else
+                {
+                    throw new Exception("Dia " + dto.Dia + " já possui registro de horário em: " + dto.HoraInicial + " - " + dto.HoraFinal);
                 }
             }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-
             return new DtoResponseCreate
             {
                 message = "Entidade gerada!",

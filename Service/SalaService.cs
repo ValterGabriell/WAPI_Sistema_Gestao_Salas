@@ -115,26 +115,16 @@ namespace WAPI_GS.Service
         public async Task Delete(int id, string requestKey)
         {
 
+            var entity = await _appDbContext.TblSalas.Where(e => e.Id == id).FirstAsync();
             try
-            {
-                bool requestValid = await ValidateRequestToken.Validate(_appDbContext, requestKey);
-                if (!requestValid)
-                {
-                    throw new Exception("000-Token Inválido");
-                }
-            }
-            catch (Exception ex)
             {
 
-                throw new Exception(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
-            }
-            var entity = await GetEntityByIdAndThrowExIfNot(id);
-            try
-            {
                 _appDbContext.Remove(entity);
 
                 List<TblUsersSala> tblUsersSalas = await _appDbContext.TblUsersSala.Where(e => e.SalaId == id).ToListAsync();
                 _appDbContext.RemoveRange(tblUsersSalas);
+
+
 
             }
             catch (Exception ex)
