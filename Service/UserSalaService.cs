@@ -163,44 +163,46 @@ namespace WAPI_GS.Service
                 {
                     throw new Exception("000-Token Inválido");
                 }
-            }
-            catch (Exception ex)
-            {
 
-                throw new Exception(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
-            }
-            try
-            {
                 // Busca os registros de TblUsersSalas
-                List<TblUsersSala> tblUsersSalas1 = await _appDbContext.TblUsersSala
+                List<TblUsersSala> todasUserSala = await _appDbContext.TblUsersSala
                     .AsNoTracking()
                     .AsQueryable()
                     .ToListAsync();
 
-                List<DtoGetUserSala> dtoGetUserSalas = new List<DtoGetUserSala>();
+                List<DtoGetUserSala> dtoResponse = [];
 
                 // Itera sobre as TblUsersSalas
-                foreach (var item in tblUsersSalas1)
+                foreach (var item in todasUserSala)
                 {
-                    // Busca o DTO para o dia
-                    var dto = dtoGetUserSalas.FirstOrDefault(d => d.Dia == item.Dia);
+                    DtoGetUserSala? diaExistente = dtoResponse.FirstOrDefault(e => e.Dia == item.Dia);
 
                     // Caso o dia não exista, cria um novo DTO
-                    if (dto == null)
+                    if (diaExistente == null)
                     {
-                        dto = new DtoGetUserSala
+                        diaExistente = new DtoGetUserSala
                         {
                             Dia = item.Dia,
-                            Salas = new List<DtoGetUserSala.SalaComProfessores>()
+                            Salas = []
                         };
-
-                        // Adiciona o DTO à lista
-                        dtoGetUserSalas.Add(dto);
+                        dtoResponse.Add(diaExistente);
                     }
+
 
                     // Busca a sala associada à TblUsersSala
                     TblSala tblSala = await _appDbContext.TblSalas
                         .Where(e => e.Id == item.SalaId)
+                        .FirstAsync();
+
+
+                    // Busca a disciplina associada à TblUsersSala
+                    TblDisciplina tblDisciplina = await _appDbContext.TblDisciplina
+                        .Where(e => e.Id == item.DisciplinaId)
+                        .FirstAsync();
+
+                    // Busca o professor associada à TblUsersSala
+                    TblUser tblUser = await _appDbContext.TblUsers
+                        .Where(e => e.Id == item.UserId)
                         .FirstAsync();
 
                     if (tblSala != null)
@@ -212,39 +214,25 @@ namespace WAPI_GS.Service
                             TblSala = tblSala,
                             HoraInit = item.HoraInicial,
                             HoraFinal = item.HoraFinal,
-                            Professores = new List<TblUser>()
+                            Professor = tblUser,
+                            Disciplina = tblDisciplina
                         };
 
-                        // Agora, usa foreach para procurar os professores
-                        var professores = await _appDbContext.TblUsersSala
-                            .Where(us => us.UserId == item.UserId)
-                            .ToListAsync();
-
-                        foreach (var professorSala in professores)
-                        {
-                            // Agora buscamos o professor individualmente
-                            TblUser professor = await _appDbContext.TblUsers
-                                .Where(u => u.Id == professorSala.UserId)
-                                .FirstAsync();
-
-                            if (professor != null)
-                            {
-                                // Adiciona o professor à lista de professores da sala
-                                salaComProfessores.Professores.Add(professor);
-                            }
-                        }
 
                         // Adiciona a sala com os professores no DTO do dia
-                        dto.Salas.Add(salaComProfessores);
+                        diaExistente.Salas.Add(salaComProfessores);
+
                     }
                 }
 
-                return dtoGetUserSalas;
+                return dtoResponse;
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+
+                throw new Exception(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
             }
+
         }
 
 

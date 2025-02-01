@@ -61,7 +61,7 @@
         "parameters": [
           {
             "name": "requestKey",
-            "in": "query",
+            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -179,7 +179,7 @@
         "parameters": [
           {
             "name": "requestKey",
-            "in": "query",
+            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -1239,6 +1239,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "disciplinaId": {
+            "type": "integer",
+            "format": "int32"
+          },
           "dia": {
             "type": "string",
             "format": "date"
@@ -1440,12 +1444,11 @@
           "tblSala": {
             "$ref": "#/components/schemas/TblSala"
           },
-          "professores": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TblUser"
-            },
-            "nullable": true
+          "professor": {
+            "$ref": "#/components/schemas/TblUser"
+          },
+          "disciplina": {
+            "$ref": "#/components/schemas/TblDisciplina"
           }
         },
         "additionalProperties": false

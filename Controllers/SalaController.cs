@@ -11,13 +11,13 @@ namespace WAPI_GS.Controllers
     {
         private readonly ICS_UnitOfWork _uow = uow;
 
-        [HttpPost]
-        public ActionResult<string> Create(DtoCreateSala dto, [FromHeader] string requestKey)
+        [HttpPost()]
+        public async Task<ActionResult<string>> Create(DtoCreateSala dto, [FromHeader] string requestKey)
         {
             try
             {
-                var result = _uow.SalaRepository.Create(dto, requestKey);
-                _uow.Commit();
+                var result = await _uow.SalaRepository.Create(dto, requestKey);
+
                 return Ok(result);
             }
             catch (Exception ex)

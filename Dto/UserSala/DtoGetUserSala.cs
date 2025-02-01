@@ -13,7 +13,9 @@ namespace WAPI_GS.Dto.UserSala
             public int HoraInit { get; set; }
             public int HoraFinal { get; set; }
             public TblSala TblSala { get; set; }  // Detalhes da sala
-            public List<TblUser> Professores { get; set; }  // Lista de professores alocados na sala
+            public TblUser Professor { get; set; }  // Lista de professores alocados na sala
+
+            public TblDisciplina Disciplina { get; set; }
         }
     }
 }

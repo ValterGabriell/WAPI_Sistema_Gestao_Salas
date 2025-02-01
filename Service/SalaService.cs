@@ -22,21 +22,16 @@ namespace WAPI_GS.Service
                 {
                     throw new Exception("000-Token Inválido");
                 }
+                var entity = dto.ToEntity();
+                _appDbContext.Add(entity);
+                _appDbContext.SaveChanges();
             }
             catch (Exception ex)
             {
 
                 throw new Exception(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
             }
-            var entity = dto.ToEntity();
-            try
-            {
-                _appDbContext.Add(entity);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+
             return "Entidade gerada!";
         }
 

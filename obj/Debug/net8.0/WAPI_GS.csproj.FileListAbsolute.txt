@@ -219,3 +219,4 @@ C:\Users\vgabr\OneDrive\Documentos\TCC\WAPI_TCC\obj\Debug\net8.0\staticwebassets
 C:\Users\vgabr\OneDrive\Documentos\TCC\WAPI_TCC\bin\Debug\net8.0\BCrypt.Net-Next.dll
 Z:\Programacao\TCC\WAPI_GS\bin\Debug\net8.0\appsettings.Production.json
 Z:\Programacao\TCC\WAPI_GS\bin\Debug\net8.0\BCrypt.Net-Next.dll
+Z:\Programacao\TCC\WAPI_GS\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
