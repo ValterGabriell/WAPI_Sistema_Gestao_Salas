@@ -17,6 +17,9 @@ public class TblUsersSala
     [Column("salaid")]
     public int SalaId { get; set; }
 
+    [Column("disciplinaid")]
+    public int DisciplinaId { get; set; }
+
     [Column("dia")]
     public DateOnly Dia { get; set; }
 

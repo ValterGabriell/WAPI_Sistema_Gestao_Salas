@@ -24,6 +24,8 @@ namespace WAPI_GS.Service
 
         public ICS_Auth AuthRepository => new AuthService(appDbContext);
 
+        public ICS_Disciplina cS_Disciplina => new DisciplinaService(appDbContext);
+
         public async Task Commit()
         {
             await appDbContext.SaveChangesAsync();

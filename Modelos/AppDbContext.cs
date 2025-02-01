@@ -14,6 +14,7 @@ public class AppDbContext : DbContext
 
     public DbSet<TblUser> TblUsers { get; set; }
     public DbSet<TblAuth> TblAuth { get; set; }
+    public DbSet<TblDisciplina> TblDisciplina { get; set; }
 
 
 

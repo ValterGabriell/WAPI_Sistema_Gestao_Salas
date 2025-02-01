@@ -11,6 +11,7 @@ namespace WAPI_GS.EM.UserSala
             {
                 UserId = dto.UserId,
                 SalaId = dto.SalaId,
+                DisciplinaId = dto.DisciplinaId,
                 Dia = dto.Dia,
                 HoraFinal = dto.HoraFinal,
                 HoraInicial = dto.HoraInicial

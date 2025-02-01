@@ -77,6 +77,99 @@
     ]
   },
   {
+    "ContainingType": "WAPI_GS.Controllers.DisciplinaController",
+    "Method": "Create",
+    "RelativePath": "api/v1/disciplina",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "WAPI_GS.Dto.Disciplina.DtoCreateDisciplina",
+        "IsRequired": true
+      },
+      {
+        "Name": "requestKey",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WAPI_GS.Controllers.DisciplinaController",
+    "Method": "Update",
+    "RelativePath": "api/v1/disciplina",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "WAPI_GS.Dto.Disciplina.DtoCreateDisciplina",
+        "IsRequired": true
+      },
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "requestKey",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WAPI_GS.Controllers.DisciplinaController",
+    "Method": "GetList",
+    "RelativePath": "api/v1/disciplina",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "requestKey",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[WAPI_GS.Modelos.TblDisciplina, WAPI_GS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "WAPI_GS.Controllers.ProfessorController",
     "Method": "Create",
     "RelativePath": "api/v1/professor",

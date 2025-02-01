@@ -12,8 +12,8 @@ using WAPI_GS.Modelos;
 namespace WAPI_GS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250130011018_Init")]
-    partial class Init
+    [Migration("20250201171103_TblDisicplina")]
+    partial class TblDisicplina
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,7 +47,7 @@ namespace WAPI_GS.Migrations
 
                     b.Property<long>("TokenAvailableUntil")
                         .HasColumnType("bigint")
-                        .HasColumnName("TokenAvailableUntil");
+                        .HasColumnName("tokenAvailableUntil");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer")
@@ -56,6 +56,37 @@ namespace WAPI_GS.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("tblauth");
+                });
+
+            modelBuilder.Entity("WAPI_GS.Modelos.TblDisciplina", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CargaHoraria")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Codigo")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Sigla")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("TotalAulas")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("tbl_disciplina");
                 });
 
             modelBuilder.Entity("WAPI_GS.Modelos.TblSala", b =>
