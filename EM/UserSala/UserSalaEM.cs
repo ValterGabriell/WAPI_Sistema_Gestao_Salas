@@ -5,9 +5,9 @@ namespace WAPI_GS.EM.UserSala
 {
     public static class UserSalaEM
     {
-        public static TblUsersSala ToEntity(this DtoCreateUserSala dto)
+        public static TblPtd ToEntity(this DtoCreateUserSala dto)
         {
-            return new TblUsersSala
+            return new TblPtd
             {
                 UserId = dto.UserId,
                 SalaId = dto.SalaId,
@@ -18,7 +18,7 @@ namespace WAPI_GS.EM.UserSala
             };
         }
 
-        public static DtoGetUserSala ToDto(this TblUsersSala entity)
+        public static DtoGetUserSala ToDto(this TblPtd entity)
         {
             return new DtoGetUserSala
             {

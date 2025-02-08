@@ -4,8 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WAPI_GS.Modelos;
 
-[Table("tbluserssaladias")]
-public class TblUsersSala
+[Table("tblptd")]
+public class TblPtd
 {
 
     [Column("id")]

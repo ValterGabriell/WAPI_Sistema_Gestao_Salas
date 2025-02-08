@@ -6,5 +6,6 @@
         public string Codigo { get; set; }
         public string Sigla { get; set; }
         public int CargaHoraria { get; set; }
+        public string TurmaId { get; set; }
     }
 }

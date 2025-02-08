@@ -27,7 +27,7 @@ namespace WAPI_GS.Service
                     bool existEntityToDayHour = IsEntityPresentForDayHour(dto);
                     if (!existEntityToDayHour)
                     {
-                        TblUsersSala entity;
+                        TblPtd entity;
                         InitializeEntity(dto, out entity);
                         _appDbContext.Add(entity);
                     }
@@ -46,7 +46,7 @@ namespace WAPI_GS.Service
             }
             else
             {
-                TblUsersSala entity;
+                TblPtd entity;
 
                 bool existEntityToDayHour = IsEntityPresentForDayHour(dto);
 
@@ -74,7 +74,7 @@ namespace WAPI_GS.Service
                 .Any(e => e.Dia == dto.Dia && dto.HoraInicial >= e.HoraInicial && dto.HoraInicial <= e.HoraFinal);
         }
 
-        private static void InitializeEntity(DtoCreateUserSala dto, out TblUsersSala entity)
+        private static void InitializeEntity(DtoCreateUserSala dto, out TblPtd entity)
         {
             entity = dto.ToEntity();
             var g = Guid.NewGuid();
@@ -98,7 +98,7 @@ namespace WAPI_GS.Service
                 throw new Exception(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
             }
             //A entidade existe, se nao solta um erro e nem passa dessa linha
-            TblUsersSala tblUsersSala = await CreateQuery()
+            TblPtd tblUsersSala = await CreateQuery()
                 .Where(e => e.Dia == DateOnly.Parse(dto.DiaCorrente))
                 .Where(e => e.SalaId == SalaId)
                 .Where(e => e.UserId == oldUserId)
@@ -158,14 +158,14 @@ namespace WAPI_GS.Service
 
             try
             {
-                bool requestValid = await ValidateRequestToken.Validate(_appDbContext, requestKey);
-                if (!requestValid)
-                {
-                    throw new Exception("000-Token Inválido");
-                }
+                //bool requestValid = await ValidateRequestToken.Validate(_appDbContext, requestKey);
+                //if (!requestValid)
+                //{
+                //    throw new Exception("000-Token Inválido");
+                //}
 
                 // Busca os registros de TblUsersSalas
-                List<TblUsersSala> todasUserSala = await _appDbContext.TblUsersSala
+                List<TblPtd> todasUserSala = await _appDbContext.TblUsersSala
                     .AsNoTracking()
                     .AsQueryable()
                     .ToListAsync();
@@ -173,16 +173,16 @@ namespace WAPI_GS.Service
                 List<DtoGetUserSala> dtoResponse = [];
 
                 // Itera sobre as TblUsersSalas
-                foreach (var item in todasUserSala)
+                foreach (var ptdAtual in todasUserSala)
                 {
-                    DtoGetUserSala? diaExistente = dtoResponse.FirstOrDefault(e => e.Dia == item.Dia);
+                    DtoGetUserSala? diaExistente = dtoResponse.FirstOrDefault(e => e.Dia == ptdAtual.Dia);
 
                     // Caso o dia não exista, cria um novo DTO
                     if (diaExistente == null)
                     {
                         diaExistente = new DtoGetUserSala
                         {
-                            Dia = item.Dia,
+                            Dia = ptdAtual.Dia,
                             Salas = []
                         };
                         dtoResponse.Add(diaExistente);
@@ -191,18 +191,18 @@ namespace WAPI_GS.Service
 
                     // Busca a sala associada à TblUsersSala
                     TblSala tblSala = await _appDbContext.TblSalas
-                        .Where(e => e.Id == item.SalaId)
+                        .Where(e => e.Id == ptdAtual.SalaId)
                         .FirstAsync();
 
 
                     // Busca a disciplina associada à TblUsersSala
                     TblDisciplina tblDisciplina = await _appDbContext.TblDisciplina
-                        .Where(e => e.Id == item.DisciplinaId)
+                        .Where(e => e.Id == ptdAtual.DisciplinaId).Include(e => e.tblTurma)
                         .FirstAsync();
 
                     // Busca o professor associada à TblUsersSala
                     TblUser tblUser = await _appDbContext.TblUsers
-                        .Where(e => e.Id == item.UserId)
+                        .Where(e => e.Id == ptdAtual.UserId)
                         .FirstAsync();
 
                     if (tblSala != null)
@@ -212,8 +212,8 @@ namespace WAPI_GS.Service
                         {
                             SalaId = tblSala.Id,
                             TblSala = tblSala,
-                            HoraInit = item.HoraInicial,
-                            HoraFinal = item.HoraFinal,
+                            HoraInit = ptdAtual.HoraInicial,
+                            HoraFinal = ptdAtual.HoraFinal,
                             Professor = tblUser,
                             Disciplina = tblDisciplina
                         };
@@ -371,7 +371,7 @@ namespace WAPI_GS.Service
 
         public async Task<bool> NotAccept(int salaId)
         {
-            TblUsersSala tblUsersSala = await _appDbContext.TblUsersSala.Where(e => e.SalaId == salaId).FirstAsync();
+            TblPtd tblUsersSala = await _appDbContext.TblUsersSala.Where(e => e.SalaId == salaId).FirstAsync();
             TblUser tblUser = await _appDbContext.TblUsers.Where(e => e.Id == tblUsersSala.UserId).FirstAsync();
             TblSala tblSala = await _appDbContext.TblSalas.Where(e => e.Id == salaId).FirstAsync();
             await SendEmail(tblUser.Email!,
@@ -409,7 +409,7 @@ namespace WAPI_GS.Service
 
 
         //PRIVATE
-        private IQueryable<TblUsersSala> CreateQuery()
+        private IQueryable<TblPtd> CreateQuery()
         {
             return _appDbContext.TblUsersSala
             .AsNoTracking();

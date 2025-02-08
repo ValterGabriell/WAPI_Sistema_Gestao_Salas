@@ -23,5 +23,11 @@ namespace WAPI_GS.Controllers
                 return BadRequest(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
             }
         }
+
+        [HttpGet]
+        public ActionResult<string> OK()
+        {
+            return Ok("OK");
+        }
     }
 }

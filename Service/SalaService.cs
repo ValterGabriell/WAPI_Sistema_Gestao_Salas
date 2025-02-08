@@ -116,7 +116,7 @@ namespace WAPI_GS.Service
 
                 _appDbContext.Remove(entity);
 
-                List<TblUsersSala> tblUsersSalas = await _appDbContext.TblUsersSala.Where(e => e.SalaId == id).ToListAsync();
+                List<TblPtd> tblUsersSalas = await _appDbContext.TblUsersSala.Where(e => e.SalaId == id).ToListAsync();
                 _appDbContext.RemoveRange(tblUsersSalas);
 
 

@@ -8,12 +8,13 @@ public class AppDbContext : DbContext
     {
         this.ChangeTracker.LazyLoadingEnabled = false;
     }
-    public DbSet<TblUsersSala> TblUsersSala { get; set; }
+    public DbSet<TblPtd> TblUsersSala { get; set; }
 
     public DbSet<TblSala> TblSalas { get; set; }
 
     public DbSet<TblUser> TblUsers { get; set; }
     public DbSet<TblAuth> TblAuth { get; set; }
+    public DbSet<TblTurma> TblTurma { get; set; }
     public DbSet<TblDisciplina> TblDisciplina { get; set; }
 
 
@@ -21,6 +22,6 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-
+        modelBuilder.Entity<TblDisciplina>().HasOne(e => e.tblTurma).WithOne().HasForeignKey<TblDisciplina>(e => e.TurmaId);
     }
 }

@@ -12,11 +12,11 @@ namespace WAPI_GS.Service
         {
             try
             {
-                bool requestValid = await ValidateRequestToken.Validate(_appDbContext, requestKey);
-                if (!requestValid)
-                {
-                    throw new Exception("000-Token Inválido");
-                }
+                //bool requestValid = await ValidateRequestToken.Validate(_appDbContext, requestKey);
+                //if (!requestValid)
+                //{
+                //    throw new Exception("000-Token Inválido");
+                //}
 
                 TblDisciplina? tblDisciplina = await _appDbContext.TblDisciplina.Where(x => x.Codigo == dto.Codigo).FirstOrDefaultAsync();
                 if (tblDisciplina != null)
@@ -30,7 +30,8 @@ namespace WAPI_GS.Service
                     Nome = dto.Nome,
                     Sigla = dto.Sigla,
                     CargaHoraria = dto.CargaHoraria,
-                    TotalAulas = dto.CargaHoraria / 4
+                    TotalAulas = dto.CargaHoraria / 4,
+                    TurmaId = dto.TurmaId
                 };
 
                 _appDbContext.Add(tblDisciplina1);
