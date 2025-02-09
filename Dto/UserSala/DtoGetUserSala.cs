@@ -15,6 +15,7 @@ namespace WAPI_GS.Dto.UserSala
             public TblSala TblSala { get; set; }  // Detalhes da sala
             public TblUser Professor { get; set; }  // Lista de professores alocados na sala
             public TblDisciplina Disciplina { get; set; }
+            public TblTurma Turma { get; set; }
         }
     }
 }

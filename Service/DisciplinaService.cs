@@ -95,12 +95,19 @@ namespace WAPI_GS.Service
         {
             try
             {
-                bool requestValid = await ValidateRequestToken.Validate(_appDbContext, requestKey);
-                if (!requestValid)
+                //bool requestValid = await ValidateRequestToken.Validate(_appDbContext, requestKey);
+                //if (!requestValid)
+                //{
+                //    throw new Exception("000-Token Inválido");
+                //}
+                List<TblDisciplina> tblDisciplinas = await _appDbContext.TblDisciplina.ToListAsync();
+                foreach (var curent in tblDisciplinas)
                 {
-                    throw new Exception("000-Token Inválido");
+                    TblTurma? turma = await _appDbContext.TblTurma.Where(e => e.Id == curent.TurmaId).FirstAsync();
+                    curent.tblTurma = turma;
+
                 }
-                return await _appDbContext.TblDisciplina.ToListAsync();
+                return tblDisciplinas;
             }
             catch (Exception ex)
             {

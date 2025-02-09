@@ -806,8 +806,7 @@
             "name": "dia",
             "in": "query",
             "schema": {
-              "type": "string",
-              "format": "date"
+              "type": "string"
             }
           },
           {
@@ -819,11 +818,10 @@
             }
           },
           {
-            "name": "newUserId",
+            "name": "currentUsername",
             "in": "query",
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
             }
           },
           {
@@ -1570,14 +1568,6 @@
           "horaFinal": {
             "type": "integer",
             "format": "int32"
-          },
-          "isRepeat": {
-            "type": "boolean"
-          },
-          "timeRepeat": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1765,6 +1755,9 @@
           },
           "disciplina": {
             "$ref": "#/components/schemas/TblDisciplina"
+          },
+          "turma": {
+            "$ref": "#/components/schemas/TblTurma"
           }
         },
         "additionalProperties": false

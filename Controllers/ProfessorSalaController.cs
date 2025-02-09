@@ -56,13 +56,13 @@ namespace WAPI_GS.Controllers
         }
 
         [HttpGet("/accept")]
-        public async Task<ActionResult<bool>> Accept([FromQuery] int salaId, [FromQuery] DateOnly dia, [FromQuery] int userId, [FromQuery] int newUserId,
+        public async Task<ActionResult<bool>> Accept([FromQuery] int salaId, [FromQuery] string dia, [FromQuery] int userId, [FromQuery] string currentUsername,
             [FromQuery] int horaInit,
             [FromQuery] int horaFinal)
         {
             try
             {
-                bool v = await _uow.UserSalaRepository.Accept(salaId, dia, userId, newUserId, horaInit, horaFinal);
+                bool v = await _uow.UserSalaRepository.Accept(salaId, DateOnly.Parse(dia), userId, currentUsername, horaInit, horaFinal);
                 return Ok(v);
             }
             catch (Exception ex)

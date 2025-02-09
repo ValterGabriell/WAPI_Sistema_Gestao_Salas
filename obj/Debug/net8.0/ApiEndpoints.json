@@ -14,7 +14,7 @@
       },
       {
         "Name": "dia",
-        "Type": "System.DateOnly",
+        "Type": "System.String",
         "IsRequired": false
       },
       {
@@ -23,8 +23,8 @@
         "IsRequired": false
       },
       {
-        "Name": "newUserId",
-        "Type": "System.Int32",
+        "Name": "currentUsername",
+        "Type": "System.String",
         "IsRequired": false
       },
       {

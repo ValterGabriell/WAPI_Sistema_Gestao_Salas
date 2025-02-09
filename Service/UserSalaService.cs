@@ -19,51 +19,33 @@ namespace WAPI_GS.Service
 
         public async Task<DtoResponseCreate> Create(DtoCreateUserSala dto, string requestKey)
         {
-            if (dto.IsRepeat)
-            {
-                List<string> notSavedEntityList = new();
-                for (var i = 0; i < dto.TimeRepeat; i++)
-                {
-                    bool existEntityToDayHour = IsEntityPresentForDayHour(dto);
-                    if (!existEntityToDayHour)
-                    {
-                        TblPtd entity;
-                        InitializeEntity(dto, out entity);
-                        _appDbContext.Add(entity);
-                    }
-                    else
-                    {
-                        notSavedEntityList.Add("Dia: " + dto.Dia + " com horário inicial " + dto.HoraInicial + " e hora final " + dto.HoraFinal + " já cadastrado!");
-                    }
-                    dto.Dia = dto.Dia.AddDays(7);
-                }
+            TblDisciplina tblDisciplina = await _appDbContext.TblDisciplina.Where(e => e.Id == dto.DisciplinaId).FirstAsync() ?? throw new KeyNotFoundException("Disciplina");
 
-                return new DtoResponseCreate
-                {
-                    message = "Entidade gerada!",
-                    errors = notSavedEntityList
-                };
-            }
-            else
-            {
-                TblPtd entity;
+            TblPtd tblPtd = InitializeEntity(dto);
 
+            int totalAulas = tblDisciplina.TotalAulas;
+
+
+            List<string> notSavedEntityList = new();
+            for (var i = 0; i < totalAulas; i++)
+            {
                 bool existEntityToDayHour = IsEntityPresentForDayHour(dto);
-
                 if (!existEntityToDayHour)
                 {
-                    InitializeEntity(dto, out entity);
+                    TblPtd entity = InitializeEntity(dto);
                     _appDbContext.Add(entity);
                 }
                 else
                 {
-                    throw new Exception("Dia " + dto.Dia + " já possui registro de horário em: " + dto.HoraInicial + " - " + dto.HoraFinal);
+                    notSavedEntityList.Add("Dia: " + dto.Dia + " com horário inicial " + dto.HoraInicial + " e hora final " + dto.HoraFinal + " já cadastrado!");
                 }
+                dto.Dia = dto.Dia.AddDays(7);
             }
+
             return new DtoResponseCreate
             {
                 message = "Entidade gerada!",
-                errors = []
+                errors = notSavedEntityList
             };
         }
 
@@ -74,11 +56,12 @@ namespace WAPI_GS.Service
                 .Any(e => e.Dia == dto.Dia && dto.HoraInicial >= e.HoraInicial && dto.HoraInicial <= e.HoraFinal);
         }
 
-        private static void InitializeEntity(DtoCreateUserSala dto, out TblPtd entity)
+        private static TblPtd InitializeEntity(DtoCreateUserSala dto)
         {
-            entity = dto.ToEntity();
+            var entity = dto.ToEntity();
             var g = Guid.NewGuid();
             entity.Id = g.ToString();
+            return entity;
         }
 
         public async Task<string> Update(DtoUpdateSalaUser dto, int oldUserId, int SalaId, string requestKey)
@@ -197,7 +180,11 @@ namespace WAPI_GS.Service
 
                     // Busca a disciplina associada à TblUsersSala
                     TblDisciplina tblDisciplina = await _appDbContext.TblDisciplina
-                        .Where(e => e.Id == ptdAtual.DisciplinaId).Include(e => e.tblTurma)
+                        .Where(e => e.Id == ptdAtual.DisciplinaId)
+                        .FirstAsync();
+
+                    TblTurma tblTurma = await _appDbContext.TblTurma
+                        .Where(e => e.Id == tblDisciplina.TurmaId)
                         .FirstAsync();
 
                     // Busca o professor associada à TblUsersSala
@@ -215,7 +202,8 @@ namespace WAPI_GS.Service
                             HoraInit = ptdAtual.HoraInicial,
                             HoraFinal = ptdAtual.HoraFinal,
                             Professor = tblUser,
-                            Disciplina = tblDisciplina
+                            Disciplina = tblDisciplina,
+                            Turma = tblTurma
                         };
 
 
@@ -306,14 +294,14 @@ namespace WAPI_GS.Service
 
 
 
-        public async Task<bool> Accept(int salaId, DateOnly dia, int userId, int newUserId, int horaInit, int horaFinal)
+        public async Task<bool> Accept(int salaId, DateOnly dia, int userId, string currentUsername, int horaInit, int horaFinal)
         {
             int year = dia.Year;
             int month = dia.Month;
             int day = dia.Day;
 
             // Formatar como "YYYY-DD-MM"
-            string formattedDate = $"{year}-{day:D2}-{month:D2}";
+            string formattedDate = $"{year}-{month:D2}-{day:D2}";
             var tblUsersSala = await _appDbContext.TblUsersSala
                 .Where(e => e.SalaId == salaId
                     && e.UserId == userId
@@ -322,10 +310,14 @@ namespace WAPI_GS.Service
                     && e.HoraFinal == horaFinal)
                 .FirstOrDefaultAsync() ?? throw new Exception("Nenhuma reserva encontrada com os parâmetros fornecidos.");
 
-            tblUsersSala.UserId = newUserId;
+
+            TblUser user = await _appDbContext.TblUsers.Where(e => e.Username == currentUsername).FirstAsync();
+
+
+            tblUsersSala.UserId = user.Id;
             await _appDbContext.SaveChangesAsync();
 
-            TblUser tblUser = await _appDbContext.TblUsers.Where(e => e.Id == newUserId).FirstAsync();
+            TblUser tblUser = await _appDbContext.TblUsers.Where(e => e.Id == user.Id).FirstAsync();
             TblSala tblSala = await _appDbContext.TblSalas.Where(e => e.Id == salaId).FirstAsync();
             await SendEmail(tblUser.Email!,
                 "Solicitação para troca de sala aceita! " + tblSala.Name +

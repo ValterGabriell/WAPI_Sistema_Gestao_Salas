@@ -19,7 +19,7 @@ namespace WAPI_GS.Interfaces
             int newUserId,
             int horaInit,
             int horaFinal, string requestKey);
-        Task<bool> Accept(int salaId, DateOnly dia, int userId, int newUserId, int horaInit, int horaFinal);
+        Task<bool> Accept(int salaId, DateOnly dia, int userId, string currentUsername, int horaInit, int horaFinal);
         Task<bool> NotAccept(int salaId);
     }
 }
