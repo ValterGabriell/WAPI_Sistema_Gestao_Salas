@@ -26,4 +26,7 @@ public class TblUser
     public string? Username { get; set; }
     [Column("password")]
     public string? Password { get; set; }
+
+    [Column("color")]
+    public string? Color { get; set; }
 }
