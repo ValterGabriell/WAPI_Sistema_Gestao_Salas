@@ -1627,6 +1627,10 @@
           "username": {
             "type": "string",
             "nullable": true
+          },
+          "color": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1692,9 +1696,9 @@
             "type": "integer",
             "format": "int32"
           },
-          "newUserId": {
-            "type": "integer",
-            "format": "int32"
+          "currentUsername": {
+            "type": "string",
+            "nullable": true
           },
           "horaInit": {
             "type": "integer",

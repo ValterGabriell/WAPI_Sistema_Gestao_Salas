@@ -173,26 +173,28 @@ namespace WAPI_GS.Service
 
 
                     // Busca a sala associada à TblUsersSala
-                    TblSala tblSala = await _appDbContext.TblSalas
+                    TblSala? tblSala = await _appDbContext.TblSalas
                         .Where(e => e.Id == ptdAtual.SalaId)
-                        .FirstAsync();
+                        .FirstOrDefaultAsync();
 
 
                     // Busca a disciplina associada à TblUsersSala
-                    TblDisciplina tblDisciplina = await _appDbContext.TblDisciplina
+                    TblDisciplina? tblDisciplina = await _appDbContext.TblDisciplina
                         .Where(e => e.Id == ptdAtual.DisciplinaId)
-                        .FirstAsync();
+                        .FirstOrDefaultAsync();
 
-                    TblTurma tblTurma = await _appDbContext.TblTurma
+                    if (tblDisciplina == null) continue;
+
+                    TblTurma? tblTurma = await _appDbContext.TblTurma
                         .Where(e => e.Id == tblDisciplina.TurmaId)
-                        .FirstAsync();
+                        .FirstOrDefaultAsync();
 
                     // Busca o professor associada à TblUsersSala
-                    TblUser tblUser = await _appDbContext.TblUsers
+                    TblUser? tblUser = await _appDbContext.TblUsers
                         .Where(e => e.Id == ptdAtual.UserId)
-                        .FirstAsync();
+                        .FirstOrDefaultAsync();
 
-                    if (tblSala != null)
+                    if (tblSala != null && tblDisciplina != null && tblTurma != null && tblUser != null)
                     {
                         // Cria um objeto SalaComProfessores
                         DtoGetUserSala.SalaComProfessores salaComProfessores = new()
@@ -231,7 +233,7 @@ namespace WAPI_GS.Service
             int salaId,
             DateOnly dia,
             int currentUserId,
-            int newUserId,
+            string currentUsername,
             int horaInit,
             int horaFinal
             , string requestKey)
@@ -254,24 +256,75 @@ namespace WAPI_GS.Service
             {
                 var smtpSettings = _configuration.GetSection("SmtpSettings");
 
-                using (SmtpClient client = new(smtpSettings["Host"], int.Parse(smtpSettings["Port"])))
+                using (SmtpClient client = new SmtpClient(smtpSettings["Host"], int.Parse(smtpSettings["Port"])))
                 {
                     client.Credentials = new NetworkCredential(smtpSettings["Username"], smtpSettings["Password"]);
                     client.EnableSsl = bool.Parse(smtpSettings["EnableSsl"]);
+
+                    string emailBody = $@"
+                    <html>
+                    <head>
+                        <style>
+                            body {{
+                                font-family: Arial, sans-serif;
+                                background-color: #f4f4f4;
+                                margin: 0;
+                                padding: 20px;
+                            }}
+                            .container {{
+                                max-width: 600px;
+                                background: #ffffff;
+                                padding: 20px;
+                                border-radius: 10px;
+                                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                            }}
+                            h2 {{
+                                color: #333;
+                            }}
+                            p {{
+                                font-size: 16px;
+                                color: #555;
+                                line-height: 1.5;
+                            }}
+                            .button {{
+                                display: inline-block;
+                                padding: 10px 20px;
+                                margin: 10px 5px;
+                                text-decoration: none;
+                                color: white;
+                                border-radius: 5px;
+                                font-weight: bold;
+                            }}
+                            .accept {{
+                                background-color: #28a745;
+                            }}
+                            .reject {{
+                                background-color: #dc3545;
+                            }}
+                            .footer {{
+                                margin-top: 20px;
+                                font-size: 12px;
+                                color: #777;
+                                text-align: center;
+                            }}
+                        </style>
+                    </head>
+                    <body>
+                        <div class='container'>
+                            <h2>Confirmação de Reserva de Sala</h2>
+                            <p>{body}</p>
+                            <p>Caso aceite, clique em um dos botões abaixo:</p>
+                            <a href='{fullUrl}/accept?salaId={salaId}&dia={dia}&userId={currentUserId}&currentUsername={currentUsername}&horaInit={horaInit}&horaFinal={horaFinal}' class='button accept'>✔ Aceito</a>
+                            <a href='{fullUrl}/notAccept?salaId={salaId}' class='button reject'>❌ Não Aceito</a>
+                        </div>
+                    </body>
+                    </html>";
 
                     var mailMessage = new MailMessage
                     {
                         From = new MailAddress(smtpSettings["Username"], "Gestão de Salas"),
                         Subject = title,
-                        Body = body + "\n\n" +
-                            "Caso aceite, clique no link abaixo referente ao aceite ou não:\n\n" +
-                            "✔ Aceito: " + fullUrl + "/accept?salaId=" + salaId +
-                            "&dia=" + dia +
-                            "&userId=" + currentUserId +
-                            "&newUserId=" + newUserId +
-                            "&horaInit=" + horaInit +
-                            "&horaFinal=" + horaFinal + "\n\n" +
-                            "❌ Não aceito: " + fullUrl + "/notAccept?salaId=" + salaId + " \n",
+                        Body = emailBody,
                         IsBodyHtml = true
                     };
 
@@ -312,9 +365,8 @@ namespace WAPI_GS.Service
 
 
             TblUser user = await _appDbContext.TblUsers.Where(e => e.Username == currentUsername).FirstAsync();
-
-
             tblUsersSala.UserId = user.Id;
+            _appDbContext.Update(tblUsersSala);
             await _appDbContext.SaveChangesAsync();
 
             TblUser tblUser = await _appDbContext.TblUsers.Where(e => e.Id == user.Id).FirstAsync();

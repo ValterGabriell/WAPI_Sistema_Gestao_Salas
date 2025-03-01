@@ -30,7 +30,7 @@ namespace WAPI_GS.EM.User
                 MobilePhone = entity.MobilePhone,
                 Email = entity.Email,
                 Username = entity.Username,
-                //Password = entity.Password,
+                Color = entity.Color,
             };
         }
 

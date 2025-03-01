@@ -42,7 +42,7 @@ namespace WAPI_GS.Controllers
                     dtoSendEmail.salaId,
                     dtoSendEmail.dia,
                     dtoSendEmail.currentUserId,
-                    dtoSendEmail.newUserId,
+                    dtoSendEmail.currentUsername,
                     dtoSendEmail.horaInit,
                     dtoSendEmail.horaFinal,
                     requestKey

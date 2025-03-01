@@ -16,7 +16,7 @@ namespace WAPI_GS.Interfaces
         Task<bool> SendEmailSolicitacao(string destEmail, string body, string title, string fullUrl, int salaId,
             DateOnly dia,
             int currentUserId,
-            int newUserId,
+            string currentUsername,
             int horaInit,
             int horaFinal, string requestKey);
         Task<bool> Accept(int salaId, DateOnly dia, int userId, string currentUsername, int horaInit, int horaFinal);
