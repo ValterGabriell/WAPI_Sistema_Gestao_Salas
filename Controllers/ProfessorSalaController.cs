@@ -62,8 +62,8 @@ namespace WAPI_GS.Controllers
         {
             try
             {
-                bool v = await _uow.UserSalaRepository.Accept(salaId, DateOnly.Parse(dia), userId, currentUsername, horaInit, horaFinal);
-                return Ok(v);
+                await _uow.UserSalaRepository.Accept(salaId, DateOnly.Parse(dia), userId, currentUsername, horaInit, horaFinal);
+                return Ok("Um email foi enviado ao professor com sua resposta, pode fechar essa aba");
             }
             catch (Exception ex)
             {
@@ -73,11 +73,12 @@ namespace WAPI_GS.Controllers
 
 
         [HttpGet("/notAccept")]
-        public async Task<ActionResult<bool>> NotAccept([FromQuery] int salaId)
+        public async Task<ActionResult<string>> NotAccept([FromQuery] int salaId)
         {
             try
             {
-                return Ok(await _uow.UserSalaRepository.NotAccept(salaId));
+                await _uow.UserSalaRepository.NotAccept(salaId);
+                return Ok("Um email foi enviado ao professor com sua resposta, pode fechar essa aba");
             }
             catch (Exception ex)
             {

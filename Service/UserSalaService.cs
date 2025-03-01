@@ -246,14 +246,10 @@ namespace WAPI_GS.Service
                 {
                     throw new Exception("000-Token Inválido");
                 }
-            }
-            catch (Exception ex)
-            {
-
-                throw new Exception(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
-            }
-            try
-            {
+                int year = dia.Year;
+                int month = dia.Month;
+                int day = dia.Day;
+                string formattedDate = $"{day:D2}/{month:D2}/{year}";
                 var smtpSettings = _configuration.GetSection("SmtpSettings");
 
                 using (SmtpClient client = new SmtpClient(smtpSettings["Host"], int.Parse(smtpSettings["Port"])))
@@ -314,7 +310,7 @@ namespace WAPI_GS.Service
                             <h2>Confirmação de Reserva de Sala</h2>
                             <p>{body}</p>
                             <p>Caso aceite, clique em um dos botões abaixo:</p>
-                            <a href='{fullUrl}/accept?salaId={salaId}&dia={dia}&userId={currentUserId}&currentUsername={currentUsername}&horaInit={horaInit}&horaFinal={horaFinal}' class='button accept'>✔ Aceito</a>
+                            <a href='{fullUrl}/accept?salaId={salaId}&dia={formattedDate}&userId={currentUserId}&currentUsername={currentUsername}&horaInit={horaInit}&horaFinal={horaFinal}' class='button accept'>✔ Aceito</a>
                             <a href='{fullUrl}/notAccept?salaId={salaId}' class='button reject'>❌ Não Aceito</a>
                         </div>
                     </body>
@@ -372,9 +368,9 @@ namespace WAPI_GS.Service
             TblUser tblUser = await _appDbContext.TblUsers.Where(e => e.Id == user.Id).FirstAsync();
             TblSala tblSala = await _appDbContext.TblSalas.Where(e => e.Id == salaId).FirstAsync();
             await SendEmail(tblUser.Email!,
-                "Solicitação para troca de sala aceita! " + tblSala.Name +
+                " Solicitação para troca de sala aceita! " + tblSala.Name +
                 " agora está alocada para você em " +
-                tblUsersSala.Dia + " " + tblUsersSala.HoraInicial + ":" + tblUsersSala.HoraFinal,
+                tblUsersSala.Dia + " das " + tblUsersSala.HoraInicial + ":00h até as " + tblUsersSala.HoraFinal + ":00h",
                 tblSala.Name + "Solicitação de troca de sala aceita!"
                 );
 
@@ -418,11 +414,12 @@ namespace WAPI_GS.Service
             TblPtd tblUsersSala = await _appDbContext.TblUsersSala.Where(e => e.SalaId == salaId).FirstAsync();
             TblUser tblUser = await _appDbContext.TblUsers.Where(e => e.Id == tblUsersSala.UserId).FirstAsync();
             TblSala tblSala = await _appDbContext.TblSalas.Where(e => e.Id == salaId).FirstAsync();
+
             await SendEmail(tblUser.Email!,
-                "Solicitação para troca de sala recusada! " + tblSala.Name +
-                "O professor referente " + tblUser.Name + " não aceitou sua solicitação",
-                tblSala.Name + "Solicitação de troca de sala recusada!"
-                );
+                $"Solicitação para troca de sala recusada! {tblSala.Name} - O professor {tblUser.Name} não aceitou sua solicitação",
+                ""
+            );
+
             return false;
         }
 
