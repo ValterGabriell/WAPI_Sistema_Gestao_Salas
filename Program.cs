@@ -26,13 +26,31 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<AppDbContext>(options =>
+if (builder.Environment.IsDevelopment())
 {
-    options.UseNpgsql(connectionString);
-});
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    builder.Services.AddDbContext<AppDbContext>(options =>
+    {
+        options.UseNpgsql(connectionString);
+    });
+}
+else
+{
+    var url = Environment.GetEnvironmentVariable("SUPABASE_URL");
+    var key = Environment.GetEnvironmentVariable("SUPABASE_KEY");
+
+    var options = new Supabase.SupabaseOptions
+    {
+        AutoConnectRealtime = true
+    };
+
+    var supabase = new Supabase.Client(url, key, options);
+    await supabase.InitializeAsync();
+}
+
 builder.Services.AddScoped<ICS_UnitOfWork, UOWService>();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
