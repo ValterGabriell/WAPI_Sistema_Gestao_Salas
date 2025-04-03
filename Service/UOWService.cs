@@ -8,13 +8,13 @@ namespace WAPI_GS.Service
 {
     public class UOWService(AppDbContext appDbContext, IConfiguration configuration) : ICS_UnitOfWork
     {
-        public ICS_CrudInterface<DtoCreateSala, DtoGetSala> _salaRepository = null!;
-        public ICS_CrudInterface<DtoCreateSala, DtoGetSala> SalaRepository
+        public ICrudInterface<DtoCreateSala, DtoGetSala> _salaRepository = null!;
+        public ICrudInterface<DtoCreateSala, DtoGetSala> SalaRepository
             => _salaRepository ??= new SalaService(appDbContext);
 
 
-        public ICS_CrudInterface<DtoCreateUpdateUser, DtoGetProfessor> _userRepository = null!;
-        public ICS_CrudInterface<DtoCreateUpdateUser, DtoGetProfessor> UserRepository
+        public ICrudInterface<DtoCreateUpdateUser, DtoGetProfessor> _userRepository = null!;
+        public ICrudInterface<DtoCreateUpdateUser, DtoGetProfessor> UserRepository
             => _userRepository ??= new ProfessorService(appDbContext);
 
 
@@ -24,7 +24,7 @@ namespace WAPI_GS.Service
 
         public ICS_Auth AuthRepository => new AuthService(appDbContext);
 
-        public ICS_Disciplina cS_Disciplina => new DisciplinaService(appDbContext);
+        public IDisciplinaService cS_Disciplina => new DisciplinaService(appDbContext);
 
         public async Task Commit()
         {

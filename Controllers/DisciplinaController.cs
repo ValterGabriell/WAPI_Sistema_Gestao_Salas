@@ -18,12 +18,12 @@ namespace WAPI_GS.Controllers
         {
             try
             {
-                var result = await _uow.cS_Disciplina.Create(dto, requestKey);
+                var result = await _uow.cS_Disciplina.CreateAsync(dto, requestKey);
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+                return BadRequest(HelperExceptions.CreateExceptionMessage(ex));
             }
         }
 
@@ -38,7 +38,7 @@ namespace WAPI_GS.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+                return BadRequest(HelperExceptions.CreateExceptionMessage(ex));
             }
         }
 
@@ -53,7 +53,7 @@ namespace WAPI_GS.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+                return BadRequest(HelperExceptions.CreateExceptionMessage(ex));
             }
         }
     }

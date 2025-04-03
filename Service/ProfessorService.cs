@@ -6,7 +6,7 @@ using WAPI_GS.Utilidades;
 
 namespace WAPI_GS.Service
 {
-    public class ProfessorService(IProfessorRepository professorRepository) : ICS_CrudInterface<DtoCreateUpdateUser, DtoGetProfessor>
+    public class ProfessorService(IProfessorRepository professorRepository) : ICrudInterface<DtoCreateUpdateUser, DtoGetProfessor>
     {
         private readonly IProfessorRepository _professorRepository = professorRepository;
 

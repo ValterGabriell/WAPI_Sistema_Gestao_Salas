@@ -3,11 +3,12 @@ using WAPI_GS.Dto.Sala;
 using WAPI_GS.EM.Sala;
 using WAPI_GS.Interfaces;
 using WAPI_GS.Modelos;
+using WAPI_GS.Utilidades;
 
 namespace WAPI_GS.Service
 {
     public class SalaService(AppDbContext appDbContext)
-        : ICS_CrudInterface<DtoCreateSala, DtoGetSala>
+        : ICrudInterface<DtoCreateSala, DtoGetSala>
     {
         private readonly AppDbContext _appDbContext = appDbContext;
 
@@ -28,7 +29,7 @@ namespace WAPI_GS.Service
             catch (Exception ex)
             {
 
-                throw new Exception(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+                throw new Exception(HelperExceptions.CreateExceptionMessage(ex));
             }
 
             return "Entidade gerada!";
@@ -48,7 +49,7 @@ namespace WAPI_GS.Service
             catch (Exception ex)
             {
 
-                throw new Exception(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+                throw new Exception(HelperExceptions.CreateExceptionMessage(ex));
             }
             //A entidade existe, se nao solta um erro e nem passa dessa linha
             await GetEntityByIdAndThrowExIfNot(id);
@@ -90,7 +91,7 @@ namespace WAPI_GS.Service
             catch (Exception ex)
             {
 
-                throw new Exception(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+                throw new Exception(HelperExceptions.CreateExceptionMessage(ex));
             }
             var entity = await GetEntityByIdAndThrowExIfNot(id);
             entity.IsActive = !entity.IsActive;
@@ -141,7 +142,7 @@ namespace WAPI_GS.Service
             catch (Exception ex)
             {
 
-                throw new Exception(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+                throw new Exception(HelperExceptions.CreateExceptionMessage(ex));
             }
             try
             {
@@ -169,7 +170,7 @@ namespace WAPI_GS.Service
             catch (Exception ex)
             {
 
-                throw new Exception(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+                throw new Exception(HelperExceptions.CreateExceptionMessage(ex));
             }
             try
             {

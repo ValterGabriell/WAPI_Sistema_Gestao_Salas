@@ -1,93 +1,39 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WAPI_GS.Dto.Disciplina;
+﻿using WAPI_GS.Dto.Disciplina;
 using WAPI_GS.Interfaces;
 using WAPI_GS.Modelos;
+using WAPI_GS.Repositorios.Disciplina;
+using WAPI_GS.Utilidades;
 
 namespace WAPI_GS.Service
 {
-    public class DisciplinaService(AppDbContext appDbContext) : ICS_Disciplina
+    public class DisciplinaService(IDisciplinaRepository repository) : IDisciplinaService
     {
-        private readonly AppDbContext _appDbContext = appDbContext;
-        public async Task<string> Create(DtoCreateDisciplina dto, string requestKey)
+        private readonly IDisciplinaRepository _repository = repository;
+        public async Task<string> CreateAsync(DtoCreateDisciplina dto)
         {
             try
             {
-                //bool requestValid = await ValidateRequestToken.Validate(_appDbContext, requestKey);
-                //if (!requestValid)
-                //{
-                //    throw new Exception("000-Token Inválido");
-                //}
-
-                TblDisciplina? tblDisciplina = await _appDbContext.TblDisciplina.Where(x => x.Codigo == dto.Codigo).FirstOrDefaultAsync();
-                if (tblDisciplina != null)
-                {
-                    throw new Exception("Disciplina já cadastrada");
-                }
-
-                TblDisciplina tblDisciplina1 = new TblDisciplina
-                {
-                    Codigo = dto.Codigo,
-                    Nome = dto.Nome,
-                    Sigla = dto.Sigla,
-                    CargaHoraria = dto.CargaHoraria,
-                    TotalAulas = dto.CargaHoraria / 4,
-                    TurmaId = dto.TurmaId
-                };
-
-                _appDbContext.Add(tblDisciplina1);
-                await _appDbContext.SaveChangesAsync();
-                return "Disciplina cadastrada com sucesso!";
-
+                TblDisciplina newDisciplina = dto.ToEntity();
+                string message = await _repository.CreateAsync(newDisciplina);
+                return message;
             }
             catch (Exception ex)
             {
-
-                throw new Exception(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+                throw new Exception(HelperExceptions.CreateExceptionMessage(ex));
             }
         }
 
-        public async Task<string> Update(DtoCreateDisciplina dto, int id, string requestKey)
+        public async Task<string> Update(DtoCreateDisciplina dto, int id)
         {
             try
             {
-                bool requestValid = await ValidateRequestToken.Validate(_appDbContext, requestKey);
-                if (!requestValid)
-                {
-                    throw new Exception("000-Token Inválido");
-                }
-
-                TblDisciplina? tblDisciplina = await _appDbContext.TblDisciplina.Where(x => x.Codigo == dto.Codigo).FirstOrDefaultAsync();
-                if (tblDisciplina != null)
-                {
-                    throw new Exception("Disciplina já cadastrada");
-                }
-
-                TblDisciplina? tblDisciplinaUpdate = await _appDbContext.TblDisciplina.Where(x => x.Id == id).FirstOrDefaultAsync();
-
-                if (tblDisciplinaUpdate == null)
-                {
-                    throw new Exception("Disciplina não encontrada");
-                }
-
-
-                tblDisciplinaUpdate.Codigo = dto.Codigo;
-                tblDisciplinaUpdate.Nome = dto.Nome;
-                tblDisciplinaUpdate.Sigla = dto.Sigla;
-                tblDisciplinaUpdate.Codigo = dto.Codigo;
-                tblDisciplinaUpdate.CargaHoraria = dto.CargaHoraria;
-                tblDisciplinaUpdate.TotalAulas = dto.CargaHoraria / 4;
-                tblDisciplinaUpdate.Id = id;
-
-
-                _appDbContext.Update(tblDisciplinaUpdate);
-                await _appDbContext.SaveChangesAsync();
-                return "Disciplina atualizada com sucesso!";
-
+                TblDisciplina updatedDisciplina = dto.ToEntityForUpdate(id);
+                string updateResult = await _repository.UpdateAsync(updatedDisciplina, id);
+                return updateResult;
             }
             catch (Exception ex)
             {
-
-                throw new Exception(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+                throw new Exception(HelperExceptions.CreateExceptionMessage(ex));
             }
         }
 
@@ -95,23 +41,20 @@ namespace WAPI_GS.Service
         {
             try
             {
-                //bool requestValid = await ValidateRequestToken.Validate(_appDbContext, requestKey);
-                //if (!requestValid)
-                //{
-                //    throw new Exception("000-Token Inválido");
-                //}
-                List<TblDisciplina> tblDisciplinas = await _appDbContext.TblDisciplina.ToListAsync();
-                foreach (var curent in tblDisciplinas)
-                {
-                    TblTurma? turma = await _appDbContext.TblTurma.Where(e => e.Id == curent.TurmaId).FirstAsync();
-                    curent.tblTurma = turma;
+                List<TblDisciplina> tblDisciplinas = await _repository.GetListAsync();
 
-                }
+#warning AQUI DEVE SE CRIAR UM DTO PRA DISCIPLINA E ISNERIR A TURMA QUE ELA TA
+                //foreach (var curent in tblDisciplinas)
+                //{
+                //    TblTurma? turma = await _appDbContext.TblTurma.Where(e => e.Id == curent.TurmaId).FirstAsync();
+                //    curent.tblTurma = turma;
+
+                //}
                 return tblDisciplinas;
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+                throw new Exception(HelperExceptions.CreateExceptionMessage(ex));
             }
         }
 

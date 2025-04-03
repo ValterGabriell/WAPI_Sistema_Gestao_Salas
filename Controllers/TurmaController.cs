@@ -24,7 +24,7 @@ namespace WAPI_GS.Controllers
             catch (Exception ex)
             {
 
-                throw new Exception(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+                throw new Exception(HelperExceptions.CreateExceptionMessage(ex));
             }
 
             return "Entidade gerada!";
@@ -42,7 +42,7 @@ namespace WAPI_GS.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+                return BadRequest(HelperExceptions.CreateExceptionMessage(ex));
             }
         }
 
@@ -58,7 +58,7 @@ namespace WAPI_GS.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+                return BadRequest(HelperExceptions.CreateExceptionMessage(ex));
             }
         }
 

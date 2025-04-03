@@ -78,7 +78,7 @@ namespace WAPI_GS.Service
             catch (Exception ex)
             {
 
-                throw new Exception(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+                throw new Exception(HelperExceptions.CreateExceptionMessage(ex));
             }
             //A entidade existe, se nao solta um erro e nem passa dessa linha
             TblPtd tblUsersSala = await CreateQuery()
@@ -120,7 +120,7 @@ namespace WAPI_GS.Service
             catch (Exception ex)
             {
 
-                throw new Exception(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+                throw new Exception(HelperExceptions.CreateExceptionMessage(ex));
             }
             var entity = CreateQuery()
                 .Where(e => e.UserId == userId)
@@ -220,7 +220,7 @@ namespace WAPI_GS.Service
             catch (Exception ex)
             {
 
-                throw new Exception(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+                throw new Exception(HelperExceptions.CreateExceptionMessage(ex));
             }
 
         }

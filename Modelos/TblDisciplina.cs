@@ -15,7 +15,5 @@ namespace WAPI_GS.Modelos
         public int CargaHoraria { get; set; }
         public int TotalAulas { get; set; }
         public string? TurmaId { get; set; }
-
-        public TblTurma tblTurma { get; set; }
     }
 }

@@ -20,7 +20,7 @@ namespace WAPI_GS.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+                return BadRequest(HelperExceptions.CreateExceptionMessage(ex));
             }
         }
 
