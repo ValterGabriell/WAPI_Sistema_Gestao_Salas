@@ -18,8 +18,8 @@ namespace WAPI_GS.Service
             => _userRepository ??= new ProfessorService(appDbContext);
 
 
-        public ICS_UserSala<DtoCreateUserSala, DtoGetUserSala> _userSalaRepository = null!;
-        public ICS_UserSala<DtoCreateUserSala, DtoGetUserSala> UserSalaRepository
+        public ICS_UserSala<DtoAtribuirProfessorASala, DtoGetUserSala> _userSalaRepository = null!;
+        public ICS_UserSala<DtoAtribuirProfessorASala, DtoGetUserSala> UserSalaRepository
             => _userSalaRepository ??= new UserSalaService(appDbContext, configuration);
 
         public ICS_Auth AuthRepository => new AuthService(appDbContext);

@@ -13,7 +13,7 @@ namespace WAPI_GS.Controllers
         private readonly ICS_UnitOfWork _uow = uow;
 
         [HttpPost]
-        public async Task<ActionResult<string>> Create(DtoCreateUserSala dto, [FromHeader] string requestKey)
+        public async Task<ActionResult<string>> Create(DtoAtribuirProfessorASala dto, [FromHeader] string requestKey)
         {
             try
             {
@@ -109,7 +109,7 @@ namespace WAPI_GS.Controllers
 
         [HttpPut]
 
-        public async Task<ActionResult<string>> Update(DtoUpdateSalaUser dto, [FromQuery] int salaId, [FromQuery] int oldUserId, [FromHeader] string requestKey)
+        public async Task<ActionResult<string>> Update(DtoAtualizarAtribuicaoProfessorSala dto, [FromQuery] int salaId, [FromQuery] int oldUserId, [FromHeader] string requestKey)
         {
             try
             {

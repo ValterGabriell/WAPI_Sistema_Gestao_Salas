@@ -4,8 +4,10 @@ namespace WAPI_GS.Repositorios.Disciplina
 {
     public interface IDisciplinaRepository
     {
-        Task<string> CreateAsync(TblDisciplina entity);
-        Task<string> UpdateAsync(TblDisciplina entity, int id);
+        string Create(TblDisciplina entity);
+        string Update(TblDisciplina entity);
         Task<List<TblDisciplina>> GetListAsync();
+        Task<TblDisciplina?> RecuperaDisciplinaPorID(int id);
+        Task<TblDisciplina?> RecuperaDisciplinaPorCodigo(string codigo);
     }
 }

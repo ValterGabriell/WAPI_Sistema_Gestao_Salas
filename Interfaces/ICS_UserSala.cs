@@ -6,7 +6,7 @@ namespace WAPI_GS.Interfaces
         where DtoGet : class where DtoCreateUpdate : class
     {
         Task<DtoResponseCreate> Create(DtoCreateUpdate dto, string requestKey);
-        Task<string> Update(DtoUpdateSalaUser dto, int oldUserId, int SalaId, string requestKey);
+        Task<string> Update(DtoAtualizarAtribuicaoProfessorSala dto, int oldUserId, int SalaId, string requestKey);
         //Task<List<DtoGet>> GetByUserId(int id);
         //Task<List<DtoGet>> GetBySalaNome(string salaNome);
         Task<List<DtoGet>> GetList(int? salaId, int? profId, string requestKey);

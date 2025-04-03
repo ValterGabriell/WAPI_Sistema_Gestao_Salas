@@ -5,8 +5,8 @@ namespace WAPI_GS.Interfaces
 {
     public interface IDisciplinaService
     {
-        Task<string> CreateAsync(DtoCreateDisciplina dto);
-        Task<string> Update(DtoCreateDisciplina dto, int id);
+        string Create(DtoCreateDisciplina dto);
+        Task<string> UpdateAsync(DtoCreateDisciplina dto, int id);
         Task<List<TblDisciplina>> GetList(string requestKey);
 
     }

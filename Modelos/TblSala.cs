@@ -1,5 +1,6 @@
 ﻿
 using System.ComponentModel.DataAnnotations.Schema;
+using WAPI_GS.Dto.Sala;
 
 namespace WAPI_GS.Modelos;
 
@@ -18,4 +19,27 @@ public class TblSala
 
     [Column("name")]
     public string? Name { get; set; }
+
+    public TblSala MudaPropriedadeIsAtivo()
+    {
+        return new TblSala
+        {
+            Id = this.Id,
+            IsActive = this.IsActive!,
+            CreationDate = this.CreationDate,
+            Name = this.Name,
+        };
+    }
+
+
+    public DtoGetSala ToDto()
+    {
+        return new DtoGetSala
+        {
+            Id = this.Id,
+            IsActive = this.IsActive!,
+            CreationDate = this.CreationDate,
+            Name = this.Name,
+        };
+    }
 }

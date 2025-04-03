@@ -6,7 +6,7 @@ using WAPI_GS.Utilidades;
 
 namespace WAPI_GS.Service
 {
-    public class ProfessorService(IProfessorRepository professorRepository) : ICrudInterface<DtoCreateUpdateUser, DtoGetProfessor>
+    public class ProfessorService(IProfessorRepository professorRepository) : IProfessorService
     {
         private readonly IProfessorRepository _professorRepository = professorRepository;
 
@@ -14,8 +14,16 @@ namespace WAPI_GS.Service
         {
             try
             {
-                string message = await _professorRepository.CreateAsync(dto);
-                return message;
+                TblProfessor professorEncontrado =
+                    await _professorRepository.RecuperaProfessorPorEmailOuUsernameELancaExcecaoSeNaoExistir(dto);
+
+                professorEncontrado = dto.ToEntity();
+
+                professorEncontrado.Password = BCrypt.Net.BCrypt.HashPassword(dto.Password);
+
+                _professorRepository.Create(professorEncontrado);
+
+                return HelperMessages.PROFESSOR_SALVO_SUCESSO;
             }
             catch (Exception ex)
             {
@@ -27,12 +35,18 @@ namespace WAPI_GS.Service
         {
             try
             {
-                string _id = await _professorRepository.UpdateAsync(id, dto);
-                return _id;
+                TblProfessor professorEncontrado =
+                    await _professorRepository.RecuperaProfessorPorIDELancaExcecaoSeNaoExistir(id);
+
+                professorEncontrado = professorEncontrado.UpdateProfessorPropriedades(dto);
+
+                _professorRepository.Update(professorEncontrado);
+
+                return id.ToString();
             }
             catch (Exception ex)
             {
-                throw new Exception(HelperExceptions.CreateExceptionMessage(ex));
+                throw new Exception(ex.Message);
             }
         }
 
@@ -41,7 +55,9 @@ namespace WAPI_GS.Service
         {
             try
             {
-                string _id = await _professorRepository.ChangeActiveAsync(id);
+                TblProfessor professorEncontrado =
+                   await _professorRepository.RecuperaProfessorPorIDELancaExcecaoSeNaoExistir(id);
+                string _id = _professorRepository.ChangeActive(professorEncontrado);
                 return _id;
             }
             catch (Exception ex)
@@ -55,7 +71,10 @@ namespace WAPI_GS.Service
         {
             try
             {
-                await _professorRepository.DeleteAsync(id);
+                TblProfessor professorEncontrado =
+                  await _professorRepository.RecuperaProfessorPorIDELancaExcecaoSeNaoExistir(id);
+                _professorRepository.Delete(professorEncontrado);
+
 #warning REMOVER SALAS DO PROFESSOR
                 //List<TblPtd> tblUsersSalas = await _appDbContext.TblUsersSala.Where(e => e.UserId == id).ToListAsync();
                 //_appDbContext.RemoveRange(tblUsersSalas);

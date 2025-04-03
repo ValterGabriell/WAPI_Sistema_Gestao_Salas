@@ -8,7 +8,7 @@ namespace WAPI_GS.Interfaces
     {
         ICrudInterface<DtoCreateSala, DtoGetSala> SalaRepository { get; }
         ICrudInterface<DtoCreateUpdateUser, DtoGetProfessor> UserRepository { get; }
-        ICS_UserSala<DtoCreateUserSala, DtoGetUserSala> UserSalaRepository { get; }
+        ICS_UserSala<DtoAtribuirProfessorASala, DtoGetUserSala> UserSalaRepository { get; }
         ICS_Auth AuthRepository { get; }
         IDisciplinaService cS_Disciplina { get; }
         Task Commit();

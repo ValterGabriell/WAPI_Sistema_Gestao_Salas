@@ -9,12 +9,12 @@ namespace WAPI_GS.Service
     public class DisciplinaService(IDisciplinaRepository repository) : IDisciplinaService
     {
         private readonly IDisciplinaRepository _repository = repository;
-        public async Task<string> CreateAsync(DtoCreateDisciplina dto)
+        public string Create(DtoCreateDisciplina dto)
         {
             try
             {
                 TblDisciplina newDisciplina = dto.ToEntity();
-                string message = await _repository.CreateAsync(newDisciplina);
+                string message = _repository.Create(newDisciplina);
                 return message;
             }
             catch (Exception ex)
@@ -23,12 +23,16 @@ namespace WAPI_GS.Service
             }
         }
 
-        public async Task<string> Update(DtoCreateDisciplina dto, int id)
+        public async Task<string> UpdateAsync(DtoCreateDisciplina dto, int id)
         {
             try
             {
-                TblDisciplina updatedDisciplina = dto.ToEntityForUpdate(id);
-                string updateResult = await _repository.UpdateAsync(updatedDisciplina, id);
+                TblDisciplina? tblDisciplina = await _repository.RecuperaDisciplinaPorID(id);
+                if (tblDisciplina is null) throw new KeyNotFoundException(HelperMessages.DISCIPLINA_NAO_ENCONTRADA);
+
+                tblDisciplina = dto.ToEntityForUpdate(id);
+
+                string updateResult = _repository.Update(tblDisciplina);
                 return updateResult;
             }
             catch (Exception ex)

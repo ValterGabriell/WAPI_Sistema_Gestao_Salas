@@ -1,4 +1,6 @@
-﻿namespace WAPI_GS.Dto.User
+﻿using WAPI_GS.Modelos;
+
+namespace WAPI_GS.Dto.User
 {
     public class DtoCreateUpdateUser
     {
@@ -8,5 +10,17 @@
         public string Username { get; set; } = null!;
         public string? Password { get; set; } = string.Empty;
         public bool IsActive { get; set; } = true;
+
+        public TblProfessor ToEntity()
+        {
+            return new TblProfessor
+            {
+                Name = Name,
+                MobilePhone = MobilePhone,
+                Email = Email,
+                Password = Password,
+                IsActive = true
+            };
+        }
     }
 }

@@ -5,11 +5,14 @@ namespace WAPI_GS.Infra.Professor
 {
     public interface IProfessorRepository
     {
-        Task<string> CreateAsync(DtoCreateUpdateUser dto);
-        Task<string> UpdateAsync(int id, DtoCreateUpdateUser dto);
-        Task<string> ChangeActiveAsync(int id);
-        Task DeleteAsync(int id);
+        string Create(TblProfessor entity);
+        string Update(TblProfessor entity);
+        string ChangeActive(TblProfessor entity);
+        void Delete(TblProfessor entity);
         Task<TblProfessor> GetByIdAsync(int id);
         Task<(IEnumerable<TblProfessor>, int count)> GetListAsync(FiltersParameter filtersParameter);
+
+        Task<TblProfessor> RecuperaProfessorPorEmailOuUsernameELancaExcecaoSeNaoExistir(DtoCreateUpdateUser dto);
+        Task<TblProfessor> RecuperaProfessorPorIDELancaExcecaoSeNaoExistir(int id);
     }
 }

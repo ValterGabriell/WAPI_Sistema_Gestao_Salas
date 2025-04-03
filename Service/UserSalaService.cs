@@ -4,20 +4,18 @@ using System.Net.Mail;
 using System.Text;
 using System.Text.Json;
 using WAPI_GS.Dto.UserSala;
-using WAPI_GS.EM.Sala;
-using WAPI_GS.EM.UserSala;
 using WAPI_GS.Interfaces;
 using WAPI_GS.Modelos;
 
 namespace WAPI_GS.Service
 {
     public class UserSalaService(AppDbContext appDbContext, IConfiguration configuration)
-        : ICS_UserSala<DtoCreateUserSala, DtoGetUserSala>
+        : ICS_UserSala<DtoAtribuirProfessorASala, DtoGetUserSala>
     {
         private readonly AppDbContext _appDbContext = appDbContext;
         private readonly IConfiguration _configuration = configuration;
 
-        public async Task<DtoResponseCreate> Create(DtoCreateUserSala dto, string requestKey)
+        public async Task<DtoResponseCreate> Create(DtoAtribuirProfessorASala dto, string requestKey)
         {
             TblDisciplina tblDisciplina = await _appDbContext.TblDisciplina.Where(e => e.Id == dto.DisciplinaId).FirstAsync() ?? throw new KeyNotFoundException("Disciplina");
 
@@ -49,14 +47,14 @@ namespace WAPI_GS.Service
             };
         }
 
-        private bool IsEntityPresentForDayHour(DtoCreateUserSala dto)
+        private bool IsEntityPresentForDayHour(DtoAtribuirProfessorASala dto)
         {
             return _appDbContext.TblUsersSala
                 .AsNoTracking()
                 .Any(e => e.Dia == dto.Dia && dto.HoraInicial >= e.HoraInicial && dto.HoraInicial <= e.HoraFinal);
         }
 
-        private static TblPtd InitializeEntity(DtoCreateUserSala dto)
+        private static TblPtd InitializeEntity(DtoAtribuirProfessorASala dto)
         {
             var entity = dto.ToEntity();
             var g = Guid.NewGuid();
@@ -64,7 +62,7 @@ namespace WAPI_GS.Service
             return entity;
         }
 
-        public async Task<string> Update(DtoUpdateSalaUser dto, int oldUserId, int SalaId, string requestKey)
+        public async Task<string> Update(DtoAtualizarAtribuicaoProfessorSala dto, int oldUserId, int SalaId, string requestKey)
         {
 
             try
