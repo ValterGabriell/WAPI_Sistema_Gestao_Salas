@@ -1,5 +1,4 @@
-﻿using CS800_Model_iCorp;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using WAPI_GS.Dto.Sala;
 using WAPI_GS.EM.Sala;
 using WAPI_GS.Interfaces;
@@ -12,7 +11,7 @@ namespace WAPI_GS.Service
     {
         private readonly AppDbContext _appDbContext = appDbContext;
 
-        public async Task<string> Create(DtoCreateSala dto, string requestKey)
+        public async Task<string> CreateAsync(DtoCreateSala dto)
         {
 
             try
@@ -35,7 +34,7 @@ namespace WAPI_GS.Service
             return "Entidade gerada!";
         }
 
-        public async Task<string> Update(DtoCreateSala dto, int id, string requestKey)
+        public async Task<string> UpdateAsync(DtoCreateSala dto, int id)
         {
 
             try
@@ -77,7 +76,7 @@ namespace WAPI_GS.Service
         }
 
 
-        public async Task<string> ChangeActive(int id, string requestKey)
+        public async Task<string> ChangeActive(int id)
         {
 
             try
@@ -107,7 +106,7 @@ namespace WAPI_GS.Service
         }
 
 
-        public async Task Delete(int id, string requestKey)
+        public async Task DeleteAsync(int id)
         {
 
             var entity = await _appDbContext.TblSalas.Where(e => e.Id == id).FirstAsync();
@@ -128,7 +127,7 @@ namespace WAPI_GS.Service
             }
         }
 
-        public async Task<DtoGetSala> GetById(int id, string requestKey)
+        public async Task<DtoGetSala> GetByIdAsync(int id)
         {
 
             try
@@ -156,7 +155,7 @@ namespace WAPI_GS.Service
             }
         }
 
-        public async Task<PagedList<DtoGetSala>> GetList(FiltersParameter filtersParameter, string requestKey)
+        public async Task<PagedList<DtoGetSala>> GetListAsync(FiltersParameter filtersParameter)
         {
 
             try

@@ -12,7 +12,7 @@ public class AppDbContext : DbContext
 
     public DbSet<TblSala> TblSalas { get; set; }
 
-    public DbSet<TblUser> TblUsers { get; set; }
+    public DbSet<TblProfessor> TblUsers { get; set; }
     public DbSet<TblAuth> TblAuth { get; set; }
     public DbSet<TblTurma> TblTurma { get; set; }
     public DbSet<TblDisciplina> TblDisciplina { get; set; }

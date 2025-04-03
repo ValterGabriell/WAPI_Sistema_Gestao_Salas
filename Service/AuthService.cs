@@ -9,7 +9,7 @@ namespace WAPI_GS.Service
         private readonly AppDbContext _appDbContext = appDbContext;
         public async Task<string> Login(string username, string password, bool isAdmin)
         {
-            TblUser tblUser = await _appDbContext.TblUsers.Where(e => e.Username == username)
+            TblProfessor tblUser = await _appDbContext.TblUsers.Where(e => e.Username == username)
                 .FirstOrDefaultAsync() ?? throw new KeyNotFoundException("Usuário não encontrado");
 
             TblAuth tblAdmin = await _appDbContext.TblAuth.SingleAsync(e => e.IsAdmin);
@@ -73,7 +73,7 @@ namespace WAPI_GS.Service
             return RequestToken;
         }
 
-        private async Task<TblAuth> GenerateAuthEntityRegister(bool isAdmin, TblUser tblUser, long miliAtuais)
+        private async Task<TblAuth> GenerateAuthEntityRegister(bool isAdmin, TblProfessor tblUser, long miliAtuais)
         {
             tblUser.LastLogin = DateTime.UtcNow;
 

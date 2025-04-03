@@ -1,8 +1,8 @@
-﻿using CS800_Model_iCorp;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WAPI_GS.Dto;
 using WAPI_GS.Dto.UserSala;
 using WAPI_GS.Interfaces;
+using WAPI_GS.Utilidades;
 
 namespace WAPI_GS.Controllers
 {

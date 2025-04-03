@@ -190,7 +190,7 @@ namespace WAPI_GS.Service
                         .FirstOrDefaultAsync();
 
                     // Busca o professor associada à TblUsersSala
-                    TblUser? tblUser = await _appDbContext.TblUsers
+                    TblProfessor? tblUser = await _appDbContext.TblUsers
                         .Where(e => e.Id == ptdAtual.UserId)
                         .FirstOrDefaultAsync();
 
@@ -360,12 +360,12 @@ namespace WAPI_GS.Service
                 .FirstOrDefaultAsync() ?? throw new Exception("Nenhuma reserva encontrada com os parâmetros fornecidos.");
 
 
-            TblUser user = await _appDbContext.TblUsers.Where(e => e.Username == currentUsername).FirstAsync();
+            TblProfessor user = await _appDbContext.TblUsers.Where(e => e.Username == currentUsername).FirstAsync();
             tblUsersSala.UserId = user.Id;
             _appDbContext.Update(tblUsersSala);
             await _appDbContext.SaveChangesAsync();
 
-            TblUser tblUser = await _appDbContext.TblUsers.Where(e => e.Id == user.Id).FirstAsync();
+            TblProfessor tblUser = await _appDbContext.TblUsers.Where(e => e.Id == user.Id).FirstAsync();
             TblSala tblSala = await _appDbContext.TblSalas.Where(e => e.Id == salaId).FirstAsync();
             await SendEmail(tblUser.Email!,
                 " Solicitação para troca de sala aceita! " + tblSala.Name +
@@ -412,7 +412,7 @@ namespace WAPI_GS.Service
         public async Task<bool> NotAccept(int salaId)
         {
             TblPtd tblUsersSala = await _appDbContext.TblUsersSala.Where(e => e.SalaId == salaId).FirstAsync();
-            TblUser tblUser = await _appDbContext.TblUsers.Where(e => e.Id == tblUsersSala.UserId).FirstAsync();
+            TblProfessor tblUser = await _appDbContext.TblUsers.Where(e => e.Id == tblUsersSala.UserId).FirstAsync();
             TblSala tblSala = await _appDbContext.TblSalas.Where(e => e.Id == salaId).FirstAsync();
 
             await SendEmail(tblUser.Email!,

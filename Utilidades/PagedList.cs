@@ -1,4 +1,4 @@
-﻿namespace CS800_Model_iCorp;
+﻿namespace WAPI_GS.Utilidades;
 
 public class PagedList<T> : List<T> where T : class
 {
@@ -14,21 +14,29 @@ public class PagedList<T> : List<T> where T : class
     {
         TotalCount = count;
         CurrentPage = pageNumber;
-        PageSize = pageSize;    
+        PageSize = pageSize;
         TotalPage = (int)Math.Ceiling(count / (double)pageSize);
 
         AddRange(items);
     }
 
-    public static PagedList<T> ToPagedList(List<T> source, int pageNumber, int pageSize)
+
+    public static PagedList<T> ToPagedList(List<T> source, int count, int pageNumber, int pageSize)
     {
-        var count = source.Count();
         if (source == null)
         {
             throw new ArgumentNullException(nameof(source), "Source cannot be null");
         }
-
-        var items = source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
-        return new PagedList<T>(items, count, pageNumber, pageSize);
+        return new PagedList<T>(source, count, pageNumber, pageSize);
     }
+
+    public static PagedList<T> ToPagedList(IEnumerable<T> source, int count, int pageNumber, int pageSize)
+    {
+        if (source == null)
+        {
+            throw new ArgumentNullException(nameof(source), "Source cannot be null");
+        }
+        return new PagedList<T>(source.ToList(), count, pageNumber, pageSize);
+    }
+
 }

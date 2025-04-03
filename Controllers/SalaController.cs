@@ -1,7 +1,7 @@
-﻿using CS800_Model_iCorp;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WAPI_GS.Dto.Sala;
 using WAPI_GS.Interfaces;
+using WAPI_GS.Utilidades;
 
 namespace WAPI_GS.Controllers
 {
@@ -16,7 +16,7 @@ namespace WAPI_GS.Controllers
         {
             try
             {
-                var result = await _uow.SalaRepository.Create(dto, requestKey);
+                var result = await _uow.SalaRepository.CreateAsync(dto, requestKey);
 
                 return Ok(result);
             }
@@ -32,7 +32,7 @@ namespace WAPI_GS.Controllers
         {
             try
             {
-                var result = await _uow.SalaRepository.GetById(id, requestKey);
+                var result = await _uow.SalaRepository.GetByIdAsync(id, requestKey);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -46,7 +46,7 @@ namespace WAPI_GS.Controllers
         {
             try
             {
-                var result = await _uow.SalaRepository.GetList(filtersParameter, requestKey);
+                var result = await _uow.SalaRepository.GetListAsync(filtersParameter, requestKey);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -61,7 +61,7 @@ namespace WAPI_GS.Controllers
         {
             try
             {
-                var result = await _uow.SalaRepository.Update(dto, id, requestKey);
+                var result = await _uow.SalaRepository.UpdateAsync(dto, id, requestKey);
                 await _uow.Commit();
                 return Ok(result);
             }
@@ -77,7 +77,7 @@ namespace WAPI_GS.Controllers
         {
             try
             {
-                await _uow.SalaRepository.Delete(id, requestKey);
+                await _uow.SalaRepository.DeleteAsync(id, requestKey);
                 await _uow.Commit();
                 return Ok();
             }

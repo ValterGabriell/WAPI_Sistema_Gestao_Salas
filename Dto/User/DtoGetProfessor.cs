@@ -1,6 +1,6 @@
 ﻿namespace WAPI_GS.Dto.User
 {
-    public class DtoGetUser
+    public class DtoGetProfessor
     {
         public int Id { get; set; }
         public bool IsActive { get; set; }

@@ -5,9 +5,9 @@ namespace WAPI_GS.EM.User
 {
     public static class UserEM
     {
-        public static TblUser ToEntity(this DtoCreateUser dto)
+        public static TblProfessor ToEntity(this DtoCreateUpdateUser dto)
         {
-            return new TblUser
+            return new TblProfessor
             {
                 Name = dto.Name,
                 MobilePhone = dto.MobilePhone,
@@ -18,9 +18,9 @@ namespace WAPI_GS.EM.User
             };
         }
 
-        public static DtoGetUser ToDto(this TblUser entity)
+        public static DtoGetProfessor ToDto(this TblProfessor entity)
         {
-            return new DtoGetUser
+            return new DtoGetProfessor
             {
                 Id = entity.Id,
                 IsActive = entity.IsActive,
@@ -34,9 +34,9 @@ namespace WAPI_GS.EM.User
             };
         }
 
-        public static TblUser ToEntity(this DtoGetUser dto)
+        public static TblProfessor ToEntity(this DtoGetProfessor dto)
         {
-            return new TblUser
+            return new TblProfessor
             {
                 Id = dto.Id,
                 IsActive = dto.IsActive,

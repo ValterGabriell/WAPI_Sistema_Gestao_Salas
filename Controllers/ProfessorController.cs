@@ -1,7 +1,7 @@
-﻿using CS800_Model_iCorp;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WAPI_GS.Dto.User;
 using WAPI_GS.Interfaces;
+using WAPI_GS.Utilidades;
 
 namespace WAPI_GS.Controllers
 {
@@ -12,11 +12,11 @@ namespace WAPI_GS.Controllers
         private readonly ICS_UnitOfWork _uow = uow;
 
         [HttpPost]
-        public ActionResult<string> Create(DtoCreateUser dto)
+        public ActionResult<string> Create(DtoCreateUpdateUser dto)
         {
             try
             {
-                var result = _uow.UserRepository.Create(dto, "");
+                var result = _uow.UserRepository.CreateAsync(dto, "");
                 _uow.Commit();
                 return Ok(result);
             }
@@ -27,11 +27,11 @@ namespace WAPI_GS.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<DtoGetUser>> GetById(int id, [FromHeader] string requestKey)
+        public async Task<ActionResult<DtoGetProfessor>> GetById(int id, [FromHeader] string requestKey)
         {
             try
             {
-                var result = await _uow.UserRepository.GetById(id, requestKey);
+                var result = await _uow.UserRepository.GetByIdAsync(id, requestKey);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -41,11 +41,11 @@ namespace WAPI_GS.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<PagedList<DtoGetUser>>> GetList([FromQuery] FiltersParameter filtersParameter, [FromHeader] string requestKey)
+        public async Task<ActionResult<PagedList<DtoGetProfessor>>> GetList([FromQuery] FiltersParameter filtersParameter, [FromHeader] string requestKey)
         {
             try
             {
-                var result = await _uow.UserRepository.GetList(filtersParameter, requestKey);
+                var result = await _uow.UserRepository.GetListAsync(filtersParameter, requestKey);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -56,11 +56,11 @@ namespace WAPI_GS.Controllers
 
         [HttpPut("{id}")]
 
-        public async Task<ActionResult<string>> Update(DtoCreateUser dto, int id, [FromHeader] string requestKey)
+        public async Task<ActionResult<string>> Update(DtoCreateUpdateUser dto, int id, [FromHeader] string requestKey)
         {
             try
             {
-                var result = await _uow.UserRepository.Update(dto, id, requestKey);
+                var result = await _uow.UserRepository.UpdateAsync(dto, id, requestKey);
                 await _uow.Commit();
                 return Ok(result);
             }
@@ -76,7 +76,7 @@ namespace WAPI_GS.Controllers
         {
             try
             {
-                await _uow.UserRepository.Delete(id, requestKey);
+                await _uow.UserRepository.DeleteAsync(id, requestKey);
                 await _uow.Commit();
                 return Ok();
             }

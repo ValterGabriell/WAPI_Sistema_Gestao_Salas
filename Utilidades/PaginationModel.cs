@@ -1,4 +1,4 @@
-﻿namespace CS800_Model_iCorp
+﻿namespace WAPI_GS.Utilidades
 {
     public class PaginationModel<T>
     {

@@ -37,3 +37,5 @@ bin/Debug/net8.0/System.Diagnostics.DiagnosticSource.dll
 bin/Debug/net8.0/WAPI_GS.dll
 bin/Debug/net8.0/WAPI_GS.exe
 bin/Debug/net8.0/WAPI_GS.pdb
+/obj
+/bin
