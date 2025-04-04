@@ -4,7 +4,7 @@ using WAPI_GS.Dto.UserSala;
 
 namespace WAPI_GS.Interfaces
 {
-    public interface ICS_UnitOfWork
+    public interface IUnitOfWork
     {
         ICrudInterface<DtoCreateSala, DtoGetSala> SalaRepository { get; }
         ICrudInterface<DtoCreateUpdateUser, DtoGetProfessor> UserRepository { get; }

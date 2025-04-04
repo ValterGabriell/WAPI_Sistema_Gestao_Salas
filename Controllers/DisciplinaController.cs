@@ -7,9 +7,9 @@ namespace WAPI_GS.Controllers
 {
     [ApiController]
     [Route("api/v1/disciplina")]
-    public class DisciplinaController(ICS_UnitOfWork uow) : ControllerBase
+    public class DisciplinaController(IUnitOfWork uow) : ControllerBase
     {
-        private readonly ICS_UnitOfWork _uow = uow;
+        private readonly IUnitOfWork _uow = uow;
 
 
         [HttpPost]

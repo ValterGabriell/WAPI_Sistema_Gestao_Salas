@@ -7,7 +7,8 @@ namespace WAPI_GS.Repositorios.Disciplina
         string Create(TblDisciplina entity);
         string Update(TblDisciplina entity);
         Task<List<TblDisciplina>> GetListAsync();
-        Task<TblDisciplina?> RecuperaDisciplinaPorID(int id);
+        Task<TblDisciplina> GetByIdAsync(int id);
+        Task<TblDisciplina> RecuperaDisciplinaPorIDELancaExcecaoSeNaoAchar(int id);
         Task<TblDisciplina?> RecuperaDisciplinaPorCodigo(string codigo);
     }
 }

@@ -15,14 +15,6 @@ namespace WAPI_GS.Repositorios.Disciplina
 
         public string Update(TblDisciplina entity)
         {
-            //TblDisciplina? tblDisciplina = await RecuperaDisciplinaPorCodigo(entity.Codigo);
-            //if (tblDisciplina != null) throw new InvalidDataException(HelperMessages.DISCIPLINA_JA_CADASTRADA);
-
-            //TblDisciplina? tblDisciplinaUpdate = await RecuperaDisciplinaPorID(id);
-            //if (tblDisciplinaUpdate != null) throw new KeyNotFoundException(HelperMessages.DISCIPLINA_NAO_ENCONTRADA);
-
-            //tblDisciplinaUpdate = entity;
-
             _appDbContext.Update(entity);
             return HelperMessages.DISCIPLINA_SALVO_SUCESSO;
         }
@@ -32,7 +24,10 @@ namespace WAPI_GS.Repositorios.Disciplina
             List<TblDisciplina> tblDisciplinas = await _appDbContext.TblDisciplina.ToListAsync();
             return tblDisciplinas;
         }
-
+        public async Task<TblDisciplina> GetByIdAsync(int id)
+        {
+            return await RecuperaDisciplinaPorIDELancaExcecaoSeNaoAchar(id);
+        }
         public async Task<TblDisciplina?> RecuperaDisciplinaPorCodigo(string codigo)
         {
             return await _appDbContext.TblDisciplina
@@ -41,12 +36,13 @@ namespace WAPI_GS.Repositorios.Disciplina
         }
 
 
-        public async Task<TblDisciplina?> RecuperaDisciplinaPorID(int id)
+        public async Task<TblDisciplina> RecuperaDisciplinaPorIDELancaExcecaoSeNaoAchar(int id)
         {
             return await _appDbContext.TblDisciplina
                 .Where(x => x.Id == id)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync() ?? throw new KeyNotFoundException(HelperMessages.DISCIPLINA_NAO_ENCONTRADA);
         }
+
 
     }
 }

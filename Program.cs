@@ -48,7 +48,7 @@ else
     await supabase.InitializeAsync();
 }
 
-builder.Services.AddScoped<ICS_UnitOfWork, UOWService>();
+builder.Services.AddScoped<IUnitOfWork, UOWService>();
 
 
 var app = builder.Build();

@@ -7,9 +7,9 @@ namespace WAPI_GS.Controllers
 {
     [ApiController()]
     [Route("api/v1/professor")]
-    public class ProfessorController(ICS_UnitOfWork uow) : ControllerBase
+    public class ProfessorController(IUnitOfWork uow) : ControllerBase
     {
-        private readonly ICS_UnitOfWork _uow = uow;
+        private readonly IUnitOfWork _uow = uow;
 
         [HttpPost]
         public ActionResult<string> Create(DtoCreateUpdateUser dto)

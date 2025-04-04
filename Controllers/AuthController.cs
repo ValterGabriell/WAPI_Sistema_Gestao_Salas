@@ -6,9 +6,9 @@ namespace WAPI_GS.Controllers
 {
     [ApiController]
     [Route("api/v1/auth")]
-    public class AuthController(ICS_UnitOfWork uow) : ControllerBase
+    public class AuthController(IUnitOfWork uow) : ControllerBase
     {
-        private readonly ICS_UnitOfWork _uow = uow;
+        private readonly IUnitOfWork _uow = uow;
 
         [HttpPost]
         public async Task<ActionResult<string>> Login(DtoLogin dto)

@@ -7,9 +7,9 @@ namespace WAPI_GS.Controllers
 {
     [ApiController]
     [Route("api/v1/sala")]
-    public class SalaController(ICS_UnitOfWork uow) : ControllerBase
+    public class SalaController(IUnitOfWork uow) : ControllerBase
     {
-        private readonly ICS_UnitOfWork _uow = uow;
+        private readonly IUnitOfWork _uow = uow;
 
         [HttpPost()]
         public async Task<ActionResult<string>> Create(DtoCreateSala dto, [FromHeader] string requestKey)

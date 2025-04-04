@@ -5,7 +5,7 @@ using WAPI_GS.Modelos;
 
 namespace WAPI_GS.Repositorios.Email
 {
-    public class EmailRepositoryImpl(AppDbContext appDbContext, IConfiguration configuration)
+    public class EmailRepositoryImpl(AppDbContext appDbContext, IConfiguration configuration) : IEmailRepository
     {
         private readonly AppDbContext _appDbContext = appDbContext;
         private readonly IConfiguration _configuration = configuration;

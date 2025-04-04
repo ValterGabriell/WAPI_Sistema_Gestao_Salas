@@ -8,9 +8,9 @@ namespace WAPI_GS.Controllers
 {
     [ApiController]
     [Route("api/v1/professorsala")]
-    public class ProfessorSalaController(ICS_UnitOfWork uow) : ControllerBase
+    public class ProfessorSalaController(IUnitOfWork uow) : ControllerBase
     {
-        private readonly ICS_UnitOfWork _uow = uow;
+        private readonly IUnitOfWork _uow = uow;
 
         [HttpPost]
         public async Task<ActionResult<string>> Create(DtoAtribuirProfessorASala dto, [FromHeader] string requestKey)

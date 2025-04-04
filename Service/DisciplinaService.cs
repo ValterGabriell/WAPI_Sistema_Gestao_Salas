@@ -27,9 +27,7 @@ namespace WAPI_GS.Service
         {
             try
             {
-                TblDisciplina? tblDisciplina = await _repository.RecuperaDisciplinaPorID(id);
-                if (tblDisciplina is null) throw new KeyNotFoundException(HelperMessages.DISCIPLINA_NAO_ENCONTRADA);
-
+                TblDisciplina? tblDisciplina = await _repository.RecuperaDisciplinaPorIDELancaExcecaoSeNaoAchar(id);
                 tblDisciplina = dto.ToEntityForUpdate(id);
 
                 string updateResult = _repository.Update(tblDisciplina);

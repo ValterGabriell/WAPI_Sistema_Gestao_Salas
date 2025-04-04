@@ -14,5 +14,6 @@
         public const string SALA_NAO_ENCONTRADA = "Sala não encontrada";
 
         public const string ATRIBUICAO_FEITA = "Professor atribuido a sala com sucesso";
+        public const string ATRIBUICAO_NAO_ENCONTRADA = "Atribuicao nao encontrada";
     }
 }
