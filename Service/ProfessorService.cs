@@ -14,14 +14,15 @@ namespace WAPI_GS.Service
         {
             try
             {
-                TblProfessor professorEncontrado =
-                    await _professorRepository.RecuperaProfessorPorEmailOuUsernameELancaExcecaoSeNaoExistir(dto);
+                TblProfessor? professorEncontrado =
+                    await _professorRepository.RecuperaProfessorPorEmailOuUsername(dto);
+                if (professorEncontrado is not null) throw new ArgumentException(HelperMessages.PROFESSOR_JA_CADASTRADO);
 
                 professorEncontrado = dto.ToEntity();
 
                 professorEncontrado.Password = BCrypt.Net.BCrypt.HashPassword(dto.Password);
 
-                _professorRepository.Create(professorEncontrado);
+                await _professorRepository.Create(professorEncontrado);
 
                 return HelperMessages.PROFESSOR_SALVO_SUCESSO;
             }
@@ -40,7 +41,7 @@ namespace WAPI_GS.Service
 
                 professorEncontrado = professorEncontrado.UpdateProfessorPropriedades(dto);
 
-                _professorRepository.Update(professorEncontrado);
+                await _professorRepository.Update(professorEncontrado);
 
                 return id.ToString();
             }
@@ -57,7 +58,7 @@ namespace WAPI_GS.Service
             {
                 TblProfessor professorEncontrado =
                    await _professorRepository.RecuperaProfessorPorIDELancaExcecaoSeNaoExistir(id);
-                string _id = _professorRepository.ChangeActive(professorEncontrado);
+                string _id = await _professorRepository.ChangeActive(professorEncontrado);
                 return _id;
             }
             catch (Exception ex)
@@ -73,7 +74,7 @@ namespace WAPI_GS.Service
             {
                 TblProfessor professorEncontrado =
                   await _professorRepository.RecuperaProfessorPorIDELancaExcecaoSeNaoExistir(id);
-                _professorRepository.Delete(professorEncontrado);
+                await _professorRepository.Delete(professorEncontrado);
 
 #warning REMOVER SALAS DO PROFESSOR
                 //List<TblPtd> tblUsersSalas = await _appDbContext.TblUsersSala.Where(e => e.UserId == id).ToListAsync();

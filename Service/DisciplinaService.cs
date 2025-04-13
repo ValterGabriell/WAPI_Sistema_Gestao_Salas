@@ -9,12 +9,12 @@ namespace WAPI_GS.Service
     public class DisciplinaService(IDisciplinaRepository repository) : IDisciplinaService
     {
         private readonly IDisciplinaRepository _repository = repository;
-        public string Create(DtoCreateDisciplina dto)
+        public async Task<string> Create(DtoCreateDisciplina dto)
         {
             try
             {
                 TblDisciplina newDisciplina = dto.ToEntity();
-                string message = _repository.Create(newDisciplina);
+                string message = await _repository.Create(newDisciplina);
                 return message;
             }
             catch (Exception ex)
@@ -30,7 +30,7 @@ namespace WAPI_GS.Service
                 TblDisciplina? tblDisciplina = await _repository.RecuperaDisciplinaPorIDELancaExcecaoSeNaoAchar(id);
                 tblDisciplina = dto.ToEntityForUpdate(id);
 
-                string updateResult = _repository.Update(tblDisciplina);
+                string updateResult = await _repository.Update(tblDisciplina);
                 return updateResult;
             }
             catch (Exception ex)
@@ -39,7 +39,7 @@ namespace WAPI_GS.Service
             }
         }
 
-        public async Task<List<TblDisciplina>> GetList(string requestKey)
+        public async Task<List<TblDisciplina>> GetList()
         {
             try
             {

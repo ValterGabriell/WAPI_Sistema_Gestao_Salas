@@ -14,6 +14,5 @@ namespace WAPI_GS.Modelos
         public string Sigla { get; set; }
         public int CargaHoraria { get; set; }
         public int TotalAulas { get; set; }
-        public string? TurmaId { get; set; }
     }
 }

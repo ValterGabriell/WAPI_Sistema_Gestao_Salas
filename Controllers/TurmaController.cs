@@ -1,102 +1,57 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using WAPI_GS.Dto.Turma;
+using WAPI_GS.Interfaces;
 using WAPI_GS.Modelos;
 
 namespace WAPI_GS.Controllers
 {
     [ApiController]
     [Route("api/v1/turma")]
-    public class TurmaController(AppDbContext appDbContext) : ControllerBase
+    public class TurmaController : ControllerBase
     {
-        private readonly AppDbContext _appDbContext = appDbContext;
+        private readonly IUnitOfWork _uow;
+
+        public TurmaController(IUnitOfWork uow)
+        {
+            _uow = uow;
+        }
 
         [HttpPost()]
-        public async Task<ActionResult<string>> Create([FromBody] TblTurma entity, [FromHeader] string requestKey)
+        public async Task<ActionResult<string>> Create([FromBody] DtoCreateTurma dto)
         {
-            try
-            {
-
-                var id = Guid.NewGuid().ToString();
-                entity.Id = id;
-                _appDbContext.Add(entity);
-                await _appDbContext.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-
-                throw new Exception(HelperExceptions.CreateExceptionMessage(ex));
-            }
-
-            return "Entidade gerada!";
+            string id = await _uow.TurmaService.CreateAsync(dto);
+            return CreatedAtAction(nameof(GetById), new { id }, id);
         }
 
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<TblTurma>> GetById(string id, [FromHeader] string requestKey)
+        public async Task<ActionResult<TblTurma>> GetById(string id)
         {
-            try
-            {
-                TblTurma tblTurma = await _appDbContext.TblTurma
-                     .AsNoTracking().FirstOrDefaultAsync(e => e.Id == id) ?? throw new KeyNotFoundException("Key Not FOund");
-                return Ok(tblTurma);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(HelperExceptions.CreateExceptionMessage(ex));
-            }
+            TblTurma tblTurma = await _uow.TurmaService.GetByIdAsync(id);
+            return Ok(tblTurma);
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<TblTurma>>> GetList([FromQuery] FiltersParameter filtersParameter, [FromHeader] string requestKey)
+        public async Task<ActionResult<List<TblTurma>>> GetList()
         {
-            try
-            {
-                List<TblTurma> tblTurmas = await _appDbContext.TblTurma
-                    .AsNoTracking().ToListAsync();
-
-                return Ok(tblTurmas);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(HelperExceptions.CreateExceptionMessage(ex));
-            }
+            List<TblTurma> tblTurmas = await _uow.TurmaService.GetListAsync();
+            return Ok(tblTurmas);
         }
 
         [HttpPut("{id}")]
 
-        public async Task<ActionResult<string>> Update([FromBody] TblTurma newEntity, string id, [FromHeader] string requestKey)
+        public async Task<ActionResult<string>> Update([FromBody] DtoCreateTurma dto, string id)
         {
-            try
-            {
-                TblTurma _ = await _appDbContext.TblTurma
-                    .AsNoTracking().FirstOrDefaultAsync(e => e.Id == id) ?? throw new KeyNotFoundException("Key Not Fund");
-
-
-                newEntity.Id = id;
-                _appDbContext.Update(newEntity);
-                await _appDbContext.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-            return id.ToString();
+            string _id = await _uow.TurmaService.Update(dto, id);
+            return Ok(_id);
         }
 
         [HttpDelete("{id}")]
 
-        public async Task<ActionResult<string>> Delete(string id, [FromHeader] string requestKey)
+        public async Task<ActionResult<string>> Delete(string id)
         {
-            try
-            {
-                var entity = await _appDbContext.TblTurma.Where(e => e.Id == id).FirstAsync();
-                _appDbContext.Remove(entity);
-                return Ok("Deletado");
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            string _id = await _uow.TurmaService.Delete(id);
+            return Ok(_id);
         }
     }
 }

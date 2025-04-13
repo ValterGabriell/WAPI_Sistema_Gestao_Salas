@@ -1,102 +1,5 @@
 [
   {
-    "ContainingType": "WAPI_GS.Controllers.ProfessorSalaController",
-    "Method": "Accept",
-    "RelativePath": "accept",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "salaId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "dia",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "userId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "currentUsername",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "horaInit",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "horaFinal",
-        "Type": "System.Int32",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Boolean",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "WAPI_GS.Controllers.AuthController",
-    "Method": "Login",
-    "RelativePath": "api/v1/auth",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "dto",
-        "Type": "WAPI_GS.Dto.DtoLogin",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.String",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "WAPI_GS.Controllers.AuthController",
-    "Method": "OK",
-    "RelativePath": "api/v1/auth",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.String",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
     "ContainingType": "WAPI_GS.Controllers.DisciplinaController",
     "Method": "Create",
     "RelativePath": "api/v1/disciplina",
@@ -108,11 +11,6 @@
         "Name": "dto",
         "Type": "WAPI_GS.Dto.Disciplina.DtoCreateDisciplina",
         "IsRequired": true
-      },
-      {
-        "Name": "requestKey",
-        "Type": "System.String",
-        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -144,11 +42,6 @@
         "Name": "id",
         "Type": "System.Int32",
         "IsRequired": false
-      },
-      {
-        "Name": "requestKey",
-        "Type": "System.String",
-        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -170,13 +63,7 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "requestKey",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.List\u00601[[WAPI_GS.Modelos.TblDisciplina, WAPI_GS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
@@ -199,7 +86,7 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "WAPI_GS.Dto.User.DtoCreateUser",
+        "Type": "WAPI_GS.Dto.User.DtoCreateUpdateUser",
         "IsRequired": true
       }
     ],
@@ -242,16 +129,11 @@
         "Name": "PageSize",
         "Type": "System.Int32",
         "IsRequired": false
-      },
-      {
-        "Name": "requestKey",
-        "Type": "System.String",
-        "IsRequired": false
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "CS800_Model_iCorp.PagedList\u00601[[WAPI_GS.Dto.User.DtoGetUser, WAPI_GS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "WAPI_GS.Utilidades.PagedList\u00601[[WAPI_GS.Dto.User.DtoGetProfessor, WAPI_GS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -273,16 +155,11 @@
         "Name": "id",
         "Type": "System.Int32",
         "IsRequired": true
-      },
-      {
-        "Name": "requestKey",
-        "Type": "System.String",
-        "IsRequired": false
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "WAPI_GS.Dto.User.DtoGetUser",
+        "Type": "WAPI_GS.Dto.User.DtoGetProfessor",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -302,18 +179,13 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "WAPI_GS.Dto.User.DtoCreateUser",
+        "Type": "WAPI_GS.Dto.User.DtoCreateUpdateUser",
         "IsRequired": true
       },
       {
         "Name": "id",
         "Type": "System.Int32",
         "IsRequired": true
-      },
-      {
-        "Name": "requestKey",
-        "Type": "System.String",
-        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -340,18 +212,13 @@
         "Name": "id",
         "Type": "System.Int32",
         "IsRequired": true
-      },
-      {
-        "Name": "requestKey",
-        "Type": "System.String",
-        "IsRequired": false
       }
     ],
     "ReturnTypes": []
   },
   {
     "ContainingType": "WAPI_GS.Controllers.ProfessorSalaController",
-    "Method": "Create",
+    "Method": "AtribuirProfessorASala",
     "RelativePath": "api/v1/professorsala",
     "HttpMethod": "POST",
     "IsController": true,
@@ -359,13 +226,8 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "WAPI_GS.Dto.UserSala.DtoCreateUserSala",
+        "Type": "WAPI_GS.Dto.UserSala.DtoAtribuirProfessorASala",
         "IsRequired": true
-      },
-      {
-        "Name": "requestKey",
-        "Type": "System.String",
-        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -382,7 +244,7 @@
   },
   {
     "ContainingType": "WAPI_GS.Controllers.ProfessorSalaController",
-    "Method": "Delete",
+    "Method": "RemoverAtribuicaoProfessorSala",
     "RelativePath": "api/v1/professorsala",
     "HttpMethod": "DELETE",
     "IsController": true,
@@ -399,8 +261,13 @@
         "IsRequired": false
       },
       {
-        "Name": "requestKey",
+        "Name": "turmaID",
         "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "dia",
+        "Type": "System.DateOnly",
         "IsRequired": false
       }
     ],
@@ -419,26 +286,10 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "salaId",
-        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "profId",
-        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "requestKey",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "CS800_Model_iCorp.PagedList\u00601[[WAPI_GS.Dto.UserSala.DtoGetUserSala, WAPI_GS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "WAPI_GS.Utilidades.PagedList\u00601[[WAPI_GS.Dto.UserSala.DtoGetUserSala, WAPI_GS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -450,7 +301,7 @@
   },
   {
     "ContainingType": "WAPI_GS.Controllers.ProfessorSalaController",
-    "Method": "Update",
+    "Method": "AtualizarAtribuicaoProfessorASala",
     "RelativePath": "api/v1/professorsala",
     "HttpMethod": "PUT",
     "IsController": true,
@@ -458,7 +309,7 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "WAPI_GS.Dto.UserSala.DtoUpdateSalaUser",
+        "Type": "WAPI_GS.Dto.UserSala.DtoAtualizarAtribuicaoProfessorSala",
         "IsRequired": true
       },
       {
@@ -470,186 +321,6 @@
         "Name": "oldUserId",
         "Type": "System.Int32",
         "IsRequired": false
-      },
-      {
-        "Name": "requestKey",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.String",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "WAPI_GS.Controllers.SalaController",
-    "Method": "Create",
-    "RelativePath": "api/v1/sala",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "dto",
-        "Type": "WAPI_GS.Dto.Sala.DtoCreateSala",
-        "IsRequired": true
-      },
-      {
-        "Name": "requestKey",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.String",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "WAPI_GS.Controllers.SalaController",
-    "Method": "GetList",
-    "RelativePath": "api/v1/sala",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "Search",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "IsActive",
-        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "PageNumber",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "PageSize",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "requestKey",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "CS800_Model_iCorp.PagedList\u00601[[WAPI_GS.Dto.Sala.DtoGetSala, WAPI_GS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "WAPI_GS.Controllers.SalaController",
-    "Method": "GetById",
-    "RelativePath": "api/v1/sala/{id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "requestKey",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "WAPI_GS.Dto.Sala.DtoGetSala",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "WAPI_GS.Controllers.SalaController",
-    "Method": "Update",
-    "RelativePath": "api/v1/sala/{id}",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "dto",
-        "Type": "WAPI_GS.Dto.Sala.DtoCreateSala",
-        "IsRequired": true
-      },
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "requestKey",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.String",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "WAPI_GS.Controllers.SalaController",
-    "Method": "Delete",
-    "RelativePath": "api/v1/sala/{id}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "requestKey",
-        "Type": "System.String",
-        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -673,14 +344,9 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "entity",
-        "Type": "WAPI_GS.Modelos.TblTurma",
+        "Name": "dto",
+        "Type": "WAPI_GS.Dto.Turma.DtoCreateTurma",
         "IsRequired": true
-      },
-      {
-        "Name": "requestKey",
-        "Type": "System.String",
-        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -702,33 +368,7 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "Search",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "IsActive",
-        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "PageNumber",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "PageSize",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "requestKey",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.List\u00601[[WAPI_GS.Modelos.TblTurma, WAPI_GS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
@@ -753,11 +393,6 @@
         "Name": "id",
         "Type": "System.String",
         "IsRequired": true
-      },
-      {
-        "Name": "requestKey",
-        "Type": "System.String",
-        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -781,19 +416,14 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "newEntity",
-        "Type": "WAPI_GS.Modelos.TblTurma",
+        "Name": "dto",
+        "Type": "WAPI_GS.Dto.Turma.DtoCreateTurma",
         "IsRequired": true
       },
       {
         "Name": "id",
         "Type": "System.String",
         "IsRequired": true
-      },
-      {
-        "Name": "requestKey",
-        "Type": "System.String",
-        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -820,73 +450,11 @@
         "Name": "id",
         "Type": "System.String",
         "IsRequired": true
-      },
-      {
-        "Name": "requestKey",
-        "Type": "System.String",
-        "IsRequired": false
       }
     ],
     "ReturnTypes": [
       {
         "Type": "System.String",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "WAPI_GS.Controllers.ProfessorSalaController",
-    "Method": "NotAccept",
-    "RelativePath": "notAccept",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "salaId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.String",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "WAPI_GS.Controllers.ProfessorSalaController",
-    "Method": "SendEmail",
-    "RelativePath": "sendEmail",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "dtoSendEmail",
-        "Type": "WAPI_GS.Dto.DtoSendEmail",
-        "IsRequired": true
-      },
-      {
-        "Name": "requestKey",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Boolean",
         "MediaTypes": [
           "text/plain",
           "application/json",

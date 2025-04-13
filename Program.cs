@@ -1,7 +1,14 @@
 
 using Microsoft.EntityFrameworkCore;
+using WAPI_GS.Infra.Professor;
 using WAPI_GS.Interfaces;
 using WAPI_GS.Modelos;
+using WAPI_GS.Repositorios.Disciplina;
+using WAPI_GS.Repositorios.Email;
+using WAPI_GS.Repositorios.Professor;
+using WAPI_GS.Repositorios.ProfessorSala;
+using WAPI_GS.Repositorios.Salas;
+using WAPI_GS.Repositorios.Turma;
 using WAPI_GS.Service;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -48,6 +55,12 @@ else
     await supabase.InitializeAsync();
 }
 
+builder.Services.AddScoped<IDisciplinaRepository, DisciplinaRepositoryImpl>();
+builder.Services.AddScoped<IEmailRepository, EmailRepositoryImpl>();
+builder.Services.AddScoped<IProfessorRepository, ProfessorRepositoryImpl>();
+builder.Services.AddScoped<ITurmaRepository, TurmaRepositoryImpl>();
+builder.Services.AddScoped<IProfessorSalaRepository, ProfessorSalaRepositoryImpl>();
+builder.Services.AddScoped<ISalaRepository, SalaRepositoryImpl>();
 builder.Services.AddScoped<IUnitOfWork, UOWService>();
 
 

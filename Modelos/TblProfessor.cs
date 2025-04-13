@@ -55,7 +55,7 @@ public class TblProfessor
             MobilePhone = dto.MobilePhone,
             Email = dto.Email,
             Username = dto.Username,
-            IsActive = dto.IsActive,
+            IsActive = dto.IsActive ?? true,
         };
     }
 

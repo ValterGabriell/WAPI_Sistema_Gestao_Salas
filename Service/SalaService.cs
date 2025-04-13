@@ -10,12 +10,12 @@ namespace WAPI_GS.Service
     {
         private readonly ISalaRepository _repository = repository;
 
-        public string Create(DtoCreateSala dto)
+        public async Task<string> Create(DtoCreateSala dto)
         {
             try
             {
                 TblSala tblSala = dto.ToEntity();
-                string message = _repository.Create(tblSala);
+                string message = await _repository.Create(tblSala);
                 return message;
             }
             catch (Exception ex)
@@ -34,7 +34,7 @@ namespace WAPI_GS.Service
 #warning deve checar se o nome da sala ja existe;
                 TblSala entity = dto.ToEntityForUpdate(tblSala.IsActive);
                 tblSala = entity;
-                string message = _repository.Update(tblSala);
+                string message = await _repository.Update(tblSala);
                 return message;
             }
             catch (Exception ex)
@@ -51,7 +51,7 @@ namespace WAPI_GS.Service
             {
                 TblSala tblSala = await _repository.RecuperaEntidadePorIDElancaExcecaoSeNaoExiste(id);
                 tblSala.MudaPropriedadeIsAtivo();
-                string message = _repository.Update(tblSala);
+                string message = await _repository.Update(tblSala);
                 return message;
             }
             catch (Exception ex)

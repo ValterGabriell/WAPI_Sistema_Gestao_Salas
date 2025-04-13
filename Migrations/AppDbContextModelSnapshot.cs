@@ -28,16 +28,11 @@ namespace WAPI_GS.Migrations
                         .HasColumnType("text")
                         .HasColumnName("id");
 
-                    b.Property<string>("AccessToken")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("accessToken");
-
                     b.Property<bool>("IsAdmin")
                         .HasColumnType("boolean")
                         .HasColumnName("isAdmin");
 
-                    b.Property<string>("RequestToken")
+                    b.Property<string>("RefreshToken")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("requestToken");
@@ -45,10 +40,6 @@ namespace WAPI_GS.Migrations
                     b.Property<long>("TokenAvailableUntil")
                         .HasColumnType("bigint")
                         .HasColumnName("tokenAvailableUntil");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer")
-                        .HasColumnName("userid");
 
                     b.HasKey("Id");
 
@@ -81,13 +72,7 @@ namespace WAPI_GS.Migrations
                     b.Property<int>("TotalAulas")
                         .HasColumnType("integer");
 
-                    b.Property<string>("TurmaId")
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("TurmaId")
-                        .IsUnique();
 
                     b.ToTable("tbldisciplina");
                 });
@@ -172,6 +157,9 @@ namespace WAPI_GS.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("salaid");
 
+                    b.Property<string>("TurmaId")
+                        .HasColumnType("text");
+
                     b.Property<int>("UserId")
                         .HasColumnType("integer")
                         .HasColumnName("userid");
@@ -230,15 +218,6 @@ namespace WAPI_GS.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("tblturma");
-                });
-
-            modelBuilder.Entity("WAPI_GS.Modelos.TblDisciplina", b =>
-                {
-                    b.HasOne("WAPI_GS.Modelos.TblTurma", "tblTurma")
-                        .WithOne()
-                        .HasForeignKey("WAPI_GS.Modelos.TblDisciplina", "TurmaId");
-
-                    b.Navigation("tblTurma");
                 });
 #pragma warning restore 612, 618
         }

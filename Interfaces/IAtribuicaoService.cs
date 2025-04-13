@@ -8,7 +8,8 @@ namespace WAPI_GS.Interfaces
         Task<string> AtualizarAtribuicaoProfessorASala(DtoAtualizarAtribuicaoProfessorSala dto,
             int previousUserId, int SalaId);
 
-        Task Delete(int userId, int salaId);
+        Task RemoverAtribuicaoProfessorSala(int userId, int salaId, string turmaID, DateOnly dateOnly);
+        Task RemoverTodasAtribuicaoProfessorSala(int userId, int salaId, string turmaID);
         Task<List<DtoGetUserSala>> GetList();
     }
 }

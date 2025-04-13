@@ -5,94 +5,10 @@
     "version": "1.0"
   },
   "paths": {
-    "/api/v1/auth": {
-      "post": {
-        "tags": [
-          "Auth"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DtoLogin"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DtoLogin"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/DtoLogin"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "Auth"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/v1/disciplina": {
       "post": {
         "tags": [
           "Disciplina"
-        ],
-        "parameters": [
-          {
-            "name": "requestKey",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
         ],
         "requestBody": {
           "content": {
@@ -148,13 +64,6 @@
               "type": "integer",
               "format": "int32"
             }
-          },
-          {
-            "name": "requestKey",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "requestBody": {
@@ -203,15 +112,6 @@
         "tags": [
           "Disciplina"
         ],
-        "parameters": [
-          {
-            "name": "requestKey",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -254,17 +154,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/DtoCreateUser"
+                "$ref": "#/components/schemas/DtoCreateUpdateUser"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/DtoCreateUser"
+                "$ref": "#/components/schemas/DtoCreateUpdateUser"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/DtoCreateUser"
+                "$ref": "#/components/schemas/DtoCreateUpdateUser"
               }
             }
           }
@@ -326,13 +226,6 @@
               "type": "integer",
               "format": "int32"
             }
-          },
-          {
-            "name": "requestKey",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -343,7 +236,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/DtoGetUser"
+                    "$ref": "#/components/schemas/DtoGetProfessor"
                   }
                 }
               },
@@ -351,7 +244,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/DtoGetUser"
+                    "$ref": "#/components/schemas/DtoGetProfessor"
                   }
                 }
               },
@@ -359,7 +252,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/DtoGetUser"
+                    "$ref": "#/components/schemas/DtoGetProfessor"
                   }
                 }
               }
@@ -382,13 +275,6 @@
               "type": "integer",
               "format": "int32"
             }
-          },
-          {
-            "name": "requestKey",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -397,17 +283,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/DtoGetUser"
+                  "$ref": "#/components/schemas/DtoGetProfessor"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DtoGetUser"
+                  "$ref": "#/components/schemas/DtoGetProfessor"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DtoGetUser"
+                  "$ref": "#/components/schemas/DtoGetProfessor"
                 }
               }
             }
@@ -427,30 +313,23 @@
               "type": "integer",
               "format": "int32"
             }
-          },
-          {
-            "name": "requestKey",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/DtoCreateUser"
+                "$ref": "#/components/schemas/DtoCreateUpdateUser"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/DtoCreateUser"
+                "$ref": "#/components/schemas/DtoCreateUpdateUser"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/DtoCreateUser"
+                "$ref": "#/components/schemas/DtoCreateUpdateUser"
               }
             }
           }
@@ -491,13 +370,6 @@
               "type": "integer",
               "format": "int32"
             }
-          },
-          {
-            "name": "requestKey",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -512,30 +384,21 @@
         "tags": [
           "ProfessorSala"
         ],
-        "parameters": [
-          {
-            "name": "requestKey",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/DtoCreateUserSala"
+                "$ref": "#/components/schemas/DtoAtribuirProfessorASala"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/DtoCreateUserSala"
+                "$ref": "#/components/schemas/DtoAtribuirProfessorASala"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/DtoCreateUserSala"
+                "$ref": "#/components/schemas/DtoAtribuirProfessorASala"
               }
             }
           }
@@ -585,10 +448,18 @@
             }
           },
           {
-            "name": "requestKey",
-            "in": "header",
+            "name": "turmaID",
+            "in": "query",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "dia",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
             }
           }
         ],
@@ -601,31 +472,6 @@
       "get": {
         "tags": [
           "ProfessorSala"
-        ],
-        "parameters": [
-          {
-            "name": "salaId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "profId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "requestKey",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
         ],
         "responses": {
           "200": {
@@ -679,495 +525,27 @@
               "type": "integer",
               "format": "int32"
             }
-          },
-          {
-            "name": "requestKey",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/DtoUpdateSalaUser"
+                "$ref": "#/components/schemas/DtoAtualizarAtribuicaoProfessorSala"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/DtoUpdateSalaUser"
+                "$ref": "#/components/schemas/DtoAtualizarAtribuicaoProfessorSala"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/DtoUpdateSalaUser"
+                "$ref": "#/components/schemas/DtoAtualizarAtribuicaoProfessorSala"
               }
             }
           }
         },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/sendEmail": {
-      "post": {
-        "tags": [
-          "ProfessorSala"
-        ],
-        "parameters": [
-          {
-            "name": "requestKey",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DtoSendEmail"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DtoSendEmail"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/DtoSendEmail"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "boolean"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "boolean"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "boolean"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/accept": {
-      "get": {
-        "tags": [
-          "ProfessorSala"
-        ],
-        "parameters": [
-          {
-            "name": "salaId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "dia",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "userId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "currentUsername",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "horaInit",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "horaFinal",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "boolean"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "boolean"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "boolean"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/notAccept": {
-      "get": {
-        "tags": [
-          "ProfessorSala"
-        ],
-        "parameters": [
-          {
-            "name": "salaId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/sala": {
-      "post": {
-        "tags": [
-          "Sala"
-        ],
-        "parameters": [
-          {
-            "name": "requestKey",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DtoCreateSala"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DtoCreateSala"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/DtoCreateSala"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "Sala"
-        ],
-        "parameters": [
-          {
-            "name": "Search",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "IsActive",
-            "in": "query",
-            "schema": {
-              "type": "boolean"
-            }
-          },
-          {
-            "name": "PageNumber",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "PageSize",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "requestKey",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DtoGetSala"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DtoGetSala"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DtoGetSala"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/sala/{id}": {
-      "get": {
-        "tags": [
-          "Sala"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "requestKey",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/DtoGetSala"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DtoGetSala"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DtoGetSala"
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Sala"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "requestKey",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DtoCreateSala"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DtoCreateSala"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/DtoCreateSala"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Sala"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "requestKey",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -1197,30 +575,21 @@
         "tags": [
           "Turma"
         ],
-        "parameters": [
-          {
-            "name": "requestKey",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TblTurma"
+                "$ref": "#/components/schemas/DtoCreateTurma"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/TblTurma"
+                "$ref": "#/components/schemas/DtoCreateTurma"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/TblTurma"
+                "$ref": "#/components/schemas/DtoCreateTurma"
               }
             }
           }
@@ -1251,45 +620,6 @@
       "get": {
         "tags": [
           "Turma"
-        ],
-        "parameters": [
-          {
-            "name": "Search",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "IsActive",
-            "in": "query",
-            "schema": {
-              "type": "boolean"
-            }
-          },
-          {
-            "name": "PageNumber",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "PageSize",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "requestKey",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
         ],
         "responses": {
           "200": {
@@ -1337,13 +667,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "requestKey",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -1381,30 +704,23 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "requestKey",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TblTurma"
+                "$ref": "#/components/schemas/DtoCreateTurma"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/TblTurma"
+                "$ref": "#/components/schemas/DtoCreateTurma"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/TblTurma"
+                "$ref": "#/components/schemas/DtoCreateTurma"
               }
             }
           }
@@ -1444,13 +760,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "requestKey",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {
@@ -1480,6 +789,65 @@
   },
   "components": {
     "schemas": {
+      "DtoAtribuirProfessorASala": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "salaId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "disciplinaId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "turmaID": {
+            "type": "string",
+            "nullable": true
+          },
+          "diaDeAulaDaSemana": {
+            "type": "string",
+            "format": "date"
+          },
+          "horaInicial": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "horaFinal": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DtoAtualizarAtribuicaoProfessorSala": {
+        "required": [
+          "diaCorrente"
+        ],
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "horaInicial": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "horaFinal": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "diaCorrente": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        "additionalProperties": false
+      },
       "DtoCreateDisciplina": {
         "type": "object",
         "properties": {
@@ -1498,25 +866,28 @@
           "cargaHoraria": {
             "type": "integer",
             "format": "int32"
-          },
-          "turmaId": {
-            "type": "string",
-            "nullable": true
           }
         },
         "additionalProperties": false
       },
-      "DtoCreateSala": {
+      "DtoCreateTurma": {
         "type": "object",
         "properties": {
-          "name": {
+          "turno": {
+            "$ref": "#/components/schemas/EnumTurnoTurma"
+          },
+          "bloco": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
             "type": "string",
             "nullable": true
           }
         },
         "additionalProperties": false
       },
-      "DtoCreateUser": {
+      "DtoCreateUpdateUser": {
         "type": "object",
         "properties": {
           "name": {
@@ -1531,6 +902,10 @@
             "type": "string",
             "nullable": true
           },
+          "color": {
+            "type": "string",
+            "nullable": true
+          },
           "username": {
             "type": "string",
             "nullable": true
@@ -1538,62 +913,15 @@
           "password": {
             "type": "string",
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "DtoCreateUserSala": {
-        "type": "object",
-        "properties": {
-          "userId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "salaId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "disciplinaId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "dia": {
-            "type": "string",
-            "format": "date"
-          },
-          "horaInicial": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "horaFinal": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
-      "DtoGetSala": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
           },
           "isActive": {
-            "type": "boolean"
-          },
-          "creationDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "name": {
-            "type": "string",
+            "type": "boolean",
             "nullable": true
           }
         },
         "additionalProperties": false
       },
-      "DtoGetUser": {
+      "DtoGetProfessor": {
         "type": "object",
         "properties": {
           "id": {
@@ -1652,89 +980,14 @@
         },
         "additionalProperties": false
       },
-      "DtoLogin": {
-        "type": "object",
-        "properties": {
-          "username": {
-            "type": "string",
-            "nullable": true
-          },
-          "password": {
-            "type": "string",
-            "nullable": true
-          },
-          "isAdmin": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
-      "DtoSendEmail": {
-        "type": "object",
-        "properties": {
-          "destEmail": {
-            "type": "string",
-            "nullable": true
-          },
-          "body": {
-            "type": "string",
-            "nullable": true
-          },
-          "salaNome": {
-            "type": "string",
-            "nullable": true
-          },
-          "salaId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "dia": {
-            "type": "string",
-            "format": "date"
-          },
-          "currentUserId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "currentUsername": {
-            "type": "string",
-            "nullable": true
-          },
-          "horaInit": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "horaFinal": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
-      "DtoUpdateSalaUser": {
-        "required": [
-          "diaCorrente"
+      "EnumTurnoTurma": {
+        "enum": [
+          0,
+          1,
+          2
         ],
-        "type": "object",
-        "properties": {
-          "userId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "horaInicial": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "horaFinal": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "diaCorrente": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
+        "type": "integer",
+        "format": "int32"
       },
       "SalaComProfessores": {
         "type": "object",
@@ -1755,7 +1008,7 @@
             "$ref": "#/components/schemas/TblSala"
           },
           "professor": {
-            "$ref": "#/components/schemas/TblUser"
+            "$ref": "#/components/schemas/TblProfessor"
           },
           "disciplina": {
             "$ref": "#/components/schemas/TblDisciplina"
@@ -1792,13 +1045,56 @@
           "totalAulas": {
             "type": "integer",
             "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TblProfessor": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
           },
-          "turmaId": {
+          "isActive": {
+            "type": "boolean"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastLogin": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "name": {
             "type": "string",
             "nullable": true
           },
-          "tblTurma": {
-            "$ref": "#/components/schemas/TblTurma"
+          "mobilePhone": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+          "color": {
+            "type": "string",
+            "nullable": true
+          },
+          "isAdmin": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1840,52 +1136,6 @@
             "format": "int32"
           },
           "nome": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "TblUser": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "isActive": {
-            "type": "boolean"
-          },
-          "creationDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "lastLogin": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "mobilePhone": {
-            "type": "string",
-            "nullable": true
-          },
-          "email": {
-            "type": "string",
-            "nullable": true
-          },
-          "username": {
-            "type": "string",
-            "nullable": true
-          },
-          "password": {
-            "type": "string",
-            "nullable": true
-          },
-          "color": {
             "type": "string",
             "nullable": true
           }

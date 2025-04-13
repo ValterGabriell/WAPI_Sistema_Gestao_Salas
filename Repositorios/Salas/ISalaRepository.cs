@@ -4,9 +4,9 @@ namespace WAPI_GS.Repositorios.Salas
 {
     public interface ISalaRepository : ICommit
     {
-        string Create(TblSala entity);
-        string Update(TblSala entity);
-        void Delete(TblSala entity);
+        Task<string> Create(TblSala entity);
+        Task<string> Update(TblSala entity);
+        Task Delete(TblSala entity);
         Task<TblSala> GetByIdAsync(int id);
         Task<IEnumerable<TblSala>> GetListAsync(FiltersParameter filtersParameter);
         Task<TblSala> RecuperaEntidadePorIDElancaExcecaoSeNaoExiste(int id);

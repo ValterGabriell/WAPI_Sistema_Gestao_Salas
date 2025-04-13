@@ -12,12 +12,11 @@ namespace WAPI_GS.Controllers
         private readonly IUnitOfWork _uow = uow;
 
         [HttpPost]
-        public ActionResult<string> Create(DtoCreateUpdateUser dto)
+        public async Task<ActionResult<string>> Create(DtoCreateUpdateUser dto)
         {
             try
             {
-                var result = _uow.UserRepository.CreateAsync(dto, "");
-                _uow.Commit();
+                var result = await _uow.ProfessorService.CreateAsync(dto);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -27,11 +26,11 @@ namespace WAPI_GS.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<DtoGetProfessor>> GetById(int id, [FromHeader] string requestKey)
+        public async Task<ActionResult<DtoGetProfessor>> GetById(int id)
         {
             try
             {
-                var result = await _uow.UserRepository.GetByIdAsync(id, requestKey);
+                var result = await _uow.ProfessorService.GetByIdAsync(id);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -41,11 +40,11 @@ namespace WAPI_GS.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<PagedList<DtoGetProfessor>>> GetList([FromQuery] FiltersParameter filtersParameter, [FromHeader] string requestKey)
+        public async Task<ActionResult<PagedList<DtoGetProfessor>>> GetList([FromQuery] FiltersParameter filtersParameter)
         {
             try
             {
-                var result = await _uow.UserRepository.GetListAsync(filtersParameter, requestKey);
+                var result = await _uow.ProfessorService.GetListAsync(filtersParameter);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -56,12 +55,12 @@ namespace WAPI_GS.Controllers
 
         [HttpPut("{id}")]
 
-        public async Task<ActionResult<string>> Update(DtoCreateUpdateUser dto, int id, [FromHeader] string requestKey)
+        public async Task<ActionResult<string>> Update(DtoCreateUpdateUser dto, int id)
         {
             try
             {
-                var result = await _uow.UserRepository.UpdateAsync(dto, id, requestKey);
-                await _uow.Commit();
+                var result = await _uow.ProfessorService.UpdateAsync(dto, id);
+
                 return Ok(result);
             }
             catch (Exception ex)
@@ -72,12 +71,12 @@ namespace WAPI_GS.Controllers
 
         [HttpDelete("{id}")]
 
-        public async Task<ActionResult> Delete(int id, [FromHeader] string requestKey)
+        public async Task<ActionResult> Delete(int id)
         {
             try
             {
-                await _uow.UserRepository.DeleteAsync(id, requestKey);
-                await _uow.Commit();
+                await _uow.ProfessorService.DeleteAsync(id);
+
                 return Ok();
             }
             catch (Exception ex)

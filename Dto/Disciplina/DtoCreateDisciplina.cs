@@ -8,7 +8,6 @@ namespace WAPI_GS.Dto.Disciplina
         public string Codigo { get; set; } = string.Empty;
         public string Sigla { get; set; } = string.Empty;
         public int CargaHoraria { get; set; } = 0;
-        public string TurmaId { get; set; } = string.Empty;
 
         public TblDisciplina ToEntity()
         {
@@ -18,8 +17,7 @@ namespace WAPI_GS.Dto.Disciplina
                 Nome = this.Nome,
                 Sigla = this.Sigla,
                 CargaHoraria = this.CargaHoraria,
-                TotalAulas = this.CargaHoraria / 4,
-                TurmaId = this.TurmaId
+                TotalAulas = this.CargaHoraria / 4
             };
             return newDisciplina;
         }
@@ -33,8 +31,7 @@ namespace WAPI_GS.Dto.Disciplina
                 Nome = this.Nome,
                 Sigla = this.Sigla,
                 CargaHoraria = this.CargaHoraria,
-                TotalAulas = this.CargaHoraria / 4,
-                TurmaId = this.TurmaId,
+                TotalAulas = this.CargaHoraria / 4
             };
             return newDisciplina;
         }

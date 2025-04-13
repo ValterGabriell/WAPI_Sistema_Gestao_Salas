@@ -7,16 +7,32 @@ namespace WAPI_GS.Repositorios.Disciplina
     public class DisciplinaRepositoryImpl(AppDbContext appDbContext) : IDisciplinaRepository
     {
         private readonly AppDbContext _appDbContext = appDbContext;
-        public string Create(TblDisciplina entity)
+        public async Task<string> Create(TblDisciplina entity)
         {
             _appDbContext.Add(entity);
+            await _appDbContext.SaveChangesAsync();
             return HelperMessages.DISCIPLINA_SALVO_SUCESSO;
         }
 
-        public string Update(TblDisciplina entity)
+        public async Task<string> Update(TblDisciplina entity)
         {
+            RemoveInstanciaComIDIgualDoContextoLocalDoEF(entity);
             _appDbContext.Update(entity);
+            await _appDbContext.SaveChangesAsync();
             return HelperMessages.DISCIPLINA_SALVO_SUCESSO;
+        }
+
+        private void RemoveInstanciaComIDIgualDoContextoLocalDoEF(TblDisciplina entity)
+        {
+            var local = _appDbContext.Set<TblDisciplina>()
+                .Local
+                .FirstOrDefault(entry => entry.Id == entity.Id);
+
+            if (local != null)
+            {
+                // Desanexa a instância local para evitar conflito de tracking
+                _appDbContext.Entry(local).State = EntityState.Detached;
+            }
         }
 
         public async Task<List<TblDisciplina>> GetListAsync()

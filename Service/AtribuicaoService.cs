@@ -5,6 +5,7 @@ using WAPI_GS.Modelos;
 using WAPI_GS.Repositorios.Disciplina;
 using WAPI_GS.Repositorios.ProfessorSala;
 using WAPI_GS.Repositorios.Salas;
+using WAPI_GS.Repositorios.Turma;
 using WAPI_GS.Utilidades;
 
 namespace WAPI_GS.Service
@@ -13,12 +14,14 @@ namespace WAPI_GS.Service
         IProfessorSalaRepository professorSalaRepository,
         IDisciplinaRepository disciplinaRepository,
         ISalaRepository salaRepository,
-        IProfessorRepository professorRepository) : IAtribuicaoService
+        IProfessorRepository professorRepository,
+        ITurmaRepository turmaRepository) : IAtribuicaoService
     {
         private readonly IProfessorSalaRepository _professorSalaRepository = professorSalaRepository;
         private readonly IDisciplinaRepository _disciplinaRepository = disciplinaRepository;
         private readonly ISalaRepository _salaRepository = salaRepository;
         private readonly IProfessorRepository _professorRepository = professorRepository;
+        private readonly ITurmaRepository _turmaRepository = turmaRepository;
 
 
         public async Task<DtoResponseCreate> AtribuirProfessorASala(DtoAtribuirProfessorASala dto)
@@ -28,7 +31,7 @@ namespace WAPI_GS.Service
 
             TblPtd tblProfessorSala = InicializaEntidade(dto);
 
-            List<string> listaEntidadesQueNaoForamSalvas = ProcessarAtribuicaoProfessor(dto, quantidadeTotalAulas, tblProfessorSala);
+            List<string> listaEntidadesQueNaoForamSalvas = await ProcessarAtribuicaoProfessor(dto, quantidadeTotalAulas, tblProfessorSala);
 
             return new DtoResponseCreate
             {
@@ -49,7 +52,7 @@ namespace WAPI_GS.Service
                 tblUsersSala.HoraInicial = dto.HoraInicial;
                 tblUsersSala.HoraFinal = dto.HoraFinal;
 
-                _professorSalaRepository.AtualizarAtribuicaoProfessorSala(tblUsersSala);
+                await _professorSalaRepository.AtualizarAtribuicaoProfessorSala(tblUsersSala);
                 return tblUsersSala.SalaId.ToString() + "-> Atualizado para professor: " + tblUsersSala.UserId;
             }
             catch (Exception ex)
@@ -59,13 +62,34 @@ namespace WAPI_GS.Service
         }
 
 
-        public async Task Delete(int userId, int salaId)
+        public async Task RemoverAtribuicaoProfessorSala(int userId, int salaId, string turmaID, DateOnly dia)
         {
             try
             {
                 TblPtd tblProfessorSalaEntity = await _professorSalaRepository
-                    .RecuperarProfessorSalaParaDeletarSalaELancaExcecaoSeNaoEncontrar(userId, salaId);
-                _professorSalaRepository.RemoverAtribuicaoProfessorSala(tblProfessorSalaEntity);
+                    .RecuperarProfessorSalaParaDiaParaDeletar(userId, salaId, turmaID, dia);
+                await _professorSalaRepository.RemoverAtribuicaoProfessorSala(tblProfessorSalaEntity);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task RemoverTodasAtribuicaoProfessorSala(int userId, int salaId, string turmaID)
+        {
+            try
+            {
+                List<TblPtd> tblProfessorSalaEntity = await _professorSalaRepository
+                    .RecuperarTodosProfessorSalaParaDiaParaDeletar(userId, salaId, turmaID);
+
+                foreach (var item in tblProfessorSalaEntity)
+                {
+                    await _professorSalaRepository.RemoverAtribuicaoProfessorSala(item);
+                }
+
+
             }
             catch (Exception ex)
             {
@@ -101,6 +125,7 @@ namespace WAPI_GS.Service
                     TblSala tblSalaDetails = await _salaRepository.GetByIdAsync(atribuicaoAtual.SalaId);
                     TblDisciplina tblDisciplinaDetails = await _disciplinaRepository.GetByIdAsync(atribuicaoAtual.DisciplinaId);
                     TblProfessor tblProfessorDetails = await _professorRepository.GetByIdAsync(atribuicaoAtual.UserId);
+                    TblTurma tblTurma = await _turmaRepository.GetByIdAsync(atribuicaoAtual.TurmaId!);
 
                     // Cria um objeto SalaComProfessores
                     DtoGetUserSala.SalaComProfessores salaComProfessores = new()
@@ -110,7 +135,8 @@ namespace WAPI_GS.Service
                         HoraInit = atribuicaoAtual.HoraInicial,
                         HoraFinal = atribuicaoAtual.HoraFinal,
                         Professor = tblProfessorDetails,
-                        Disciplina = tblDisciplinaDetails
+                        Disciplina = tblDisciplinaDetails,
+                        Turma = tblTurma
                     };
 
                     // Adiciona a sala com os professores no DTO Corrente do dia
@@ -125,30 +151,40 @@ namespace WAPI_GS.Service
         }
 
 
-        private List<string> ProcessarAtribuicaoProfessor(DtoAtribuirProfessorASala dto, int totalAulas, TblPtd tblProfessorSala)
+        private async Task<List<string>> ProcessarAtribuicaoProfessor(
+            DtoAtribuirProfessorASala dto, int totalAulas, TblPtd tblProfessorSala)
         {
-            List<string> listaEntidadesQueNaoForamSalvas = [];
-            for (var i = 0; i < totalAulas; i++)
+            try
             {
-                bool entidadeJaExisteParaODia = _professorSalaRepository.VerificaSeEntidadeJaEstaAgendadaParaODia(dto.Dia,
-                                                                                                                  dto.HoraInicial,
-                                                                                                                  dto.HoraFinal);
-                if (entidadeJaExisteParaODia)
+                List<string> listaEntidadesQueNaoForamSalvas = [];
+                for (var i = 0; i < totalAulas; i++)
                 {
-                    listaEntidadesQueNaoForamSalvas
-                           .Add("Dia: " +
-                            dto.Dia + " com horário inicial " +
-                            dto.HoraInicial + " e hora final " +
-                            dto.HoraFinal + " já cadastrado!");
+                    bool jaExisteAulaPraEsseDia = _professorSalaRepository.VerificaSeEntidadeJaEstaAgendadaParaODia(dto.DiaDeAulaDaSemana,
+                                                                                                                      dto.HoraInicial,
+                                                                                                                      dto.HoraFinal);
+                    if (jaExisteAulaPraEsseDia)
+                    {
+                        listaEntidadesQueNaoForamSalvas
+                               .Add("Dia: " +
+                                dto.DiaDeAulaDaSemana + " com horário inicial " +
+                                dto.HoraInicial + " e hora final " +
+                                dto.HoraFinal + " já cadastrado!");
+                        AtualizaDiaParaProximaSemana(dto);
+                        continue;
+                    }
+                    var ID = Guid.NewGuid();
+                    tblProfessorSala.Id = ID.ToString();
+                    tblProfessorSala.Dia = dto.DiaDeAulaDaSemana;
+                    await _professorSalaRepository.AtribuirProfessorASala(tblProfessorSala);
                     AtualizaDiaParaProximaSemana(dto);
-                    continue;
                 }
 
-                _professorSalaRepository.AtribuirProfessorASala(tblProfessorSala);
-                AtualizaDiaParaProximaSemana(dto);
+                return listaEntidadesQueNaoForamSalvas;
             }
-
-            return listaEntidadesQueNaoForamSalvas;
+            catch (Exception ex)
+            {
+                throw new Exception(HelperExceptions.CreateExceptionMessage(ex));
+            }
         }
 
         private static void AtualizaDiaParaProximaSemana(DtoAtribuirProfessorASala dto)
@@ -156,14 +192,12 @@ namespace WAPI_GS.Service
             /**
             * adiciona 7 dias para a proxima iteração, representando a data de aula da proxima semana
             */
-            dto.Dia = dto.Dia.AddDays(7);
+            dto.DiaDeAulaDaSemana = dto.DiaDeAulaDaSemana.AddDays(7);
         }
 
         private static TblPtd InicializaEntidade(DtoAtribuirProfessorASala dto)
         {
             TblPtd tblPtd = dto.ToEntity();
-            var ID = Guid.NewGuid();
-            tblPtd.Id = ID.ToString();
             return tblPtd;
         }
     }

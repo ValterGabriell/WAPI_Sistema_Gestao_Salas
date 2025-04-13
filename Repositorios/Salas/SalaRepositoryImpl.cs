@@ -8,20 +8,23 @@ namespace WAPI_GS.Repositorios.Salas
     {
         private readonly AppDbContext _appDbContext = appDbContext;
 
-        public string Create(TblSala entity)
+        public async Task<string> Create(TblSala entity)
         {
             _appDbContext.Add(entity);
+            await _appDbContext.SaveChangesAsync();
             return HelperMessages.SALA_SALVO_SUCESSO;
         }
 
-        public string Update(TblSala entity)
+        public async Task<string> Update(TblSala entity)
         {
             _appDbContext.Update(entity);
+            await _appDbContext.SaveChangesAsync();
             return HelperMessages.SALA_SALVO_SUCESSO;
         }
-        public void Delete(TblSala entity)
+        public async Task Delete(TblSala entity)
         {
             _appDbContext.Remove(entity);
+            await _appDbContext.SaveChangesAsync();
         }
 
         public async Task<TblSala> GetByIdAsync(int id)

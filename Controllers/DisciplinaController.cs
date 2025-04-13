@@ -2,6 +2,7 @@
 using WAPI_GS.Dto.Disciplina;
 using WAPI_GS.Interfaces;
 using WAPI_GS.Modelos;
+using WAPI_GS.Utilidades;
 
 namespace WAPI_GS.Controllers
 {
@@ -14,11 +15,11 @@ namespace WAPI_GS.Controllers
 
         [HttpPost]
 
-        public async Task<ActionResult<string>> Create(DtoCreateDisciplina dto, [FromHeader] string requestKey)
+        public async Task<ActionResult<string>> Create(DtoCreateDisciplina dto)
         {
             try
             {
-                var result = await _uow.cS_Disciplina.CreateAsync(dto, requestKey);
+                var result = await _uow.DisciplinaService.Create(dto);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -29,11 +30,11 @@ namespace WAPI_GS.Controllers
 
 
         [HttpPut]
-        public async Task<ActionResult<string>> Update(DtoCreateDisciplina dto, int id, string requestKey)
+        public async Task<ActionResult<string>> Update(DtoCreateDisciplina dto, int id)
         {
             try
             {
-                var result = await _uow.cS_Disciplina.Update(dto, id, requestKey);
+                var result = await _uow.DisciplinaService.UpdateAsync(dto, id);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -44,11 +45,11 @@ namespace WAPI_GS.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult<List<TblDisciplina>>> GetList([FromHeader] string requestKey)
+        public async Task<ActionResult<List<TblDisciplina>>> GetList()
         {
             try
             {
-                var result = await _uow.cS_Disciplina.GetList(requestKey);
+                var result = await _uow.DisciplinaService.GetList();
                 return Ok(result);
             }
             catch (Exception ex)

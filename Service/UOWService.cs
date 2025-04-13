@@ -1,34 +1,28 @@
-﻿using WAPI_GS.Dto.Sala;
-using WAPI_GS.Dto.User;
-using WAPI_GS.Dto.UserSala;
+﻿using WAPI_GS.Infra.Professor;
 using WAPI_GS.Interfaces;
-using WAPI_GS.Modelos;
+using WAPI_GS.Repositorios.Disciplina;
+using WAPI_GS.Repositorios.ProfessorSala;
+using WAPI_GS.Repositorios.Salas;
+using WAPI_GS.Repositorios.Turma;
 
 namespace WAPI_GS.Service
 {
-    public class UOWService(AppDbContext appDbContext, IConfiguration configuration) : IUnitOfWork
+    public class UOWService(
+        ISalaRepository salaRepository,
+        IProfessorRepository professorRepository,
+        IDisciplinaRepository disciplinaRepository,
+        IProfessorSalaRepository professorSalaRepository,
+        ITurmaRepository turmaRepository
+        ) : IUnitOfWork
     {
-        public ICrudInterface<DtoCreateSala, DtoGetSala> _salaRepository = null!;
-        public ICrudInterface<DtoCreateSala, DtoGetSala> SalaRepository
-            => _salaRepository ??= new SalaService(appDbContext);
+        public ISalaService SalaService => new SalaService(salaRepository);
 
+        public IProfessorService ProfessorService => new ProfessorService(professorRepository);
 
-        public ICrudInterface<DtoCreateUpdateUser, DtoGetProfessor> _userRepository = null!;
-        public ICrudInterface<DtoCreateUpdateUser, DtoGetProfessor> UserRepository
-            => _userRepository ??= new ProfessorService(appDbContext);
+        public IDisciplinaService DisciplinaService => new DisciplinaService(disciplinaRepository);
+        public ITurmaService TurmaService => new TurmaServiceImpl(turmaRepository);
 
-
-        public ICS_UserSala<DtoAtribuirProfessorASala, DtoGetUserSala> _userSalaRepository = null!;
-        public ICS_UserSala<DtoAtribuirProfessorASala, DtoGetUserSala> UserSalaRepository
-            => _userSalaRepository ??= new ProfessorSalaService(appDbContext, configuration);
-
-        public ICS_Auth AuthRepository => new AuthService(appDbContext);
-
-        public IDisciplinaService cS_Disciplina => new DisciplinaService(appDbContext);
-
-        public async Task Commit()
-        {
-            await appDbContext.SaveChangesAsync();
-        }
+        public IAtribuicaoService AtribuicaoService => new AtribuicaoService(
+            professorSalaRepository, disciplinaRepository, salaRepository, professorRepository, turmaRepository);
     }
 }

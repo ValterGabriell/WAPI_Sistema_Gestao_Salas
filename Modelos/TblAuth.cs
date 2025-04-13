@@ -13,22 +13,11 @@ namespace WAPI_GS.Modelos
         [Column("isAdmin")]
         public bool IsAdmin { get; set; } = false;
 
-
-
-        [Column("accessToken")]
-        public string AccessToken { get; set; }
-
-
         [Column("tokenAvailableUntil")]
         public long TokenAvailableUntil { get; set; }
 
-
-        [Column("userid")]
-        public int UserId { get; set; }
-
-
         [Column("requestToken")]
-        public string RequestToken { get; set; } = "";
+        public string RefreshToken { get; set; } = "";
 
     }
 }

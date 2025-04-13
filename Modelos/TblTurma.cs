@@ -17,6 +17,6 @@ namespace WAPI_GS.Modelos
         public int Bloco { get; set; }
 
         [Column("nome")]
-        public string Nome { get; set; }
+        public string Nome { get; set; } = string.Empty;
     }
 }

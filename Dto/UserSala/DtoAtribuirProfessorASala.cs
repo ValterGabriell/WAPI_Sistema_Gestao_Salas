@@ -8,7 +8,8 @@ namespace WAPI_GS.Dto.UserSala
         public int SalaId { get; set; }
 
         public int DisciplinaId { get; set; }
-        public DateOnly Dia { get; set; }
+        public string TurmaID { get; set; }
+        public DateOnly DiaDeAulaDaSemana { get; set; }
         public int HoraInicial { get; set; }
         public int HoraFinal { get; set; }
 
@@ -19,9 +20,10 @@ namespace WAPI_GS.Dto.UserSala
                 UserId = this.UserId,
                 SalaId = this.SalaId,
                 DisciplinaId = this.DisciplinaId,
-                Dia = this.Dia,
+                Dia = this.DiaDeAulaDaSemana,
                 HoraInicial = this.HoraInicial,
                 HoraFinal = this.HoraFinal,
+                TurmaId = this.TurmaID
             };
         }
     }

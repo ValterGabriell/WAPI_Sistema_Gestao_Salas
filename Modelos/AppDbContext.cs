@@ -22,6 +22,5 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        modelBuilder.Entity<TblDisciplina>().HasOne(e => e.tblTurma).WithOne().HasForeignKey<TblDisciplina>(e => e.TurmaId);
     }
 }
