@@ -5,7 +5,7 @@ using WAPI_GS.Utilidades;
 
 namespace WAPI_GS.Controllers
 {
-    [ApiController()]
+    [ApiController]
     [Route("api/v1/professor")]
     public class ProfessorController(IUnitOfWork uow) : ControllerBase
     {
