@@ -1,6 +1,6 @@
 [
   {
-    "ContainingType": "WAPI_GS.Controllers.ProfessorSalaController",
+    "ContainingType": "WAPI_GS.Controllers.AtribuicoesController",
     "Method": "AtribuirProfessorASala",
     "RelativePath": "api/v1/atribuicoes",
     "HttpMethod": "POST",
@@ -26,7 +26,7 @@
     ]
   },
   {
-    "ContainingType": "WAPI_GS.Controllers.ProfessorSalaController",
+    "ContainingType": "WAPI_GS.Controllers.AtribuicoesController",
     "Method": "RemoverAtribuicaoProfessorSala",
     "RelativePath": "api/v1/atribuicoes",
     "HttpMethod": "DELETE",
@@ -63,7 +63,7 @@
     ]
   },
   {
-    "ContainingType": "WAPI_GS.Controllers.ProfessorSalaController",
+    "ContainingType": "WAPI_GS.Controllers.AtribuicoesController",
     "Method": "GetList",
     "RelativePath": "api/v1/atribuicoes",
     "HttpMethod": "GET",
@@ -83,7 +83,7 @@
     ]
   },
   {
-    "ContainingType": "WAPI_GS.Controllers.ProfessorSalaController",
+    "ContainingType": "WAPI_GS.Controllers.AtribuicoesController",
     "Method": "AtualizarAtribuicaoProfessorASala",
     "RelativePath": "api/v1/atribuicoes",
     "HttpMethod": "PUT",
@@ -119,7 +119,7 @@
     ]
   },
   {
-    "ContainingType": "WAPI_GS.Controllers.ProfessorSalaController",
+    "ContainingType": "WAPI_GS.Controllers.AtribuicoesController",
     "Method": "RemoverTodasAtribuicaoProfessorSala",
     "RelativePath": "api/v1/atribuicoes/todos",
     "HttpMethod": "DELETE",
@@ -218,6 +218,26 @@
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.List\u00601[[WAPI_GS.Modelos.TblDisciplina, WAPI_GS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WAPI_GS.Controllers.DisciplinaController",
+    "Method": "GetListCombo",
+    "RelativePath": "api/v1/disciplina/combo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[WAPI_GS.Dto.DtoGetCombo, WAPI_GS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -366,6 +386,26 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WAPI_GS.Controllers.ProfessorController",
+    "Method": "GetListCombo",
+    "RelativePath": "api/v1/professor/combo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[WAPI_GS.Dto.DtoGetCombo, WAPI_GS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "WAPI_GS.Controllers.SalaController",
@@ -518,6 +558,26 @@
     ]
   },
   {
+    "ContainingType": "WAPI_GS.Controllers.SalaController",
+    "Method": "GetListCombo",
+    "RelativePath": "api/v1/sala/combo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[WAPI_GS.Dto.DtoGetCombo, WAPI_GS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "WAPI_GS.Controllers.TurmaController",
     "Method": "Create",
     "RelativePath": "api/v1/turma",
@@ -637,6 +697,26 @@
     "ReturnTypes": [
       {
         "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WAPI_GS.Controllers.TurmaController",
+    "Method": "GetListCombo",
+    "RelativePath": "api/v1/turma/combo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[WAPI_GS.Dto.DtoGetCombo, WAPI_GS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",

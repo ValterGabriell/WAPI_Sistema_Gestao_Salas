@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WAPI_GS.Dto;
 using WAPI_GS.Dto.Turma;
 using WAPI_GS.Interfaces;
 using WAPI_GS.Modelos;
+using WAPI_GS.Utilidades;
 
 namespace WAPI_GS.Controllers
 {
@@ -36,6 +38,21 @@ namespace WAPI_GS.Controllers
         {
             List<TblTurma> tblTurmas = await _uow.TurmaService.GetListAsync();
             return Ok(tblTurmas);
+        }
+
+
+        [HttpGet("combo")]
+        public async Task<ActionResult<List<DtoGetCombo>>> GetListCombo()
+        {
+            try
+            {
+                var result = await _uow.TurmaService.GetListCombo();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(HelperExceptions.CreateExceptionMessage(ex));
+            }
         }
 
         [HttpPut("{id}")]

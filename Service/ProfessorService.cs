@@ -1,4 +1,5 @@
-﻿using WAPI_GS.Dto.User;
+﻿using WAPI_GS.Dto;
+using WAPI_GS.Dto.User;
 using WAPI_GS.Infra.Professor;
 using WAPI_GS.Interfaces;
 using WAPI_GS.Modelos;
@@ -75,10 +76,6 @@ namespace WAPI_GS.Service
                 TblProfessor professorEncontrado =
                   await _professorRepository.RecuperaProfessorPorIDELancaExcecaoSeNaoExistir(id);
                 await _professorRepository.Delete(professorEncontrado);
-
-#warning REMOVER SALAS DO PROFESSOR
-                //List<TblPtd> tblUsersSalas = await _appDbContext.TblUsersSala.Where(e => e.UserId == id).ToListAsync();
-                //_appDbContext.RemoveRange(tblUsersSalas);
             }
             catch (Exception ex)
             {
@@ -113,6 +110,19 @@ namespace WAPI_GS.Service
 
 
                 return pagedProfessorsList;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(HelperExceptions.CreateExceptionMessage(ex));
+            }
+        }
+
+        public async Task<List<DtoGetCombo>> GetListCombo(FiltersParameter filtersParameter)
+        {
+            try
+            {
+                var (lista, c) = await _professorRepository.GetListAsync(filtersParameter);
+                return lista.Select(e => new DtoGetCombo(e.Id.ToString(), e.Name ?? "-")).ToList();
             }
             catch (Exception ex)
             {

@@ -1,4 +1,5 @@
-﻿using WAPI_GS.Dto.User;
+﻿using WAPI_GS.Dto;
+using WAPI_GS.Dto.User;
 using WAPI_GS.Utilidades;
 
 namespace WAPI_GS.Interfaces
@@ -10,6 +11,7 @@ namespace WAPI_GS.Interfaces
         Task<string> ChangeActive(int id);
         Task DeleteAsync(int id);
         Task<PagedList<DtoGetProfessor>> GetListAsync(FiltersParameter filtersParameter);
+        Task<List<DtoGetCombo>> GetListCombo(FiltersParameter filtersParameter);
         Task<DtoGetProfessor> GetByIdAsync(int id);
     }
 }

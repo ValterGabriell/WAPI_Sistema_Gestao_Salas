@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WAPI_GS.Dto;
 using WAPI_GS.Dto.User;
 using WAPI_GS.Interfaces;
 using WAPI_GS.Utilidades;
@@ -45,6 +46,22 @@ namespace WAPI_GS.Controllers
             try
             {
                 var result = await _uow.ProfessorService.GetListAsync(filtersParameter);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(HelperExceptions.CreateExceptionMessage(ex));
+            }
+        }
+
+
+        [HttpGet("combo")]
+        public async Task<ActionResult<List<DtoGetCombo>>> GetListCombo()
+        {
+            try
+            {
+                FiltersParameter filtersParameter = new FiltersParameter();
+                var result = await _uow.ProfessorService.GetListCombo(filtersParameter);
                 return Ok(result);
             }
             catch (Exception ex)

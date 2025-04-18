@@ -1,4 +1,5 @@
-﻿using WAPI_GS.Dto.Sala;
+﻿using WAPI_GS.Dto;
+using WAPI_GS.Dto.Sala;
 
 namespace WAPI_GS.Interfaces
 {
@@ -10,5 +11,6 @@ namespace WAPI_GS.Interfaces
         Task DeleteAsync(int id);
         Task<DtoGetSala> GetByIdAsync(int id);
         Task<IEnumerable<DtoGetSala>> GetListAsync(FiltersParameter filtersParameter);
+        Task<List<DtoGetCombo>> GetListCombo(FiltersParameter filtersParameter);
     }
 }

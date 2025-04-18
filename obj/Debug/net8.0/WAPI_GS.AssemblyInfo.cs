@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WAPI_GS")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3947c4a938bdf13da9ba64d7aa0350498410d80e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0385502d814341c5488c57296ad028dcf56c70a4")]
 [assembly: System.Reflection.AssemblyProductAttribute("WAPI_GS")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WAPI_GS")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,4 +1,5 @@
-﻿using WAPI_GS.Dto.Turma;
+﻿using WAPI_GS.Dto;
+using WAPI_GS.Dto.Turma;
 using WAPI_GS.Interfaces;
 using WAPI_GS.Modelos;
 using WAPI_GS.Repositorios.Turma;
@@ -57,6 +58,19 @@ namespace WAPI_GS.Service
                 List<TblTurma> tblTurmas = await _turmaRepository.GetListAsync();
 
                 return tblTurmas;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(HelperExceptions.CreateExceptionMessage(ex));
+            }
+        }
+
+        public async Task<List<DtoGetCombo>> GetListCombo()
+        {
+            try
+            {
+                var lista = await _turmaRepository.GetListAsync();
+                return lista.Select(e => new DtoGetCombo(e.Id.ToString(), e.Nome ?? "-")).ToList();
             }
             catch (Exception ex)
             {

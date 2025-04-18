@@ -1,4 +1,5 @@
-﻿using WAPI_GS.Dto.Sala;
+﻿using WAPI_GS.Dto;
+using WAPI_GS.Dto.Sala;
 using WAPI_GS.Interfaces;
 using WAPI_GS.Modelos;
 using WAPI_GS.Repositorios.Salas;
@@ -95,6 +96,19 @@ namespace WAPI_GS.Service
                 IEnumerable<TblSala> salaList = await _repository.GetListAsync(filtersParameter);
                 List<DtoGetSala> dtoGetSalas = salaList.Select(e => e.ToDto()).ToList();
                 return dtoGetSalas;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(HelperExceptions.CreateExceptionMessage(ex));
+            }
+        }
+
+        public async Task<List<DtoGetCombo>> GetListCombo(FiltersParameter filtersParameter)
+        {
+            try
+            {
+                var lista = await _repository.GetListAsync(filtersParameter);
+                return lista.Select(e => new DtoGetCombo(e.Id.ToString(), e.Name ?? "-")).ToList();
             }
             catch (Exception ex)
             {

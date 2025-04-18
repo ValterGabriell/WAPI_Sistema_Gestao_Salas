@@ -7,7 +7,7 @@ namespace WAPI_GS.Controllers
 {
     [ApiController]
     [Route("api/v1/atribuicoes")]
-    public class ProfessorSalaController(IUnitOfWork uow) : ControllerBase
+    public class AtribuicoesController(IUnitOfWork uow) : ControllerBase
     {
         private readonly IUnitOfWork _uow = uow;
 

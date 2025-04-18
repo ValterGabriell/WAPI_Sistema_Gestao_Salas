@@ -1,4 +1,5 @@
-﻿using WAPI_GS.Dto.Turma;
+﻿using WAPI_GS.Dto;
+using WAPI_GS.Dto.Turma;
 using WAPI_GS.Modelos;
 
 namespace WAPI_GS.Interfaces
@@ -9,6 +10,7 @@ namespace WAPI_GS.Interfaces
         Task<TblTurma> GetByIdAsync(string id);
         Task<List<TblTurma>> GetListAsync();
         Task<string> Update(DtoCreateTurma dto, string id);
+        Task<List<DtoGetCombo>> GetListCombo();
         Task<string> Delete(string id);
     }
 }
