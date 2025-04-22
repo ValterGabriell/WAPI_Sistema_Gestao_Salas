@@ -19,5 +19,11 @@ namespace WAPI_GS.Modelos
         [Column("requestToken")]
         public string RefreshToken { get; set; } = "";
 
+        public TblAuth(string id, bool isAdmin, long tokenAvailableUntil)
+        {
+            Id = id;
+            IsAdmin = isAdmin;
+            TokenAvailableUntil = tokenAvailableUntil;
+        }
     }
 }

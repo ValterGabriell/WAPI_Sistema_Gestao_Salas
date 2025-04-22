@@ -12,7 +12,7 @@ namespace WAPI_GS.Service
         public JwtSecurityToken GenerateJWT(IEnumerable<Claim> claims)
         {
             //recebe a chave secreta
-            var key = "MYSUPERPOWERKEY";
+            var key = "SENHAJWT_FREE_AKKAKASKDJKJKJDK2";
 
             //converte a chave para array de bytes
             var privateKey = Encoding.UTF8.GetBytes(key);
