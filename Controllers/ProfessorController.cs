@@ -61,6 +61,9 @@ namespace WAPI_GS.Controllers
             try
             {
                 FiltersParameter filtersParameter = new FiltersParameter();
+                filtersParameter.IsActive = true;
+                filtersParameter.PageNumber = 1;
+                filtersParameter.PageSize = 9999;
                 var result = await _uow.ProfessorService.GetListCombo(filtersParameter);
                 return Ok(result);
             }
