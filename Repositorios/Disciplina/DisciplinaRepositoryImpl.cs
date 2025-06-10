@@ -37,7 +37,7 @@ namespace WAPI_GS.Repositorios.Disciplina
 
         public async Task<List<TblDisciplina>> GetListAsync()
         {
-            List<TblDisciplina> tblDisciplinas = await _appDbContext.TblDisciplina.ToListAsync();
+            List<TblDisciplina> tblDisciplinas = await _appDbContext.TblDisciplina.OrderBy(e => e.Id).ToListAsync();
             return tblDisciplinas;
         }
         public async Task<TblDisciplina> GetByIdAsync(int id)
