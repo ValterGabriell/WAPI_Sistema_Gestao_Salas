@@ -31,6 +31,7 @@ namespace WAPI_GS.Repositorios.Turma
         {
             return await _appDbContext.TblTurma
                 .AsNoTracking()
+                .OrderBy(e => e.Bloco)
                 .ToListAsync();
         }
 
