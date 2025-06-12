@@ -56,7 +56,6 @@ namespace WAPI_GS.Controllers
         }
 
         [HttpPut("{id}")]
-
         public async Task<ActionResult<string>> Update([FromBody] DtoCreateTurma dto, string id)
         {
             string _id = await _uow.TurmaService.Update(dto, id);

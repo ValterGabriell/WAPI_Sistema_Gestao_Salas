@@ -74,7 +74,6 @@ namespace WAPI_GS.Controllers
         }
 
         [HttpPut("{id}")]
-
         public async Task<ActionResult<string>> Update(DtoCreateUpdateUser dto, int id)
         {
             try
