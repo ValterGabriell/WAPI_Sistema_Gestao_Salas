@@ -196,6 +196,35 @@
         }
       }
     },
+    "/api/v1/atribuicoes/solicitar-troca": {
+      "post": {
+        "tags": [
+          "Atribuicoes"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/atribuicoes/todos": {
       "delete": {
         "tags": [

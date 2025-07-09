@@ -120,6 +120,26 @@
   },
   {
     "ContainingType": "WAPI_GS.Controllers.AtribuicoesController",
+    "Method": "SolicitarTrocaHorario",
+    "RelativePath": "api/v1/atribuicoes/solicitar-troca",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WAPI_GS.Controllers.AtribuicoesController",
     "Method": "RemoverTodasAtribuicaoProfessorSala",
     "RelativePath": "api/v1/atribuicoes/todos",
     "HttpMethod": "DELETE",

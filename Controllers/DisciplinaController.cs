@@ -15,7 +15,6 @@ namespace WAPI_GS.Controllers
 
 
         [HttpPost]
-
         public async Task<ActionResult<string>> Create(DtoCreateDisciplina dto)
         {
             try

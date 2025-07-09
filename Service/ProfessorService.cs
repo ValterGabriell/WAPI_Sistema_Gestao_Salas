@@ -40,7 +40,7 @@ namespace WAPI_GS.Service
                 TblProfessor professorEncontrado =
                     await _professorRepository.RecuperaProfessorPorIDELancaExcecaoSeNaoExistir(id);
 
-                professorEncontrado = professorEncontrado.UpdateProfessorPropriedades(dto);
+                professorEncontrado.UpdateProfessorPropriedades(professorEncontrado, dto);
 
                 await _professorRepository.Update(professorEncontrado);
 

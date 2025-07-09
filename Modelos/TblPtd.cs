@@ -29,5 +29,6 @@ public class TblPtd
     [Column("horafinal")]
     public int HoraFinal { get; set; }
 
+    [Column("turmaid")]
     public string? TurmaId { get; set; }
 }

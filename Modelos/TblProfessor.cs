@@ -42,21 +42,15 @@ public class TblProfessor
     [Column("isAdmin")]
     public string? IsAdmin { get; set; }
 
-    public TblProfessor UpdateProfessorPropriedades(DtoCreateUpdateUser dto)
+    public TblProfessor UpdateProfessorPropriedades(TblProfessor tblProfessor, DtoCreateUpdateUser dto)
     {
-        return new TblProfessor
-        {
-            Id = this.Id,
-            CreationDate = this.CreationDate,
-            Password = this.Password,
-            Color = this.Color,
-            IsAdmin = this.IsAdmin,
-            Name = dto.Name,
-            MobilePhone = dto.MobilePhone,
-            Email = dto.Email,
-            Username = dto.Username,
-            IsActive = dto.IsActive ?? true,
-        };
+        tblProfessor.CreationDate = DateTime.UtcNow;
+        tblProfessor.Name = dto.Name;
+        tblProfessor.MobilePhone = dto.MobilePhone;
+        tblProfessor.Email = dto.Email;
+        tblProfessor.Username = dto.Username;
+        tblProfessor.IsActive = dto.IsActive ?? true;
+        return tblProfessor;
     }
 
     public TblProfessor ChangeActivePropriedade()

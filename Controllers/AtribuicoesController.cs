@@ -26,6 +26,21 @@ namespace WAPI_GS.Controllers
             }
         }
 
+        [HttpPost("solicitar-troca")]
+        public async Task<ActionResult<string>> SolicitarTrocaHorario()
+        {
+            try
+            {
+                //var result = await _uow.AtribuicaoService.AtribuirProfessorASala(dto);
+
+                return Ok("");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
 
         [HttpDelete]
         public async Task RemoverAtribuicaoProfessorSala([FromQuery] int userId, [FromQuery] int salaId, [FromQuery] string turmaID, [FromQuery] DateOnly dia)

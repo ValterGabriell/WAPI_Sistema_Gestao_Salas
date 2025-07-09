@@ -240,9 +240,9 @@ Z:\Programacao\TCC\WAPI_GS\obj\Debug\net8.0\refint\WAPI_GS.dll
 Z:\Programacao\TCC\WAPI_GS\obj\Debug\net8.0\WAPI_GS.pdb
 Z:\Programacao\TCC\WAPI_GS\obj\Debug\net8.0\WAPI_GS.genruntimeconfig.cache
 Z:\Programacao\TCC\WAPI_GS\obj\Debug\net8.0\ref\WAPI_GS.dll
-Z:\Programacao\TCC\WAPI_GS\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 Z:\Programacao\TCC\WAPI_GS\obj\Debug\net8.0\rpswa.dswa.cache.json
 Z:\Programacao\TCC\WAPI_GS\obj\Debug\net8.0\rjimswa.dswa.cache.json
 Z:\Programacao\TCC\WAPI_GS\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
 Z:\Programacao\TCC\WAPI_GS\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
 Z:\Programacao\TCC\WAPI_GS\obj\Debug\net8.0\staticwebassets.build.json.cache
+Z:\Programacao\TCC\WAPI_GS\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
