@@ -11,7 +11,7 @@ namespace WAPI_GS.Dto.Sala
             {
                 IsActive = isActive,
                 Name = this.Name,
-                CreationDate = DateTime.Now,
+                CreationDate = DateTime.UtcNow,
             };
         }
 
@@ -21,7 +21,7 @@ namespace WAPI_GS.Dto.Sala
             {
                 IsActive = true,
                 Name = this.Name,
-                CreationDate = DateTime.Now,
+                CreationDate = DateTime.UtcNow,
             };
         }
     }

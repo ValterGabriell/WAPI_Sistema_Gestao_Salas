@@ -16,6 +16,7 @@ namespace WAPI_GS.Service
             try
             {
                 TblSala tblSala = dto.ToEntity();
+
                 string message = await _repository.Create(tblSala);
                 return message;
             }

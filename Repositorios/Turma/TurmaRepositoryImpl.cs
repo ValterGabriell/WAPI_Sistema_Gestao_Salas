@@ -15,6 +15,7 @@ namespace WAPI_GS.Repositorios.Turma
 
         public async Task<string> CreateAsync(TblTurma tblTurma)
         {
+
             _appDbContext.Add(tblTurma);
             await _appDbContext.SaveChangesAsync();
             return tblTurma.Id;

@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\WAPI_GS.props" />
-</Project>
