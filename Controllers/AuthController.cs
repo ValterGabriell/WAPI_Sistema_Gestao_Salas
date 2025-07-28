@@ -11,12 +11,26 @@ namespace WAPI_GS.Controllers
     {
         private readonly IUnitOfWork _uow = uow;
 
-        [HttpPost]
+        [HttpPost("admin")]
         public async Task<ActionResult<string>> Login(DtoLoginModel dto)
         {
             try
             {
-                var result = await _uow.AuthService.Login(dto);
+                var result = await _uow.AuthService.Login(dto, true);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(HelperExceptions.CreateExceptionMessage(ex));
+            }
+        }
+
+        [HttpPost("prof")]
+        public async Task<ActionResult<string>> LoginProf(DtoLoginModel dto)
+        {
+            try
+            {
+                var result = await _uow.AuthService.Login(dto, false);
                 return Ok(result);
             }
             catch (Exception ex)

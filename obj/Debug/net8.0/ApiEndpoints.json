@@ -172,18 +172,12 @@
   },
   {
     "ContainingType": "WAPI_GS.Controllers.AuthController",
-    "Method": "Login",
+    "Method": "OK",
     "RelativePath": "api/v1/auth",
-    "HttpMethod": "POST",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "dto",
-        "Type": "WAPI_GS.Dto.DtoLoginModel",
-        "IsRequired": true
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": [
       {
         "Type": "System.String",
@@ -198,12 +192,18 @@
   },
   {
     "ContainingType": "WAPI_GS.Controllers.AuthController",
-    "Method": "OK",
-    "RelativePath": "api/v1/auth",
-    "HttpMethod": "GET",
+    "Method": "Login",
+    "RelativePath": "api/v1/auth/admin",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "WAPI_GS.Dto.DtoLoginModel",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": [
       {
         "Type": "System.String",
@@ -238,6 +238,32 @@
     "ReturnTypes": [
       {
         "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WAPI_GS.Controllers.AuthController",
+    "Method": "LoginProf",
+    "RelativePath": "api/v1/auth/prof",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "WAPI_GS.Dto.DtoLoginModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
         "MediaTypes": [
           "text/plain",
           "application/json",

@@ -37,18 +37,27 @@ namespace WAPI_GS.Service
             }
         }
 
-        public async Task<DtoResponseToken> Login(DtoLoginModel model)
+        public async Task<DtoResponseToken> Login(DtoLoginModel model, bool isAdmin)
         {
             try
             {
+
                 TblProfessor? tblProfessor = await _appDbContext.TblUsers
                     .Where(e => e.Username.Equals(model.UserName)).FirstOrDefaultAsync();
 
                 if (tblProfessor is null) throw new KeyNotFoundException("Usuário não cadastrado!");
 
-
-                string senhaHash = BCrypt.Net.BCrypt.HashPassword(model.Password);
-                if (tblProfessor!.Password!.Equals(senhaHash) is false) throw new ArgumentException("Senha inválida");
+                // Use BCrypt para verificar a senha
+                if (!isAdmin)
+                {
+                    if (!BCrypt.Net.BCrypt.Verify(model.Password, tblProfessor.Password))
+                        throw new ArgumentException("Senha inválida");
+                }
+                else
+                {
+                    if (!BCrypt.Net.BCrypt.Verify(model.Password, tblProfessor.Password))
+                        throw new ArgumentException("Senha inválida");
+                }
 
                 TblAuth? authEncontrada
                     = await _appDbContext.TblAuth.Where(e => e.Id.Equals(tblProfessor.Id.ToString())).FirstOrDefaultAsync();
@@ -70,8 +79,8 @@ namespace WAPI_GS.Service
                 return new DtoResponseToken
                 {
                     IsAdmin = tblProfessor.Username.Equals("admin"),
-                    Expiration = DateTime.Now.AddHours(5),
-                    Token = new Guid().ToString(),
+                    Expiration = DateTime.Now.AddMinutes(30),
+                    Token = tblProfessor.Id.ToString(),
                 };
 
             }
