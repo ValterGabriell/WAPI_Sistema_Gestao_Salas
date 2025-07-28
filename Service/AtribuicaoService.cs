@@ -154,14 +154,14 @@ namespace WAPI_GS.Service
         }
 
         public async Task<bool> SendEmailSolicitacao(
-            string destEmail,
+          string destEmail,
             string body,
             string title,
             string fullUrl,
             int salaId,
             DateOnly dia,
-            int currentUserId,
-            string currentUsername,
+            int antigoUsuarioID,
+            int novoUsuarioID,
         int horaInit,
         int horaFinal)
         {
@@ -169,7 +169,22 @@ namespace WAPI_GS.Service
             {
                 return await _emailRepository
                     .SendEmailSolicitacao(destEmail, body, title, fullUrl, salaId, dia,
-                    currentUserId, currentUsername, horaInit, horaFinal);
+                    antigoUsuarioID, novoUsuarioID, horaInit, horaFinal);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(HelperExceptions.CreateExceptionMessage(ex));
+            }
+        }
+
+        public async Task<bool> Accept(
+           int salaId, DateOnly dia, int antigoUsuarioID,
+             int novoUsuarioID, int horaInit, int horaFinal)
+        {
+            try
+            {
+                return await _emailRepository
+                    .Accept(salaId, dia, antigoUsuarioID, novoUsuarioID, horaInit, horaFinal);
             }
             catch (Exception ex)
             {

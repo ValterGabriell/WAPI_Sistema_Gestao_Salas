@@ -16,8 +16,8 @@ namespace WAPI_GS.Repositorios.Email
             string fullUrl,
             int salaId,
             DateOnly dia,
-            int currentUserId,
-            string currentUsername,
+            int antigoUsuarioID,
+            int novoUsuarioID,
         int horaInit,
         int horaFinal
         )
@@ -28,7 +28,7 @@ namespace WAPI_GS.Repositorios.Email
                 int year = dia.Year;
                 int month = dia.Month;
                 int day = dia.Day;
-                string formattedDate = $"{day:D2}/{month:D2}/{year}";
+                string formattedDate = dia.ToString("yyyy-MM-dd"); // Formato seguro para URL
                 var smtpSettings = _configuration.GetSection("SmtpSettings");
 
                 using (SmtpClient client = new SmtpClient(smtpSettings["Host"], int.Parse(smtpSettings["Port"])))
@@ -89,7 +89,7 @@ namespace WAPI_GS.Repositorios.Email
                             <h2>Confirmação de Reserva de Sala</h2>
                             <p>{body}</p>
                             <p>Caso aceite, clique em um dos botões abaixo:</p>
-                            <a href='{fullUrl}/accept?salaId={salaId}&dia={formattedDate}&userId={currentUserId}&currentUsername={currentUsername}&horaInit={horaInit}&horaFinal={horaFinal}' class='button accept'>✔ Aceito</a>
+                            <a href='{fullUrl}/accept?salaId={salaId}&dia={formattedDate}&antigoUsuarioID={antigoUsuarioID}&novoUsuarioID={novoUsuarioID}&horaInit={horaInit}&horaFinal={horaFinal}' class='button accept'>✔ Aceito</a>
                             <a href='{fullUrl}/notAccept?salaId={salaId}' class='button reject'>❌ Não Aceito</a>
                         </div>
                     </body>
@@ -117,7 +117,8 @@ namespace WAPI_GS.Repositorios.Email
 
 
 
-        public async Task<bool> Accept(int salaId, DateOnly dia, int userId, string currentUsername, int horaInit, int horaFinal)
+        public async Task<bool> Accept(int salaId, DateOnly dia, int antigoUsuarioID,
+            int novoUsuarioID, int horaInit, int horaFinal)
         {
             int year = dia.Year;
             int month = dia.Month;
@@ -127,19 +128,19 @@ namespace WAPI_GS.Repositorios.Email
             string formattedDate = $"{year}-{month:D2}-{day:D2}";
             var tblUsersSala = await _appDbContext.TblUsersSala
                 .Where(e => e.SalaId == salaId
-                    && e.UserId == userId
+                    && e.UserId == antigoUsuarioID
                     && e.Dia == DateOnly.Parse(formattedDate)
                     && e.HoraInicial == horaInit
                     && e.HoraFinal == horaFinal)
                 .FirstOrDefaultAsync() ?? throw new Exception("Nenhuma reserva encontrada com os parâmetros fornecidos.");
 
 
-            TblProfessor user = await _appDbContext.TblUsers.Where(e => e.Username == currentUsername).FirstAsync();
-            tblUsersSala.UserId = user.Id;
+            TblProfessor usuarioNovo = await _appDbContext.TblUsers.Where(e => e.Id == novoUsuarioID).FirstAsync();
+            tblUsersSala.UserId = usuarioNovo.Id;
             _appDbContext.Update(tblUsersSala);
             await _appDbContext.SaveChangesAsync();
 
-            TblProfessor tblUser = await _appDbContext.TblUsers.Where(e => e.Id == user.Id).FirstAsync();
+            TblProfessor tblUser = await _appDbContext.TblUsers.Where(e => e.Id == usuarioNovo.Id).FirstAsync();
             TblSala tblSala = await _appDbContext.TblSalas.Where(e => e.Id == salaId).FirstAsync();
             await SendEmail(tblUser.Email!,
                 " Solicitação para troca de sala aceita! " + tblSala.Name +

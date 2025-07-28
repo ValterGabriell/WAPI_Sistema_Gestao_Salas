@@ -244,6 +244,68 @@
         }
       }
     },
+    "/api/v1/atribuicoes/accept": {
+      "get": {
+        "tags": [
+          "Atribuicoes"
+        ],
+        "parameters": [
+          {
+            "name": "salaId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "dia",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "antigoUsuarioID",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "novoUsuarioID",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "horaInit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "horaFinal",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/v1/atribuicoes/todos": {
       "delete": {
         "tags": [
@@ -1728,13 +1790,13 @@
             "type": "string",
             "format": "date"
           },
-          "currentUserId": {
+          "antigoUsuarioID": {
             "type": "integer",
             "format": "int32"
           },
-          "currentUsername": {
-            "type": "string",
-            "nullable": true
+          "novoUsuarioID": {
+            "type": "integer",
+            "format": "int32"
           },
           "horaInit": {
             "type": "integer",

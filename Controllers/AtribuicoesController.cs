@@ -35,8 +35,8 @@ namespace WAPI_GS.Controllers
             public string FullUrl { get; set; }
             public int SalaId { get; set; }
             public DateOnly Dia { get; set; }
-            public int CurrentUserId { get; set; }
-            public string CurrentUsername { get; set; }
+            public int AntigoUsuarioID { get; set; }
+            public int NovoUsuarioID { get; set; }
             public int HoraInit { get; set; }
             public int HoraFinal { get; set; }
         }
@@ -52,10 +52,29 @@ namespace WAPI_GS.Controllers
                     emailSolicitacaoDto.FullUrl,
                     emailSolicitacaoDto.SalaId,
                     emailSolicitacaoDto.Dia,
-                    emailSolicitacaoDto.CurrentUserId,
-                    emailSolicitacaoDto.CurrentUsername,
+                    emailSolicitacaoDto.AntigoUsuarioID,
+                    emailSolicitacaoDto.NovoUsuarioID,
                     emailSolicitacaoDto.HoraInit,
                     emailSolicitacaoDto.HoraFinal
+                    );
+
+                return Ok(true);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("accept")]
+        public async Task<IActionResult> Accept(
+        int salaId, DateOnly dia, int antigoUsuarioID,
+             int novoUsuarioID, int horaInit, int horaFinal)
+        {
+            try
+            {
+                var result = await _uow.AtribuicaoService.Accept(
+                    salaId, dia, antigoUsuarioID, novoUsuarioID, horaInit, horaFinal
                     );
 
                 return Ok(true);

@@ -120,6 +120,47 @@
   },
   {
     "ContainingType": "WAPI_GS.Controllers.AtribuicoesController",
+    "Method": "Accept",
+    "RelativePath": "api/v1/atribuicoes/accept",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "salaId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "dia",
+        "Type": "System.DateOnly",
+        "IsRequired": false
+      },
+      {
+        "Name": "antigoUsuarioID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "novoUsuarioID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "horaInit",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "horaFinal",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WAPI_GS.Controllers.AtribuicoesController",
     "Method": "SolicitarTrocaHorario",
     "RelativePath": "api/v1/atribuicoes/solicitar-troca",
     "HttpMethod": "POST",

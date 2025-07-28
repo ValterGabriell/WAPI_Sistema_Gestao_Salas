@@ -13,15 +13,19 @@ namespace WAPI_GS.Interfaces
         Task<List<DtoGetUserSala>> GetList();
 
         Task<bool> SendEmailSolicitacao(
-            string destEmail,
+          string destEmail,
             string body,
             string title,
             string fullUrl,
             int salaId,
             DateOnly dia,
-            int currentUserId,
-            string currentUsername,
+            int antigoUsuarioID,
+            int novoUsuarioID,
         int horaInit,
         int horaFinal);
+
+        Task<bool> Accept(
+           int salaId, DateOnly dia, int antigoUsuarioID,
+             int novoUsuarioID, int horaInit, int horaFinal);
     }
 }
