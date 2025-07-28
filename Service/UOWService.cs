@@ -2,6 +2,7 @@
 using WAPI_GS.Interfaces;
 using WAPI_GS.Modelos;
 using WAPI_GS.Repositorios.Disciplina;
+using WAPI_GS.Repositorios.Email;
 using WAPI_GS.Repositorios.ProfessorSala;
 using WAPI_GS.Repositorios.Salas;
 using WAPI_GS.Repositorios.Turma;
@@ -14,6 +15,7 @@ namespace WAPI_GS.Service
         IDisciplinaRepository disciplinaRepository,
         IProfessorSalaRepository professorSalaRepository,
         ITurmaRepository turmaRepository,
+        IEmailRepository emailRepository,
         AppDbContext appDbContext
         ) : IUnitOfWork
     {
@@ -25,7 +27,7 @@ namespace WAPI_GS.Service
         public ITurmaService TurmaService => new TurmaServiceImpl(turmaRepository);
 
         public IAtribuicaoService AtribuicaoService => new AtribuicaoService(
-            professorSalaRepository, disciplinaRepository, salaRepository, professorRepository, turmaRepository);
+            professorSalaRepository, disciplinaRepository, salaRepository, professorRepository, turmaRepository, emailRepository: emailRepository);
 
         public ILoginService AuthService => new LoginService(appDbContext);
     }

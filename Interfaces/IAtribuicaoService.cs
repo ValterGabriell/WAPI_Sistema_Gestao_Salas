@@ -11,5 +11,17 @@ namespace WAPI_GS.Interfaces
         Task RemoverAtribuicaoProfessorSala(int userId, int salaId, string turmaID, DateOnly dateOnly);
         Task RemoverTodasAtribuicaoProfessorSala(int userId, int salaId, string turmaID);
         Task<List<DtoGetUserSala>> GetList();
+
+        Task<bool> SendEmailSolicitacao(
+            string destEmail,
+            string body,
+            string title,
+            string fullUrl,
+            int salaId,
+            DateOnly dia,
+            int currentUserId,
+            string currentUsername,
+        int horaInit,
+        int horaFinal);
     }
 }

@@ -201,23 +201,42 @@
         "tags": [
           "Atribuicoes"
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailSolicitacaoDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailSolicitacaoDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailSolicitacaoDto"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "text/plain": {
                 "schema": {
-                  "type": "string"
+                  "type": "boolean"
                 }
               },
               "application/json": {
                 "schema": {
-                  "type": "string"
+                  "type": "boolean"
                 }
               },
               "text/json": {
                 "schema": {
-                  "type": "string"
+                  "type": "boolean"
                 }
               }
             }
@@ -1678,6 +1697,52 @@
           "password": {
             "minLength": 1,
             "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "EmailSolicitacaoDto": {
+        "type": "object",
+        "properties": {
+          "destEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "body": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "fullUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "salaId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dia": {
+            "type": "string",
+            "format": "date"
+          },
+          "currentUserId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "currentUsername": {
+            "type": "string",
+            "nullable": true
+          },
+          "horaInit": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "horaFinal": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false

@@ -47,17 +47,8 @@ namespace WAPI_GS.Service
 
                 if (tblProfessor is null) throw new KeyNotFoundException("Usuário não cadastrado!");
 
-                // Use BCrypt para verificar a senha
-                if (!isAdmin)
-                {
-                    if (!BCrypt.Net.BCrypt.Verify(model.Password, tblProfessor.Password))
-                        throw new ArgumentException("Senha inválida");
-                }
-                else
-                {
-                    if (!BCrypt.Net.BCrypt.Verify(model.Password, tblProfessor.Password))
-                        throw new ArgumentException("Senha inválida");
-                }
+                if (!BCrypt.Net.BCrypt.Verify(model.Password, tblProfessor.Password))
+                    throw new ArgumentException("Senha inválida");
 
                 TblAuth? authEncontrada
                     = await _appDbContext.TblAuth.Where(e => e.Id.Equals(tblProfessor.Id.ToString())).FirstOrDefaultAsync();
@@ -81,6 +72,7 @@ namespace WAPI_GS.Service
                     IsAdmin = tblProfessor.Username.Equals("admin"),
                     Expiration = DateTime.Now.AddMinutes(30),
                     Token = tblProfessor.Id.ToString(),
+                    Usuario = tblProfessor
                 };
 
             }

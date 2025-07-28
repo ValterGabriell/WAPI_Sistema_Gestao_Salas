@@ -26,14 +26,39 @@ namespace WAPI_GS.Controllers
             }
         }
 
+
+        public class EmailSolicitacaoDto
+        {
+            public string DestEmail { get; set; }
+            public string Body { get; set; }
+            public string Title { get; set; }
+            public string FullUrl { get; set; }
+            public int SalaId { get; set; }
+            public DateOnly Dia { get; set; }
+            public int CurrentUserId { get; set; }
+            public string CurrentUsername { get; set; }
+            public int HoraInit { get; set; }
+            public int HoraFinal { get; set; }
+        }
         [HttpPost("solicitar-troca")]
-        public async Task<ActionResult<string>> SolicitarTrocaHorario()
+        public async Task<ActionResult<bool>> SolicitarTrocaHorario(EmailSolicitacaoDto emailSolicitacaoDto)
         {
             try
             {
-                //var result = await _uow.AtribuicaoService.AtribuirProfessorASala(dto);
+                var result = await _uow.AtribuicaoService.SendEmailSolicitacao(
+                    emailSolicitacaoDto.DestEmail,
+                    emailSolicitacaoDto.Body,
+                    emailSolicitacaoDto.Title,
+                    emailSolicitacaoDto.FullUrl,
+                    emailSolicitacaoDto.SalaId,
+                    emailSolicitacaoDto.Dia,
+                    emailSolicitacaoDto.CurrentUserId,
+                    emailSolicitacaoDto.CurrentUsername,
+                    emailSolicitacaoDto.HoraInit,
+                    emailSolicitacaoDto.HoraFinal
+                    );
 
-                return Ok("");
+                return Ok(true);
             }
             catch (Exception ex)
             {
@@ -70,8 +95,8 @@ namespace WAPI_GS.Controllers
         }
 
         [HttpPut]
-
-        public async Task<ActionResult<string>> AtualizarAtribuicaoProfessorASala(DtoAtualizarAtribuicaoProfessorSala dto, [FromQuery] int salaId, [FromQuery] int oldUserId)
+        public async Task<ActionResult<string>> AtualizarAtribuicaoProfessorASala(
+            DtoAtualizarAtribuicaoProfessorSala dto, [FromQuery] int salaId, [FromQuery] int oldUserId)
         {
             try
             {

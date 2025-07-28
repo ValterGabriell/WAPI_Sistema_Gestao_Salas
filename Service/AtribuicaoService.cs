@@ -3,6 +3,7 @@ using WAPI_GS.Infra.Professor;
 using WAPI_GS.Interfaces;
 using WAPI_GS.Modelos;
 using WAPI_GS.Repositorios.Disciplina;
+using WAPI_GS.Repositorios.Email;
 using WAPI_GS.Repositorios.ProfessorSala;
 using WAPI_GS.Repositorios.Salas;
 using WAPI_GS.Repositorios.Turma;
@@ -15,12 +16,14 @@ namespace WAPI_GS.Service
         IDisciplinaRepository disciplinaRepository,
         ISalaRepository salaRepository,
         IProfessorRepository professorRepository,
-        ITurmaRepository turmaRepository) : IAtribuicaoService
+        ITurmaRepository turmaRepository,
+        IEmailRepository emailRepository) : IAtribuicaoService
     {
         private readonly IProfessorSalaRepository _professorSalaRepository = professorSalaRepository;
         private readonly IDisciplinaRepository _disciplinaRepository = disciplinaRepository;
         private readonly ISalaRepository _salaRepository = salaRepository;
         private readonly IProfessorRepository _professorRepository = professorRepository;
+        private readonly IEmailRepository _emailRepository = emailRepository;
         private readonly ITurmaRepository _turmaRepository = turmaRepository;
 
 
@@ -143,6 +146,30 @@ namespace WAPI_GS.Service
                     diaExistenteNoDtoResposta.Salas.Add(salaComProfessores);
                 }
                 return dtoResponse;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(HelperExceptions.CreateExceptionMessage(ex));
+            }
+        }
+
+        public async Task<bool> SendEmailSolicitacao(
+            string destEmail,
+            string body,
+            string title,
+            string fullUrl,
+            int salaId,
+            DateOnly dia,
+            int currentUserId,
+            string currentUsername,
+        int horaInit,
+        int horaFinal)
+        {
+            try
+            {
+                return await _emailRepository
+                    .SendEmailSolicitacao(destEmail, body, title, fullUrl, salaId, dia,
+                    currentUserId, currentUsername, horaInit, horaFinal);
             }
             catch (Exception ex)
             {

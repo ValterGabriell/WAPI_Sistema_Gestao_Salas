@@ -2,7 +2,8 @@
 {
     public interface IEmailRepository
     {
-        Task<bool> SendEmailSolicitacao(string destEmail,
+        Task<bool> SendEmailSolicitacao(
+            string destEmail,
             string body,
             string title,
             string fullUrl,
