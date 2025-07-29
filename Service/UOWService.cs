@@ -27,7 +27,7 @@ namespace WAPI_GS.Service
         public ITurmaService TurmaService => new TurmaServiceImpl(turmaRepository);
 
         public IAtribuicaoService AtribuicaoService => new AtribuicaoService(
-            professorSalaRepository, disciplinaRepository, salaRepository, professorRepository, turmaRepository, emailRepository: emailRepository);
+            professorSalaRepository, disciplinaRepository, salaRepository, professorRepository, turmaRepository, emailRepository: emailRepository, appDbContext);
 
         public ILoginService AuthService => new LoginService(appDbContext);
     }
