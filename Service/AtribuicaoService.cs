@@ -1,4 +1,5 @@
-﻿using WAPI_GS.Dto.UserSala;
+﻿using Microsoft.EntityFrameworkCore;
+using WAPI_GS.Dto.UserSala;
 using WAPI_GS.Infra.Professor;
 using WAPI_GS.Interfaces;
 using WAPI_GS.Modelos;
@@ -17,7 +18,8 @@ namespace WAPI_GS.Service
         ISalaRepository salaRepository,
         IProfessorRepository professorRepository,
         ITurmaRepository turmaRepository,
-        IEmailRepository emailRepository) : IAtribuicaoService
+        IEmailRepository emailRepository,
+        AppDbContext appDbContext) : IAtribuicaoService
     {
         private readonly IProfessorSalaRepository _professorSalaRepository = professorSalaRepository;
         private readonly IDisciplinaRepository _disciplinaRepository = disciplinaRepository;
@@ -25,6 +27,7 @@ namespace WAPI_GS.Service
         private readonly IProfessorRepository _professorRepository = professorRepository;
         private readonly IEmailRepository _emailRepository = emailRepository;
         private readonly ITurmaRepository _turmaRepository = turmaRepository;
+        private readonly AppDbContext context = appDbContext;
 
 
         public async Task<DtoResponseCreate> AtribuirProfessorASala(DtoAtribuirProfessorASala dto)
@@ -105,47 +108,36 @@ namespace WAPI_GS.Service
         {
             try
             {
-                List<TblPtd> tblProfessorSalaList = await _professorSalaRepository.RecuperaTodasAsAtribuicoes();
+                var query = from ptd in context.TblUsersSala.AsNoTracking()
+                            join sala in context.TblSalas.AsNoTracking() on ptd.SalaId equals sala.Id
+                            join disciplina in context.TblDisciplina.AsNoTracking() on ptd.DisciplinaId equals disciplina.Id
+                            join professor in context.TblUsers.AsNoTracking() on ptd.UserId equals professor.Id
+                            join turma in context.TblTurma.AsNoTracking() on ptd.TurmaId equals turma.Id
+                            select new
+                            {
+                                ptd.Dia,
+                                SalaComProfessores = new DtoGetUserSala.SalaComProfessores
+                                {
+                                    SalaId = ptd.SalaId,
+                                    TblSala = sala,
+                                    HoraInit = ptd.HoraInicial,
+                                    HoraFinal = ptd.HoraFinal,
+                                    Professor = professor,
+                                    Disciplina = disciplina,
+                                    Turma = turma
+                                }
+                            };
 
-                List<DtoGetUserSala> dtoResponse = [];
-                // Itera sobre as TblUsersSalas
-                foreach (var atribuicaoAtual in tblProfessorSalaList)
-                {
-                    DtoGetUserSala? diaExistenteNoDtoResposta = dtoResponse
-                        .FirstOrDefault(e => e.Dia == atribuicaoAtual.Dia);
-
-                    // Caso o dia não exista, cria um novo DTO
-                    if (diaExistenteNoDtoResposta == null)
+                var agrupado = await query
+                    .GroupBy(x => x.Dia)
+                    .Select(g => new DtoGetUserSala
                     {
-                        diaExistenteNoDtoResposta = new DtoGetUserSala
-                        {
-                            Dia = atribuicaoAtual.Dia,
-                            Salas = []
-                        };
-                        dtoResponse.Add(diaExistenteNoDtoResposta);
-                    }
+                        Dia = g.Key,
+                        Salas = g.Select(x => x.SalaComProfessores).ToList()
+                    })
+                    .ToListAsync();
 
-                    TblSala tblSalaDetails = await _salaRepository.GetByIdAsync(atribuicaoAtual.SalaId);
-                    TblDisciplina tblDisciplinaDetails = await _disciplinaRepository.GetByIdAsync(atribuicaoAtual.DisciplinaId);
-                    TblProfessor tblProfessorDetails = await _professorRepository.GetByIdAsync(atribuicaoAtual.UserId);
-                    TblTurma tblTurma = await _turmaRepository.GetByIdAsync(atribuicaoAtual.TurmaId!);
-
-                    // Cria um objeto SalaComProfessores
-                    DtoGetUserSala.SalaComProfessores salaComProfessores = new()
-                    {
-                        SalaId = atribuicaoAtual.SalaId,
-                        TblSala = tblSalaDetails,
-                        HoraInit = atribuicaoAtual.HoraInicial,
-                        HoraFinal = atribuicaoAtual.HoraFinal,
-                        Professor = tblProfessorDetails,
-                        Disciplina = tblDisciplinaDetails,
-                        Turma = tblTurma
-                    };
-
-                    // Adiciona a sala com os professores no DTO Corrente do dia
-                    diaExistenteNoDtoResposta.Salas.Add(salaComProfessores);
-                }
-                return dtoResponse;
+                return agrupado;
             }
             catch (Exception ex)
             {

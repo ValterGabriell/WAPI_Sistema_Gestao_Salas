@@ -1,0 +1,3 @@
+﻿//ao apagar um professor, deve remover as atribuicoes dele
+//ao criar uma sala o front end ta feio
+//deve permitir alterar a senha do professor
