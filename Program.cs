@@ -49,7 +49,7 @@ builder.Services.AddScoped<ITurmaRepository, TurmaRepositoryImpl>();
 builder.Services.AddScoped<IProfessorSalaRepository, ProfessorSalaRepositoryImpl>();
 builder.Services.AddScoped<ISalaRepository, SalaRepositoryImpl>();
 builder.Services.AddScoped<IUnitOfWork, UOWService>();
-
+builder.Services.AddHostedService<KeepAliveService>();
 
 var app = builder.Build();
 
