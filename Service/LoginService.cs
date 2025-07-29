@@ -45,8 +45,9 @@ namespace WAPI_GS.Service
                 TblProfessor? tblProfessor = await _appDbContext.TblUsers
                     .Where(e => e.Username.Equals(model.UserName)).FirstOrDefaultAsync();
 
-                if (tblProfessor is null) throw new KeyNotFoundException("Usuário não cadastrado!");
 
+                if (tblProfessor is null) throw new KeyNotFoundException("Usuário não cadastrado!");
+                if (tblProfessor?.IsAdmin == "0") throw new Exception("Falha ao logar!");
                 if (!BCrypt.Net.BCrypt.Verify(model.Password, tblProfessor.Password))
                     throw new ArgumentException("Senha inválida");
 
