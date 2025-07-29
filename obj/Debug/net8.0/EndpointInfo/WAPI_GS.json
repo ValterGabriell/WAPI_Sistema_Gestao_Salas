@@ -306,6 +306,36 @@
         }
       }
     },
+    "/api/v1/atribuicoes/notAccept": {
+      "get": {
+        "tags": [
+          "Atribuicoes"
+        ],
+        "parameters": [
+          {
+            "name": "salaId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "usuarioQueSolicitou",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/v1/atribuicoes/todos": {
       "delete": {
         "tags": [

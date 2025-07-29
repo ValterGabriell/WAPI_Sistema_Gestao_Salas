@@ -37,63 +37,119 @@ namespace WAPI_GS.Repositorios.Email
                     client.EnableSsl = bool.Parse(smtpSettings["EnableSsl"]);
 
                     string emailBody = $@"
-                    <html>
-                    <head>
-                        <style>
-                            body {{
-                                font-family: Arial, sans-serif;
-                                background-color: #f4f4f4;
-                                margin: 0;
-                                padding: 20px;
-                            }}
-                            .container {{
-                                max-width: 600px;
-                                background: #ffffff;
-                                padding: 20px;
-                                border-radius: 10px;
-                                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                            }}
-                            h2 {{
-                                color: #333;
-                            }}
-                            p {{
-                                font-size: 16px;
-                                color: #555;
-                                line-height: 1.5;
-                            }}
-                            .button {{
-                                display: inline-block;
-                                padding: 10px 20px;
-                                margin: 10px 5px;
-                                text-decoration: none;
-                                color: white;
-                                border-radius: 5px;
-                                font-weight: bold;
-                            }}
-                            .accept {{
-                                background-color: #28a745;
-                            }}
-                            .reject {{
-                                background-color: #dc3545;
-                            }}
-                            .footer {{
-                                margin-top: 20px;
-                                font-size: 12px;
-                                color: #777;
-                                text-align: center;
-                            }}
-                        </style>
-                    </head>
-                    <body>
-                        <div class='container'>
-                            <h2>Confirmação de Reserva de Sala</h2>
-                            <p>{body}</p>
-                            <p>Caso aceite, clique em um dos botões abaixo:</p>
-                            <a href='{fullUrl}/accept?salaId={salaId}&dia={formattedDate}&antigoUsuarioID={antigoUsuarioID}&novoUsuarioID={novoUsuarioID}&horaInit={horaInit}&horaFinal={horaFinal}' class='button accept'>✔ Aceito</a>
-                            <a href='{fullUrl}/notAccept?salaId={salaId}' class='button reject'>❌ Não Aceito</a>
-                        </div>
-                    </body>
-                    </html>";
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Confirmação de Reserva de Sala</title>
+    <style>
+        body {{
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }}
+        .container {{
+            max-width: 600px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            padding: 32px 24px;
+            text-align: center;
+        }}
+        .header {{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+        }}
+        .logo {{
+            height: 40px;
+            margin-right: 12px;
+        }}
+        .title {{
+            font-size: 24px;
+            color: #2c3e50;
+            font-weight: 600;
+        }}
+        .icon {{
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 8px;
+        }}
+        p {{
+            color: #555;
+            font-size: 17px;
+            margin-bottom: 18px;
+            line-height: 1.6;
+        }}
+        .button {{
+            display: inline-block;
+            padding: 12px 28px;
+            margin: 12px 8px;
+            text-decoration: none;
+            color: #fff;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: background 0.2s;
+            box-shadow: 0 2px 8px rgba(44,62,80,0.08);
+        }}
+        .accept {{
+            background-color: #28a745;
+        }}
+        .accept:hover {{
+            background-color: #218838;
+        }}
+        .reject {{
+            background-color: #dc3545;
+        }}
+        .reject:hover {{
+            background-color: #c82333;
+        }}
+        .footer {{
+            margin-top: 32px;
+            font-size: 13px;
+            color: #888;
+            text-align: center;
+        }}
+        @media (max-width: 600px) {{
+            .container {{
+                padding: 16px 8px;
+            }}
+            .title {{
+                font-size: 20px;
+            }}
+            .button {{
+                width: 90%;
+                margin: 10px auto;
+                display: block;
+            }}
+        }}
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <div class='header'>
+            <img src='https://cdn-icons-png.flaticon.com/512/3209/3209265.png' alt='Gestão de Salas' class='logo' />
+            <span class='title'>Confirmação de Reserva de Sala</span>
+        </div>
+        <p>{body}</p>
+        <p>Para prosseguir, escolha uma das opções abaixo:</p>
+        <a href='{fullUrl}/accept?salaId={salaId}&dia={formattedDate}&antigoUsuarioID={antigoUsuarioID}&novoUsuarioID={novoUsuarioID}&horaInit={horaInit}&horaFinal={horaFinal}' class='button accept'>
+            <span class='icon'>✔️</span> Aceitar Reserva
+        </a>
+        <a href='{fullUrl}/notAccept?salaId={salaId}&usuarioQueSolicitou={novoUsuarioID}' class='button reject'>
+            <span class='icon'>❌</span> Recusar Reserva
+        </a>
+        <div class='footer'>
+            Este e-mail foi gerado automaticamente pelo sistema Gestão de Salas.<br>
+            &copy; 2025 Gestão de Salas
+        </div>
+    </div>
+</body>
+</html>";
 
                     var mailMessage = new MailMessage
                     {
@@ -142,11 +198,106 @@ namespace WAPI_GS.Repositorios.Email
 
             TblProfessor tblUser = await _appDbContext.TblUsers.Where(e => e.Id == usuarioNovo.Id).FirstAsync();
             TblSala tblSala = await _appDbContext.TblSalas.Where(e => e.Id == salaId).FirstAsync();
+
+            string emailBody = $@"
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Solicitação de Troca de Sala Aceita</title>
+    <style>
+        body {{
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }}
+        .container {{
+            max-width: 600px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            padding: 32px 24px;
+            text-align: center;
+        }}
+        .header {{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+        }}
+        .logo {{
+            height: 40px;
+            margin-right: 12px;
+        }}
+        .title {{
+            font-size: 24px;
+            color: #28a745;
+            font-weight: 600;
+        }}
+        .icon {{
+            font-size: 40px;
+            margin-bottom: 12px;
+        }}
+        .info {{
+            background: #e9f7ef;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 18px;
+            color: #155724;
+            font-size: 16px;
+        }}
+        p {{
+            color: #555;
+            font-size: 17px;
+            margin-bottom: 18px;
+            line-height: 1.6;
+        }}
+        .footer {{
+            margin-top: 32px;
+            font-size: 13px;
+            color: #888;
+            text-align: center;
+        }}
+        @media (max-width: 600px) {{
+            .container {{
+                padding: 16px 8px;
+            }}
+            .title {{
+                font-size: 20px;
+            }}
+        }}
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <div class='header'>
+            <img src='https://cdn-icons-png.flaticon.com/512/3209/3209265.png' alt='Gestão de Salas' class='logo' />
+            <span class='title'>Solicitação de Troca de Sala Aceita</span>
+        </div>
+        <div class='icon'>✔️</div>
+        <p>Olá,</p>
+        <div class='info'>
+            Sua solicitação para troca de sala foi <b>aceita</b>!<br>
+            <b>Sala:</b> {tblSala.Name}<br>
+            <b>Data:</b> {tblUsersSala.Dia:dd/MM/yyyy}<br>
+            <b>Horário:</b> das {tblUsersSala.HoraInicial}:00h até as {tblUsersSala.HoraFinal}:00h
+        </div>
+        <p>A sala agora está alocada para você. Em caso de dúvidas, entre em contato com a administração.</p>
+        <div class='footer'>
+            Este e-mail foi gerado automaticamente pelo sistema Gestão de Salas.<br>
+            &copy; 2025 Gestão de Salas
+        </div>
+    </div>
+</body>
+</html>";
+
+
+
             await SendEmail(tblUser.Email!,
-                " Solicitação para troca de sala aceita! " + tblSala.Name +
-                " agora está alocada para você em " +
-                tblUsersSala.Dia + " das " + tblUsersSala.HoraInicial + ":00h até as " + tblUsersSala.HoraFinal + ":00h",
-                tblSala.Name + "Solicitação de troca de sala aceita!"
+                emailBody,
+                tblSala.Name + " Solicitação de troca de sala aceita!"
                 );
 
 
@@ -184,15 +335,107 @@ namespace WAPI_GS.Repositorios.Email
             }
         }
 
-        public async Task<bool> NotAccept(int salaId)
+        public async Task<bool> NotAccept(int salaId, int usuarioQueSolicitou)
         {
-            TblPtd tblUsersSala = await _appDbContext.TblUsersSala.Where(e => e.SalaId == salaId).FirstAsync();
-            TblProfessor tblUser = await _appDbContext.TblUsers.Where(e => e.Id == tblUsersSala.UserId).FirstAsync();
+
+            TblProfessor tblUser = await _appDbContext.TblUsers.Where(e => e.Id == usuarioQueSolicitou).FirstAsync();
             TblSala tblSala = await _appDbContext.TblSalas.Where(e => e.Id == salaId).FirstAsync();
 
+            string emailBody = $@"
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Solicitação de Troca de Sala Recusada</title>
+    <style>
+        body {{
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }}
+        .container {{
+            max-width: 600px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            padding: 32px 24px;
+            text-align: center;
+        }}
+        .header {{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+        }}
+        .logo {{
+            height: 40px;
+            margin-right: 12px;
+        }}
+        .title {{
+            font-size: 24px;
+            color: #dc3545;
+            font-weight: 600;
+        }}
+        .icon {{
+            font-size: 40px;
+            margin-bottom: 12px;
+        }}
+        .info {{
+            background: #f8d7da;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 18px;
+            color: #721c24;
+            font-size: 16px;
+        }}
+        p {{
+            color: #555;
+            font-size: 17px;
+            margin-bottom: 18px;
+            line-height: 1.6;
+        }}
+        .footer {{
+            margin-top: 32px;
+            font-size: 13px;
+            color: #888;
+            text-align: center;
+        }}
+        @media (max-width: 600px) {{
+            .container {{
+                padding: 16px 8px;
+            }}
+            .title {{
+                font-size: 20px;
+            }}
+        }}
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <div class='header'>
+            <img src='https://cdn-icons-png.flaticon.com/512/3209/3209265.png' alt='Gestão de Salas' class='logo' />
+            <span class='title'>Solicitação de Troca de Sala Recusada</span>
+        </div>
+        <div class='icon'>❌</div>
+        <p>Olá,</p>
+        <div class='info'>
+            Sua solicitação para troca da sala <b>{tblSala.Name}</b> foi <b>recusada</b>.<br>
+            O professor <b>{tblUser.Name}</b> não aceitou sua solicitação.
+        </div>
+        <p>Se precisar de mais informações, entre em contato com a administração.</p>
+        <div class='footer'>
+            Este e-mail foi gerado automaticamente pelo sistema Gestão de Salas.<br>
+            &copy; 2025 Gestão de Salas
+        </div>
+    </div>
+</body>
+</html>";
+
             await SendEmail(tblUser.Email!,
-                $"Solicitação para troca de sala recusada! {tblSala.Name} - O professor {tblUser.Name} não aceitou sua solicitação",
-                ""
+                emailBody,
+                "Troca de Sala Recusada"
             );
 
             return false;

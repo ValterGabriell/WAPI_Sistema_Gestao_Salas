@@ -16,7 +16,7 @@ namespace WAPI_GS.Controllers
         {
             try
             {
-                var result = await _uow.AuthService.Login(dto, true);
+                var result = await _uow.AuthService.Login(dto, isAdmin: true);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -30,7 +30,7 @@ namespace WAPI_GS.Controllers
         {
             try
             {
-                var result = await _uow.AuthService.Login(dto, false);
+                var result = await _uow.AuthService.Login(dto, isAdmin: false);
                 return Ok(result);
             }
             catch (Exception ex)

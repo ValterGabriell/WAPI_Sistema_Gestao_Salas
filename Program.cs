@@ -33,27 +33,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-if (builder.Environment.IsDevelopment())
-{
-    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-    builder.Services.AddDbContext<AppDbContext>(options =>
-    {
-        options.UseNpgsql(connectionString);
-    });
-}
-else
-{
-    var url = Environment.GetEnvironmentVariable("SUPABASE_URL");
-    var key = Environment.GetEnvironmentVariable("SUPABASE_KEY");
 
-    var options = new Supabase.SupabaseOptions
-    {
-        AutoConnectRealtime = true
-    };
-
-    var supabase = new Supabase.Client(url, key, options);
-    await supabase.InitializeAsync();
-}
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    options.UseNpgsql(connectionString);
+});
 
 builder.Services.AddScoped<IDisciplinaRepository, DisciplinaRepositoryImpl>();
 builder.Services.AddScoped<IEmailRepository, EmailRepositoryImpl>();

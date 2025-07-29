@@ -6,6 +6,9 @@
 		<FileUpgradeFlags>40</FileUpgradeFlags>
 		<UpgradeBackupLocation>Z:\Programacao\TCC\WAPI_GS\Backup\</UpgradeBackupLocation>
 		<OldToolsVersion>2.0</OldToolsVersion>
+		<UserSecretsId>e712e5c0-a628-4b3d-ae38-208bdf69a2c6</UserSecretsId>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<DockerfileContext>.</DockerfileContext>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
@@ -15,6 +18,7 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.22.1" />
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
 		<PackageReference Include="supabase" Version="1.1.1" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />

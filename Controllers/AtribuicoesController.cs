@@ -77,7 +77,128 @@ namespace WAPI_GS.Controllers
                     salaId, dia, antigoUsuarioID, novoUsuarioID, horaInit, horaFinal
                     );
 
-                return Ok(true);
+                string html = @"
+        <html>
+        <head>
+            <meta charset='UTF-8'>
+            <title>Reserva Aceita</title>
+            <style>
+                body {
+                    background-color: #f4f6f8;
+                    font-family: 'Segoe UI', Arial, sans-serif;
+                    margin: 0;
+                    padding: 0;
+                }
+                .container {
+                    max-width: 500px;
+                    margin: 60px auto;
+                    background: #fff;
+                    border-radius: 12px;
+                    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+                    padding: 32px 24px;
+                    text-align: center;
+                }
+                .icon {
+                    font-size: 48px;
+                    color: #28a745;
+                    margin-bottom: 16px;
+                }
+                h2 {
+                    color: #222;
+                    margin-bottom: 12px;
+                }
+                p {
+                    color: #555;
+                    font-size: 18px;
+                    margin-bottom: 24px;
+                }
+                .footer {
+                    font-size: 13px;
+                    color: #888;
+                    margin-top: 24px;
+                }
+            </style>
+        </head>
+        <body>
+            <div class='container'>
+                <div class='icon'>✔️</div>
+                <h2>Reserva aceita com sucesso!</h2>
+                <p>Um e-mail será enviado ao professor informando sobre a confirmação da reserva.</p>
+                <div class='footer'>Gestão de Salas &copy; 2025</div>
+            </div>
+        </body>
+        </html>";
+                return Content(html, "text/html");
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("notAccept")]
+        public async Task<IActionResult> NotAccept(
+       int salaId, int usuarioQueSolicitou)
+        {
+            try
+            {
+                var result = await _uow.AtribuicaoService.NotAccept(
+                    salaId, usuarioQueSolicitou
+                    );
+
+                string html = @"
+        <html>
+        <head>
+            <meta charset='UTF-8'>
+            <title>Reserva Recusada</title>
+            <style>
+                body {
+                    background-color: #f4f6f8;
+                    font-family: 'Segoe UI', Arial, sans-serif;
+                    margin: 0;
+                    padding: 0;
+                }
+                .container {
+                    max-width: 500px;
+                    margin: 60px auto;
+                    background: #fff;
+                    border-radius: 12px;
+                    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+                    padding: 32px 24px;
+                    text-align: center;
+                }
+                .icon {
+                    font-size: 48px;
+                    color: #dc3545;
+                    margin-bottom: 16px;
+                }
+                h2 {
+                    color: #222;
+                    margin-bottom: 12px;
+                }
+                p {
+                    color: #555;
+                    font-size: 18px;
+                    margin-bottom: 24px;
+                }
+                .footer {
+                    font-size: 13px;
+                    color: #888;
+                    margin-top: 24px;
+                }
+            </style>
+        </head>
+        <body>
+            <div class='container'>
+                <div class='icon'>❌</div>
+                <h2>Reserva recusada!</h2>
+                <p>Um e-mail será enviado ao professor informando sobre a recusa da reserva.</p>
+                <div class='footer'>Gestão de Salas &copy; 2025</div>
+            </div>
+        </body>
+        </html>";
+                return Content(html, "text/html");
             }
             catch (Exception ex)
             {

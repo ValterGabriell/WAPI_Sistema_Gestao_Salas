@@ -192,6 +192,20 @@ namespace WAPI_GS.Service
             }
         }
 
+        public async Task<bool> NotAccept(
+          int salaId, int usuarioQueSolicitou)
+        {
+            try
+            {
+                return await _emailRepository
+                    .NotAccept(salaId, usuarioQueSolicitou);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(HelperExceptions.CreateExceptionMessage(ex));
+            }
+        }
+
 
         private async Task<List<string>> ProcessarAtribuicaoProfessor(
             DtoAtribuirProfessorASala dto, int totalAulas, TblPtd tblProfessorSala)

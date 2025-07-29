@@ -27,5 +27,8 @@ namespace WAPI_GS.Interfaces
         Task<bool> Accept(
            int salaId, DateOnly dia, int antigoUsuarioID,
              int novoUsuarioID, int horaInit, int horaFinal);
+
+        Task<bool> NotAccept(
+          int salaId, int usuarioQueSolicitou);
     }
 }
