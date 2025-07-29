@@ -8,6 +8,7 @@ namespace WAPI_GS.Modelos
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column("id")]
         public int Id { get; set; }
         [Column("nome")]
         public string Nome { get; set; }
