@@ -39,7 +39,7 @@ public class TblProfessor
     [Column("color")]
     public string? Color { get; set; }
 
-    [Column("isAdmin")]
+    [Column("isadmin")]
     public string? IsAdmin { get; set; }
 
     public TblProfessor UpdateProfessorPropriedades(TblProfessor tblProfessor, DtoCreateUpdateUser dto)

@@ -70,12 +70,15 @@ namespace WAPI_GS.Service
                 _appDbContext.TblAuth.Add(auth);
                 await _appDbContext.SaveChangesAsync();
 
+                if (model.UserName == "admin") tblProfessor.IsAdmin = "1";
+                if (model.UserName == "admin") tblProfessor.IsAdmin = "0";
                 return new DtoResponseToken
                 {
                     IsAdmin = tblProfessor.Username.Equals("admin"),
                     Expiration = DateTime.Now.AddMinutes(30),
                     Token = tblProfessor.Id.ToString(),
-                    Usuario = tblProfessor
+                    Usuario = tblProfessor,
+
                 };
 
             }

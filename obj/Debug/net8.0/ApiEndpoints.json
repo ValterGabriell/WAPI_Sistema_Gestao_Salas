@@ -161,6 +161,26 @@
   },
   {
     "ContainingType": "WAPI_GS.Controllers.AtribuicoesController",
+    "Method": "Imhere",
+    "RelativePath": "api/v1/atribuicoes/imhere",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "WAPI_GS.Controllers.AtribuicoesController",
     "Method": "NotAccept",
     "RelativePath": "api/v1/atribuicoes/notAccept",
     "HttpMethod": "GET",
