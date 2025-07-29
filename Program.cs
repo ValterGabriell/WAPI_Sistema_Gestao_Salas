@@ -19,7 +19,9 @@ builder.Services.AddCors(op =>
     op.AddPolicy(name: MyCorsPolicy,
         policy =>
         {
-            policy.WithOrigins("http://localhost:4200", "http://localhost:4200", "http://localhost:56598", "http://localhost:56598")
+            policy.WithOrigins("http://localhost:4200",
+                "http://localhost:4200", "http://localhost:56598", "http://localhost:56598",
+                "https://facomp-gs-admin.vercel.app", "https://facomp-gs-prof.vercel.app")
                     .AllowAnyHeader()
                     .AllowAnyMethod();
         });
