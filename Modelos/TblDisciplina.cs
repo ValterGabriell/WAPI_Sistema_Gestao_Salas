@@ -9,10 +9,15 @@ namespace WAPI_GS.Modelos
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        [Column("nome")]
         public string Nome { get; set; }
+        [Column("codigo")]
         public string Codigo { get; set; }
+        [Column("sigla")]
         public string Sigla { get; set; }
+        [Column("cargahoraria")]
         public int CargaHoraria { get; set; }
+        [Column("totalaulas")]
         public int TotalAulas { get; set; }
     }
 }
