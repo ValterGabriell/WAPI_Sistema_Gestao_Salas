@@ -11,6 +11,13 @@ namespace WAPI_GS.Controllers
     {
         private readonly IUnitOfWork _uow = uow;
 
+        [HttpGet("imhere")]
+        public ActionResult<string> Imhere()
+        {
+            return Ok("I'm here!");
+        }
+
+
         [HttpPost]
         public async Task<ActionResult<string>> AtribuirProfessorASala(DtoAtribuirProfessorASala dto)
         {
